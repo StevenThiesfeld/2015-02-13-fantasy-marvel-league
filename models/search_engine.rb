@@ -1,7 +1,3 @@
-require 'pry'
-require 'marvelite'
-
-
 class SearchEngine
 
   def initialize(options)

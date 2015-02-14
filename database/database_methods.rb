@@ -99,6 +99,15 @@ module DatabaseMethods
     DATABASE.execute("UPDATE #{table} SET #{query_string} WHERE id = #{id}")
   end
   
+  def get_characters(field, id)
+    char_objects = []
+    results = DATABASE.execute("SELECT * FROM characters WHERE #{field}=#{id}")
+    results.each do |char|
+      char_objects << Character.new(char) if char != nil
+    end
+    char_objects
+  end
+  
 end#module_end
 
 module ClassMethods

@@ -1,5 +1,3 @@
-require 'pry'
-
 # Class: User
 # A user of the Fantasy Marvel League
 #
@@ -9,6 +7,8 @@ require 'pry'
 # @password      - String:  the user's password
 
 class User
+  attr_reader :id
+  attr_accessor :name, :password
   
   def initialize(options)
     @id = options["id"]
@@ -16,8 +16,12 @@ class User
     @password = options["password"]
   end
   
-  def change_name
-    
+  def delete_user
+    DATABASE.execute("DELETE FROM characters WHERE user_id = #{@id}")
+    DATABASE.execute("DELETE FROM teams WHERE user_id = #{@id}")
+    DATABASE.execute("DELETE FROM wishlist WHERE user_id = #{@id}")
+    DATABASE.execute("DELETE FROM users WHERE id = #{@id}")
+  end
   
   
 end#class end

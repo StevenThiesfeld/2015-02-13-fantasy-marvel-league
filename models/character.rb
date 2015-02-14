@@ -2,6 +2,9 @@ class Character
   include DatabaseMethods
   extend ClassMethods
   
+  attr_reader :id, :name, :description, :image, :popularity
+  attr_accessor :user_id, :team_id
+  
   def initialize(options)
     @id = options["id"]
     @name = options["name"]
