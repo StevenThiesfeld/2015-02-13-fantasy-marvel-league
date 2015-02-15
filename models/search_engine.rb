@@ -28,5 +28,3 @@ class SearchEngine
 end#class end
 
 
-  test = SearchEngine.new({"user_search" => "Abomination"})
-  binding.pry

@@ -7,6 +7,9 @@
 # @password      - String:  the user's password
 
 class User
+  include DatabaseMethods
+  extend ClassMethods
+  include ModelHelper
   attr_reader :id
   attr_accessor :name, :password
   
@@ -23,5 +26,10 @@ class User
     DATABASE.execute("DELETE FROM users WHERE id = #{@id}")
   end
   
+  def self.login(params)
+    user_info = DATABASE.execute("SELECT * FROM users WHERE name='#{params["name"]}' AND password='#{params["password"]}'")
+    user = self.new(user_info[0]) if user_info[0] != nil
+    user
+  end
   
 end#class end

@@ -1,4 +1,7 @@
 class Team
+  include DatabaseMethods
+  extend ClassMethods
+  include ModelHelper
   
   def initialize(options)
     @id = options["id"]

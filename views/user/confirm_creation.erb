@@ -1,0 +1,9 @@
+<%=@new_user.display_attributes%>
+
+<form action="user_profile">
+  <input type="hidden" name="name" value="<%=@new_user.name%>">
+  <input type="hidden" name="password" value="<%=@new_user.password%>">
+  If the information above looks correct, click Submit.
+  <input type="submit" value="Submit">
+</form>
+<a href="/user_setup">Click here to return to User Setup</a>

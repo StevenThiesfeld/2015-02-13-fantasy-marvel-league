@@ -19,12 +19,11 @@ module DatabaseMethods
     values = []
     instance_variables.each do |i|
     
-      attributes << i.to_s.delete("@") if i != "@id"
+      attributes << i.to_s.delete("@") if i != :@id
     end
 
     attributes.each do |a|
       value = self.send(a)
-
       if value.is_a?(Integer)
         values << "#{value}"
       else values << "'#{value}'"

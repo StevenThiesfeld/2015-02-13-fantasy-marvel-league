@@ -2,13 +2,20 @@
 <html>
 
   <head>
-    <title>Warehouse Mgr.</title>
-  <link rel="stylesheet" href="/css/stylesheet.css" type="text/css" media="screen" title="no title" charset="utf-8">
+    <title>!F_M_L!</title>
+ <link rel="stylesheet" href="css/stylesheet.css" type="text/css" media="screen" title="no title" charset="utf-8">
+ 
   
    
   </head>
   
   <body>
+    <nav>
+      <a href="/user_profile"><%= session[:user].name %></a>
+      <a href="/characters">Your Characters</a>
+      <a href="/teams">Your Teams</a>
+      <a href="/wishlist">Your Wishlist</a>
+    </nav>
     <%= yield %>
   </body>
 </html>
