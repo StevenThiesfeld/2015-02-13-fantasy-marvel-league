@@ -27,19 +27,22 @@ class SearchEngine
   end
   
   def create_character(user_search)
+    results = []
     response = @client.characters(:nameStartsWith => user_search)
-    options = {}
-    options["name"] = response["data"]["results"][0]["name"]
-    if response["data"]["results"][0]["description"] == ""
-      options["description"] = "No description found"
-    else
-      options["description"] = response["data"]["results"][0]["description"]
+    response["data"]["results"].each do |result|
+      options = {}
+      options["name"] = result["name"]
+      if result["description"] == ""
+        options["description"] = "No description found"
+      else
+        options["description"] = result["description"]
+      end
+      options["popularity"] = result["comics"]["available"]
+      options["image"] = result["thumbnail"]["path"] + "." + result["thumbnail"]["extension"] if result["thumbnail"] != nil
+      options["user_id"] = @user_id
+      results << Character.new(options)
     end
-    options["popularity"] = response["data"]["results"][0]["comics"]["available"]
-    options["image"] = response["data"]["results"][0]["thumbnail"]["path"] + "." + response["data"]["results"][0]["thumbnail"]["extension"] if response["data"]["results"][0]["thumbnail"] != nil
-    options["user_id"] = @user_id
-    result = Character.new(options)
-    result    
+    results    
   end
   
   def verify_response

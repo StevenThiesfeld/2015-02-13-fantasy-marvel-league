@@ -1,0 +1,8 @@
+nav {
+  line-height: 30px;
+  height: 500px;
+  width: 120px;
+  float: left;
+  padding: 5px;
+  background-color: blue;  
+}

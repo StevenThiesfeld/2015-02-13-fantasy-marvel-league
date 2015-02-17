@@ -26,4 +26,13 @@ module ModelHelper
     table
   end
   
+  def list_chars_in_team
+    result = ""
+    chars_array = self.get_characters("team_id")
+    chars_array.each do |char|
+      result += "<li>#{char.name}---<a href='/unassign?id=#{char.id}'>Unassign</a></li>"
+    end
+    result
+  end
+  
 end#module end

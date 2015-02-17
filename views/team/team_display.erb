@@ -1,0 +1,19 @@
+<h3><%= team.name %> <a href="/delete_team?id=<%= team.id %>">Delete</a></h3>
+<ul>
+  <%= team.list_chars_in_team %>
+</ul>
+<% if team_full?(team) == false %>
+<p>Assign New Character</p>
+<%set_unassigned_chars%>
+<form action="/assign">
+  <input type="hidden" name="team_id" value="<%= team.id %>">
+  <select name="char_to_assign">
+    <%@unassigned_chars.each do |char| %>
+    <option value="<%=char.id  %>"><%= char.name %></option>
+    <%end  %>
+  </select>
+  <input type="submit" value="Submit">
+</form>
+<%else%><p>This Team is full.</p>
+<% end %>
+  

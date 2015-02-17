@@ -11,13 +11,15 @@
   
   <body>
     <nav>
-      <a href="javascript:history.back()">Back</a>
-      <a href="/user_profile">Your Profile</a>
-      <a href="/characters">Your Characters</a>
-      <a href="/teams">Your Teams</a>
-      <a href="/wishlist">Your Wishlist</a>
-      <a href="/search">Run a Search</a>
-      <a href="/logout">Logout</a>
+      <ul>
+     <li> <a href="javascript:history.back()">Back</a></li>
+     <li> <a href="/user_profile">Your Profile</a></li>
+     <li> <a href="/characters">Your Characters</a></li>
+      <li><a href="/teams">Your Teams</a></li>
+     <li> <a href="/wishlist">Your Wishlist</a></li>
+     <li> <a href="/search">Search</a></li>
+     <li> <a href="/logout">Logout</a></li>
+     </ul>
     </nav>
     <%= yield %>
   </body>

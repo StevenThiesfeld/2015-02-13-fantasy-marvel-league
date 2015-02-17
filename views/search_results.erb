@@ -1,7 +1,20 @@
-<h1><%= @character.name %></h1>
+<% @char_results.each do |result|  %>
+  <h1><%= result.name %></h1>
 
-<img src="<%= @character.image %>" alt="File not found :(" style="width:304px;height:228px">
+  <img src="<%= result.image %>" alt="Woops, no picture" width="240" height="180">
 
-<p><%= @character.description %></p>
-<p>Popularity: <%= @character.popularity %></p>
-<p>Click here to add Character to your roster!</p>
+  <p><%= result.description %></p>
+  <p>Popularity: <%= result.popularity %></p>
+  <% if char_taken?(result) == false  %>
+    <p>Click here to add Character to your roster!</p>
+    <form action="/char_add">
+      <input type="hidden" name="name" value="<%= result.name %>">
+      <input type="hidden" name="description" value="<%= result.description %>">
+      <input type="hidden" name="user_id" value="<%= result.user_id %>">
+      <input type="hidden" name="image" value="<%= result.image %>">
+      <input type="hidden" name="popularity" value="<%= result.popularity %>">
+      <input type="submit" value="Submit">
+    </form>
+    <%else %><p>Sorry, <%= char_taken?(result) %> has already claimed this Character, click <a href="add_to_wishlist?name=<%= result.name %>">here</a> to add this Character to your wishlist.</p>
+    <%end  %>
+<%end  %>

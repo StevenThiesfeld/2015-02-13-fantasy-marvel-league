@@ -16,7 +16,8 @@ require_relative "models/character"
 
 enable :sessions
 
-
+helpers MainHelper
+    
 get "/" do
   erb :login
 end
@@ -58,6 +59,25 @@ get "/user_profile" do
   erb :"user/user_profile"
 end
 
+get "/edit_profile" do
+  erb :"user/edit_profile"
+end
+
+get "/confirm_edit" do
+  session[:user].edit_object(params)
+  session[:user].save("users")
+  redirect "/user_profile"
+end
+
+get "/delete_profile" do
+  erb :"user/delete_profile"
+end
+
+get "/confirm_delete_user" do
+  session[:user].delete_user
+  redirect "/logout"
+end
+
 before "/teams" do
   if request.referrer.include?("create_team")
     new_team = Team.new(params)
@@ -79,21 +99,78 @@ get "/create_team" do
 end  
 
 get "/wishlist" do
-  result = Wishlist.search_where("wishlists", "user_id", session[:user].id)
-  @wishlist = result[0]
+  @your_chars = session[:user].get_characters("user_id")
+  @wishlist = Wishlist.search_where("wishlists", "user_id", session[:user].id)[0]
+  chars = DATABASE.execute("SELECT character_id FROM characters_to_wishlists WHERE wishlist_id = #{@wishlist.id}")
+  @chars_on_wishlist = make_wishlist_chars(chars)
   erb :"wishlist"
 end
+
+get "/add_offer" do
+  @wishlist = Wishlist.search_where("wishlists", "user_id", session[:user].id)[0]
+  @wishlist.offer = params["name"]
+  @wishlist.save("wishlists")
+  redirect "/wishlist"
+end
+  
 
 get "/search" do
   erb :"search"
 end
 
 get "/search_results" do
-  result = SearchEngine.new(params)
-  @character = result.create_character(params["user_search"])
-  @character.insert("characters")
+  results = SearchEngine.new(params)
+  @char_results = results.create_character(params["user_search"])
   erb :"search_results"
 end
-    
+
+get "/char_add" do
+  char = Character.new(params)
+  char.insert("characters")
+  redirect "/characters"
+end
+  
+
+get "/characters" do
+  @characters = session[:user].get_characters("user_id")
+  erb :"characters"
+end
+
+get "/assign" do
+  char_to_assign = Character.find("characters", params["char_to_assign"])
+  char_to_assign.team_id = params["team_id"]
+  char_to_assign.save("characters")
+  redirect "/teams"
+end
+
+get "/unassign" do
+  char_to_unassign = Character.find("characters", params["id"])
+  char_to_unassign.team_id = ""
+  char_to_unassign.save("characters")
+  redirect "/teams"
+end
+
+get "/delete_team" do
+  @team = Team.find("teams", params["id"])
+  erb :"team/confirm_delete_team"
+end
+
+get "/confirm_delete_team" do
+  team = Team.find("teams", params["id"]) 
+  team.delete
+  redirect "/teams" 
+end
+
+get "/delete_char" do
+  Character.delete_record("characters", params["id"])
+  redirect "/characters"
+end  
+
+get "/add_to_wishlist" do
+  wishlist = Wishlist.search_where("wishlists", "user_id", session[:user].id)[0]
+  char = Character.search_where("characters", "name", params["name"])[0]
+  wishlist.add_to_wishlist(char.id)
+  redirect "/wishlist"
+end
       
   

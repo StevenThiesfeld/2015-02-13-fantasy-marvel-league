@@ -12,9 +12,8 @@ class Character
     @description = options["description"]
     @user_id = options["user_id"]
     @team_id = options["team_id"]
-    @image = options["image"]
+    options["image"] != nil ? @image = options["image"] : @image = "http://cdn-static.denofgeek.com/sites/denofgeek/files/styles/article_main_half/public/images/86941.jpg?itok=xEKeqXcW"
     @popularity = options["popularity"]
   end
-  
   
 end#class end  

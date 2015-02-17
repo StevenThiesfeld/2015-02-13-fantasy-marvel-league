@@ -11,18 +11,19 @@ class User
   extend ClassMethods
   include ModelHelper
   attr_reader :id
-  attr_accessor :name, :password
+  attr_accessor :name, :password, :image
   
   def initialize(options)
     @id = options["id"]
     @name = options["name"]
     @password = options["password"]
+    @image = options["image"]
   end
   
   def delete_user
     DATABASE.execute("DELETE FROM characters WHERE user_id = #{@id}")
     DATABASE.execute("DELETE FROM teams WHERE user_id = #{@id}")
-    DATABASE.execute("DELETE FROM wishlist WHERE user_id = #{@id}")
+    DATABASE.execute("DELETE FROM wishlists WHERE user_id = #{@id}")
     DATABASE.execute("DELETE FROM users WHERE id = #{@id}")
   end
   
@@ -39,4 +40,13 @@ class User
     team.insert("teams")
   end
   
+  def get_unassigned_chars
+    unassigned_chars = []
+    unassigned_array = DATABASE.execute("SELECT * FROM characters WHERE user_id = #{id} AND team_id = ''")
+    unassigned_array.each do |char|
+      unassigned_chars << Character.new(char) if char != nil
+    end
+    unassigned_chars
+  end
+      
 end#class end

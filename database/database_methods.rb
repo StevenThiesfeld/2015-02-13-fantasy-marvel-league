@@ -1,7 +1,7 @@
 module DatabaseMethods
   
   # Public: insert
-   # Inserts the newly created item into the database.
+   # Inserts the newly created object into the database.
    #
    # Parameters:
    # table               - String: the table being added to.
@@ -9,10 +9,10 @@ module DatabaseMethods
    # values              - Array: A list of the values of the attributes.
    #
    # Returns: 
-   # @id the primary key for the product key.
+   # @id the primary key for the object.
    #
    # State changes:
-   # Selected values are updated in the database.
+   # Object's attributes are inserted into the database.
   
   def insert(table) 
     attributes = []
@@ -28,14 +28,12 @@ module DatabaseMethods
         values << "#{value}"
       elsif value.is_a?(String)
         if value.include?("'")
-          value.gsub!("'","\\\\\\\\")
-          values << "'#{value}'"
-        else values << "'#{value}'"
+          value.delete!("'")
         end
+        values << "'#{value}'"
       else values << "'#{value}'"
       end
     end
-    binding.pry
     DATABASE.execute("INSERT INTO #{table} (#{attributes.join(", ")})
                                         VALUES (#{values.join(", ")})")
     @id = DATABASE.last_insert_row_id  
@@ -105,13 +103,18 @@ module DatabaseMethods
     DATABASE.execute("UPDATE #{table} SET #{query_string} WHERE id = #{id}")
   end
   
-  def get_characters(field, id)
+  def get_characters(field)
     char_objects = []
     results = DATABASE.execute("SELECT * FROM characters WHERE #{field}=#{id}")
     results.each do |char|
       char_objects << Character.new(char) if char != nil
     end
     char_objects
+  end
+  
+  def add_to_wishlist(char_id)
+    DATABASE.execute("INSERT INTO characters_to_wishlists (character_id, wishlist_id)
+                    VALUES (#{char_id}, #{id})")
   end
   
 end#module_end

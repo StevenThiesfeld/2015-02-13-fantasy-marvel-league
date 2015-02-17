@@ -1,1 +1,4 @@
-<%= session[:user].display_attributes %>
+<h1><%= session[:user].name %></h1>
+<h2> Password: <%= session[:user].password %></h2>
+<a href="/edit_profile">Edit Profile</a>
+<a href="/delete_profile">Delete Profile</a>

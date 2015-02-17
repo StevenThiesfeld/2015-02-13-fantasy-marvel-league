@@ -1,8 +1,10 @@
 <%=@new_user.display_attributes%>
+<img src="<%= @new_user.image %>" width="160" height="180">
 
 <form action="user_profile">
   <input type="hidden" name="name" value="<%=@new_user.name%>">
   <input type="hidden" name="password" value="<%=@new_user.password%>">
+  <input type="hidden" name="image" value="<%= @new_user.image %>">
   If the information above looks correct, click Submit.
   <input type="submit" value="Submit">
 </form>

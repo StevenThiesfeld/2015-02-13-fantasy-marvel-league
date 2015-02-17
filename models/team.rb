@@ -12,4 +12,13 @@ class Team
     @user_id = options["user_id"]
   end
   
+  def delete
+    chars = self.get_characters("team_id")
+    chars.each do |char|
+      char.team_id = ""
+      char.save("characters")
+    end
+    DATABASE.execute("DELETE FROM teams WHERE id = #{id}")
+  end
+  
 end#class end
