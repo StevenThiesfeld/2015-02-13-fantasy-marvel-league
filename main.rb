@@ -21,6 +21,11 @@ get "/" do
   erb :login
 end
 
+get "/logout" do
+  session[:user] == nil
+  erb :login
+end
+
 get "/user_verification" do
   user_check = User.login(params)
   if user_check == nil
@@ -45,11 +50,19 @@ before "/user_profile" do
   if request.referrer.include?("confirm_creation")
     session[:user] = User.new(params)
     session[:user].insert("users")
+    session[:user].user_setup
   end
 end
 
 get "/user_profile" do
   erb :"user/user_profile"
+end
+
+before "/teams" do
+  if request.referrer.include?("create_team")
+    new_team = Team.new(params)
+    new_team.insert("teams")
+  end
 end
 
 get "/teams" do
@@ -61,10 +74,26 @@ get "/teams" do
   end
 end
 
-get "/create_team" do
-  
+get "/create_team" do 
   erb :"team/create_team"
 end  
+
+get "/wishlist" do
+  result = Wishlist.search_where("wishlists", "user_id", session[:user].id)
+  @wishlist = result[0]
+  erb :"wishlist"
+end
+
+get "/search" do
+  erb :"search"
+end
+
+get "/search_results" do
+  result = SearchEngine.new(params)
+  @character = result.create_character(params["user_search"])
+  @character.insert("characters")
+  erb :"search_results"
+end
     
       
   

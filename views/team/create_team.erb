@@ -1,5 +1,9 @@
 <h1> Team Creation </h1>
 <br>
 <br>
-<form action="/confirm_team">
-  
+<form action="/teams">
+  <input type="hidden" name="user_id" value="<%= session[:user].id %>">
+  Name of Team
+  <input type="text" name="name">
+  <input type="submit" value="Submit">
+</form>

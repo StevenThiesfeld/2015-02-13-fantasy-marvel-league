@@ -3,6 +3,9 @@ class Team
   extend ClassMethods
   include ModelHelper
   
+  attr_reader :id, :user_id
+  attr_accessor :name
+  
   def initialize(options)
     @id = options["id"]
     @name = options["name"]

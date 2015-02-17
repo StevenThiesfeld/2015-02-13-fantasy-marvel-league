@@ -26,9 +26,16 @@ module DatabaseMethods
       value = self.send(a)
       if value.is_a?(Integer)
         values << "#{value}"
+      elsif value.is_a?(String)
+        if value.include?("'")
+          value.gsub!("'","\\\\\\\\")
+          values << "'#{value}'"
+        else values << "'#{value}'"
+        end
       else values << "'#{value}'"
       end
     end
+    binding.pry
     DATABASE.execute("INSERT INTO #{table} (#{attributes.join(", ")})
                                         VALUES (#{values.join(", ")})")
     @id = DATABASE.last_insert_row_id  
