@@ -6,3 +6,15 @@ nav {
   padding: 5px;
   background-color: blue;  
 }
+
+p.profile {
+  float: right;
+  background-color: blue;
+  line-height: 30px;
+  height: 500px;
+  width: 120px;
+  padding: 5px;
+}
+body {
+  background-color:#CC0000;
+}

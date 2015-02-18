@@ -19,19 +19,19 @@ enable :sessions
 helpers MainHelper
     
 get "/" do
-  erb :login
+  erb :login, :layout => :layout_login
 end
 
 get "/logout" do
   session[:user] == nil
-  erb :login
+  erb :login, :layout => :layout_login
 end
 
 get "/user_verification" do
   user_check = User.login(params)
   if user_check == nil
     @error = "Invalid Login Info" 
-    erb :login
+    erb :login, :layout => :layout_login
   else
     session[:user] = user_check
     erb :"user/user_profile"
@@ -39,12 +39,12 @@ get "/user_verification" do
 end
 
 get "/user_setup" do
-  erb :"user/user_setup"
+  erb :"user/user_setup", :layout => :layout_login 
 end
 
 get "/confirm_creation" do
   @new_user = User.new(params)
-  erb :"user/confirm_creation"
+  erb :"user/confirm_creation", :layout => :layout_login
 end
 
 before "/user_profile" do
@@ -101,8 +101,7 @@ end
 get "/wishlist" do
   @your_chars = session[:user].get_characters("user_id")
   @wishlist = Wishlist.search_where("wishlists", "user_id", session[:user].id)[0]
-  chars = DATABASE.execute("SELECT character_id FROM characters_to_wishlists WHERE wishlist_id = #{@wishlist.id}")
-  @chars_on_wishlist = make_wishlist_chars(chars)
+  @chars_on_wishlist = set_wishlist_chars
   erb :"wishlist"
 end
 
@@ -127,6 +126,13 @@ end
 get "/char_add" do
   char = Character.new(params)
   char.insert("characters")
+  redirect "/characters"
+end
+
+get "/char_swap_user" do
+  char = Character.find("characters", params["id"])
+  char.user_id = session[:user].id
+  char.save("characters")
   redirect "/characters"
 end
   
@@ -162,7 +168,9 @@ get "/confirm_delete_team" do
 end
 
 get "/delete_char" do
-  Character.delete_record("characters", params["id"])
+  char =  Character.find("characters", params["id"])
+  char.user_id = ""
+  char.save("characters")
   redirect "/characters"
 end  
 

@@ -4,9 +4,6 @@
   <head>
     <title>!F_M_L!</title>
  <link rel="stylesheet" href="css/stylesheet.css" type="text/css" media="screen" title="no title" charset="utf-8">
- 
-  
-   
   </head>
   
   <body>
@@ -15,12 +12,16 @@
      <li> <a href="javascript:history.back()">Back</a></li>
      <li> <a href="/user_profile">Your Profile</a></li>
      <li> <a href="/characters">Your Characters</a></li>
-      <li><a href="/teams">Your Teams</a></li>
+     <li> <a href="/teams">Your Teams</a></li>
      <li> <a href="/wishlist">Your Wishlist</a></li>
      <li> <a href="/search">Search</a></li>
      <li> <a href="/logout">Logout</a></li>
      </ul>
     </nav>
+    <p class="profile"> <img src="<%= session[:user].image %>" height="120" width="120"</p>
+      <%= session[:user].name %>
+      
+    
     <%= yield %>
   </body>
 </html>

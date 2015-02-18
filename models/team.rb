@@ -1,3 +1,14 @@
+# Class: Team
+# A user's fictional team of Super Heroes
+#
+# Attributes:
+# @id           - Integer: the team's primary key
+# @name         - String:  the team's name
+# @user_id      - Integer: the id of the table's owner
+#
+# Public Methods:
+# #delete
+
 class Team
   include DatabaseMethods
   extend ClassMethods
@@ -11,6 +22,15 @@ class Team
     @name = options["name"]
     @user_id = options["user_id"]
   end
+  
+  # Public Method: #delete
+ #  deletes the and unassigns any character assigned to it
+ #
+ #  Parameters:none
+ #
+ #  Returns: none
+ #  State Changes:
+ #  Edits each character assigned to the team, and deletes the team from the table
   
   def delete
     chars = self.get_characters("team_id")

@@ -103,6 +103,18 @@ module DatabaseMethods
     DATABASE.execute("UPDATE #{table} SET #{query_string} WHERE id = #{id}")
   end
   
+  # Public Method: #get_characters
+ #  Returns an array of character objects assigned to a user/team
+ #
+ #  Parameters:
+ #  field      - String:  The column field that characters are being pulled from
+ #
+ #  Returns:
+ #  char_objects     - Array: An array of character objects
+ #
+ #  State Changes:
+ #  Creates and stores character objects in an array
+ #
   def get_characters(field)
     char_objects = []
     results = DATABASE.execute("SELECT * FROM characters WHERE #{field}=#{id}")
@@ -111,12 +123,7 @@ module DatabaseMethods
     end
     char_objects
   end
-  
-  def add_to_wishlist(char_id)
-    DATABASE.execute("INSERT INTO characters_to_wishlists (character_id, wishlist_id)
-                    VALUES (#{char_id}, #{id})")
-  end
-  
+   
 end#module_end
 
 module ClassMethods

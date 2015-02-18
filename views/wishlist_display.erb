@@ -4,4 +4,8 @@
 
 <p><%= char.description %></p>
 <p>Popularity: <%= char.popularity %></p>
+<% if char.user_id == "" %>
+<p>This Character is available! <a href="/char_swap_user?id=<%= char.id %>">Click here</a> to claim it!</p>
+<%else  %> 
 <p>Current Owner: <%= DATABASE.execute("SELECT name FROM users WHERE id = #{char.user_id}")[0]["name"] %></p>
+<% end  %>

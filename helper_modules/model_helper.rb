@@ -26,6 +26,17 @@ module ModelHelper
     table
   end
   
+  # Public Method: #list_chars_in_team
+ #  Displays a list of Character names in a team with an option to unassign them
+ #
+ #  Parameters: none
+ #
+ #  Returns:
+ #  result         - String: a formatted unordered list of characters
+ #
+ #  State Changes: none
+ #
+  
   def list_chars_in_team
     result = ""
     chars_array = self.get_characters("team_id")

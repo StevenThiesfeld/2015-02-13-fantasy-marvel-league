@@ -1,5 +1,15 @@
-require "pry"
-require 'marvelite'
+# Class: SearchEngine
+# Accesses the Marvel API client and searches for the user's query
+#
+# Attributes:
+# @client      - Client: the gem client that accesses the API database
+# @user_search - String: the user's query
+# @user_id     - Integer: the id of the user making the search
+#
+# Public Methods:
+# #generate_character_list
+# #create_character
+
 class SearchEngine
   attr_reader :response
 
@@ -8,23 +18,38 @@ class SearchEngine
                 '4de5aeb0ed9b963eea1608e13c1eff02', :private_key => 
                 '8145779d67b193e6d3a7da2b7d1df809804b7ca8')
             
-    # @user_search = options["user_search"]
+    @user_search = options["user_search"]
     @user_id = options["user_id"]
   end
   
-  def generate_character_list
-    response = @client.characters
-    response["data"]["results"].each do |result|
-      options = {}
-      options["name"] = result["name"]
-      options["description"] = result["description"]
-      options["popularity"] = result["comics"]["available"]
-      options["image"] = result["thumbnail"]["path"] + "." + result["thumbnail"]["extension"] if result["thumbnail"] != nil
-      options["user_id"] = nil
-      char = Character.new(options)
-      char.insert("characters")    
-    end
-  end
+  #NOT USED----------------------------------
+  # def generate_character_list
+#     response = @client.characters
+#     response["data"]["results"].each do |result|
+#       options = {}
+#       options["name"] = result["name"]
+#       options["description"] = result["description"]
+#       options["popularity"] = result["comics"]["available"]
+#       options["image"] = result["thumbnail"]["path"] + "." + result["thumbnail"]["extension"] if result["thumbnail"] != nil
+#       options["user_id"] = nil
+#       char = Character.new(options)
+#       char.insert("characters")
+#     end
+#   end-------------------------------------
+  
+# Public Method: #create_character
+# Searches the Marvel database and returns an array of Character objects
+#
+# Parameters:
+# user_search      - String: the query from the user
+# options          - Hash:   the character's information extracted from the response
+#
+# Returns:
+# results      - Array: An array of Character objects
+#
+# State Changes:
+# Creates new character objects with data from the API and inserts them into the
+# results array
   
   def create_character(user_search)
     results = []
@@ -43,11 +68,6 @@ class SearchEngine
       results << Character.new(options)
     end
     results    
-  end
-  
-  def verify_response
-    if @response["code"] == 404
-    end
   end
   
 end#class end
