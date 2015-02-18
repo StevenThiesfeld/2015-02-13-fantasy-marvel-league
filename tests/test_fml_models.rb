@@ -1,9 +1,101 @@
 require 'sqlite3'
 require 'pry'
-DATABASE = SQLite3::Database.new('database/test_warehouse_database.db')
+DATABASE = SQLite3::Database.new('../database/test_f_m_l.db')
 require 'minitest/autorun'
+require 'marvelite'
+require_relative "../database/db_setup"
 require_relative "../database/database_methods"
 require_relative "../helper_modules/model_helper"
-require_relative '../database/db_setup'
-require_relative '../models/search_engine'
-require_relative '../models/user'
+require_relative "../helper_modules/main_helper"
+require_relative "../models/user"
+require_relative "../models/character"
+require_relative "../models/team"
+require_relative "../models/wishlist"
+require_relative "../models/search_engine"
+
+
+
+class TestModels < Minitest::Test
+  include DatabaseMethods
+  extend ClassMethods
+  
+  def setup
+    DATABASE.execute("DELETE FROM users")
+    DATABASE.execute("DELETE FROM characters")
+    DATABASE.execute("DELETE FROM teams")
+    DATABASE.execute("DELETE FROM wishlists")
+    DATABASE.execute("DELETE FROM characters_to_wishlists")
+  end
+  
+  def test_simple_thing
+    assert_equal(1, 1)
+  end
+  
+  #USER TESTS-------------------------------------------------------------------
+  def test_login  #test passes
+    user = User.new("name" => "test", "password" => "password")
+    user.insert("users")
+    refute_equal(user, User.login("name" => "test1", "password" => "password"))
+    assert_equal(user.name, User.login("name" => "test", "password" => "password").name)
+  end
+  
+  def test_user_setup  #test pass
+    user = User.new("name" => "setup_test", "password" => "password")
+    user.insert("users")
+    user.user_setup
+    wishlist_check = DATABASE.execute("SELECT * FROM wishlists WHERE user_id=#{user.id}")
+    refute_equal([], wishlist_check)
+    team_check = DATABASE.execute("SELECT * FROM teams WHERE user_id=#{user.id}")
+    refute_equal([], team_check)
+  end
+  
+  def test_get_unassigned_chars #test pass
+    user = User.new("name" => "char_test", "password" => "password")
+    user.insert("users")
+    char = Character.new("name" => "test", "user_id" => user.id, "team_id" => 1)
+    char.insert("characters")
+    char2 = Character.new("name" => "test2", "user_id" => user.id, "team_id" => '')
+    char2.insert("characters")
+    check = user.get_unassigned_chars
+    assert_equal("test2", check[0].name)
+  end
+  #-----------------------------------------------------------------------------
+  #WISHLIST TESTS---------------------------------------------------------------
+  def test_add_to_wishlist #test pass
+    wishlist = Wishlist.new("name" => "testlist")
+    wishlist.insert("wishlists")
+    wishlist.add_to_wishlist(1)
+    check = DATABASE.execute("SELECT * FROM characters_to_wishlists WHERE
+     character_id=1 AND wishlist_id=#{wishlist.id}")
+     refute_equal([], check)
+   end
+   #----------------------------------------------------------------------------
+   #TEAM TESTS------------------------------------------------------------------
+   def test_delete #test pass
+     DATABASE.execute("DELETE FROM teams")
+     team = Team.new("name" => "teamtest")
+     team.insert("teams")
+     char = Character.new("name" => "test", "team_id" => team.id)
+     char.insert("characters")
+     team.delete
+     assert_equal([], DATABASE.execute("SELECT * FROM teams"))
+     assert_equal([], DATABASE.execute("SELECT * FROM characters WHERE team_id=1"))
+   end
+   #----------------------------------------------------------------------------
+   #SEARCH ENGINE TESTS---------------------------------------------------------
+   def test_create_character #test pass
+     test = SearchEngine.new("user_search" => "Spider-Man")
+     char = test.create_character[0]
+     assert_kind_of(Character, char)
+     assert_equal("Spider-Man", char.name)
+   end
+end#class end
+
+
+
+
+
+
+
+
+

@@ -51,9 +51,9 @@ class SearchEngine
 # Creates new character objects with data from the API and inserts them into the
 # results array
   
-  def create_character(user_search)
+  def create_character
     results = []
-    response = @client.characters(:nameStartsWith => user_search)
+    response = @client.characters(:nameStartsWith => @user_search)
     response["data"]["results"].each do |result|
       options = {}
       options["name"] = result["name"]

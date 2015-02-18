@@ -74,7 +74,7 @@ class User
   def user_setup
     wishlist = Wishlist.new("name" => "Your Wishlist", "user_id" => @id)
     wishlist.insert("wishlists")
-    team = Team.new("name" => "Your First Team", "user_id" => @id)
+    team = Team.new("name" => "Your Team", "user_id" => @id)
     team.insert("teams")
   end
   

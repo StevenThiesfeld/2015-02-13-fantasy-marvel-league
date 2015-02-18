@@ -119,7 +119,7 @@ end
 
 get "/search_results" do
   results = SearchEngine.new(params)
-  @char_results = results.create_character(params["user_search"])
+  @char_results = results.create_character
   erb :"search_results"
 end
 
