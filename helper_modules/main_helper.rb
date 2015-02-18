@@ -70,10 +70,15 @@ module MainHelper
 
   def char_taken?(char)
     check_char = Character.search_where("characters", "name", char.name)
-    if check_char == []
-      false
-    else user_name =  DATABASE.execute("SELECT name FROM users WHERE id = #{check_char[0].user_id}")[0]["name"]
-      user_name
+    if check_char == [] 
+      "no_entry"
+    else
+      if check_char[0].user_id == ""
+        "unassigned"
+      else
+        user_name =  DATABASE.execute("SELECT name FROM users WHERE id = #{check_char[0].user_id}")[0]["name"]
+        user_name
+      end
     end
   end
   
@@ -91,8 +96,21 @@ module MainHelper
     chars = DATABASE.execute("SELECT character_id FROM characters_to_wishlists WHERE wishlist_id = #{@wishlist.id}")
     results = []
     chars.each do |char|
-      results << Character.find("characters", char["character_id"])
+      results << Character.find("characters", char["character_id"]) 
+    end
+    results.each do |char|
+      if char.user_id == session[:user].id
+        @wishlist.remove_from_wishlist(char.id)
+        results.delete(char)
+      end 
     end
     results
   end
+  
+  def fetch_id(char_name)
+    char = Character.search_where("characters", "name", char_name)[0]
+    id = char.id
+    id
+  end
+  
 end#module end

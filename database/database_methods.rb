@@ -21,21 +21,14 @@ module DatabaseMethods
   
        attributes << i.to_s.delete("@") if i != :@id
      end
-
+     placeholder = []
      attributes.each do |a|
+       placeholder << "?"
        value = self.send(a)
-       if value.is_a?(Integer)
-         values << "#{value}"
-       elsif value.is_a?(String)
-         if value.include?("'")
-           value.delete!("'")
-         end
-         values << "'#{value}'"
-       else values << "'#{value}'"
-       end
+         values << value
      end
      DATABASE.execute("INSERT INTO #{table} (#{attributes.join(", ")})
-                                         VALUES (#{values.join(", ")})")
+                       VALUES (#{placeholder.join(", ")})", values)
      @id = DATABASE.last_insert_row_id  
    end
   

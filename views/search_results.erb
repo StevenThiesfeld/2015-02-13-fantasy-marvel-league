@@ -5,7 +5,7 @@
 
   <p><%= result.description %></p>
   <p>Popularity: <%= result.popularity %></p>
-  <% if char_taken?(result) == false  %>
+  <% if char_taken?(result) == "no_entry"  %>
     <p>Click here to add Character to your roster!</p>
     <form action="/char_add">
       <input type="hidden" name="name" value="<%= result.name %>">
@@ -13,6 +13,12 @@
       <input type="hidden" name="user_id" value="<%= result.user_id %>">
       <input type="hidden" name="image" value="<%= result.image %>">
       <input type="hidden" name="popularity" value="<%= result.popularity %>">
+      <input type="submit" value="Submit">
+    </form>
+    <%elsif char_taken?(result) == "unassigned"  %>
+    <p>Click here to add Character to your roster!</p>
+    <form action="/char_swap_user">
+      <input type="hidden" name="id" value="<%= fetch_id(result.name) %>">
       <input type="submit" value="Submit">
     </form>
     <%else %><p>Sorry, <%= char_taken?(result) %> has already claimed this Character, click <a href="add_to_wishlist?name=<%= result.name %>">here</a> to add this Character to your wishlist.</p>

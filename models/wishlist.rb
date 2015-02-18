@@ -41,4 +41,8 @@ class Wishlist
                     VALUES (#{char_id}, #{id})")
   end
   
+  def remove_from_wishlist(char_id)
+    DATABASE.execute("DELETE FROM characters_to_wishlists WHERE character_id=#{char_id}")
+  end
+  
 end#class end

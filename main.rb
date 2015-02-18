@@ -94,6 +94,12 @@ get "/teams" do
   end
 end
 
+get "/team_details" do
+  @team = Team.find("teams", params["id"])
+  @team_chars = @team.get_characters("team_id")
+  erb :"team/team_details"
+end
+
 get "/create_team" do 
   erb :"team/create_team"
 end  
@@ -144,6 +150,7 @@ end
 get "/char_swap_user" do
   char = Character.find("characters", params["id"])
   char.user_id = session[:user].id
+  char.team_id = ""
   char.save("characters")
   redirect "/characters"
 end
@@ -182,6 +189,7 @@ end
 get "/delete_char" do
   char =  Character.find("characters", params["id"])
   char.user_id = ""
+  char.team_id = ""
   char.save("characters")
   redirect "/characters"
 end  
