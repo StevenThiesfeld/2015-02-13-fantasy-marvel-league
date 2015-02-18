@@ -73,7 +73,7 @@ module MainHelper
     if check_char == [] 
       "no_entry"
     else
-      if check_char[0].user_id == ""
+      if check_char[0].user_id == 0
         "unassigned"
       else
         user_name =  DATABASE.execute("SELECT name FROM users WHERE id = #{check_char[0].user_id}")[0]["name"]

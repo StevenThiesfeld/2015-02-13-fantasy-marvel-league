@@ -65,6 +65,7 @@ class SearchEngine
       options["popularity"] = result["comics"]["available"]
       options["image"] = result["thumbnail"]["path"] + "." + result["thumbnail"]["extension"] if result["thumbnail"] != nil
       options["user_id"] = @user_id
+      options["team_id"] = 0
       results << Character.new(options)
     end
     results    

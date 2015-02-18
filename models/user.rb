@@ -91,7 +91,7 @@ class User
   
   def get_unassigned_chars
     unassigned_chars = []
-    unassigned_array = DATABASE.execute("SELECT * FROM characters WHERE user_id = #{id} AND team_id = ''")
+    unassigned_array = DATABASE.execute("SELECT * FROM characters WHERE user_id = #{id} AND team_id = 0")
     unassigned_array.each do |char|
       unassigned_chars << Character.new(char) if char != nil
     end

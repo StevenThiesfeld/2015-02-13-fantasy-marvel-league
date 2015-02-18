@@ -161,7 +161,7 @@ end
 get "/char_swap_user" do
   char = Character.find("characters", params["id"])
   char.user_id = session[:user].id
-  char.team_id = ""
+  char.team_id = 0
   char.save("characters")
   redirect "/characters"
 end
@@ -181,7 +181,7 @@ end
 
 get "/unassign" do
   char_to_unassign = Character.find("characters", params["id"])
-  char_to_unassign.team_id = ""
+  char_to_unassign.team_id = 0
   char_to_unassign.save("characters")
   redirect "/teams"
 end
@@ -199,8 +199,8 @@ end
 
 get "/delete_char" do
   char =  Character.find("characters", params["id"])
-  char.user_id = ""
-  char.team_id = ""
+  char.user_id = 0
+  char.team_id = 0
   char.save("characters")
   redirect "/characters"
 end  
@@ -224,8 +224,8 @@ end
 get "/confirm_trade" do
   char1 = Character.find("characters", params["char1_id"])
   char2 = Character.find("characters", params["char2_id"])
-  char1.edit_object("team_id" => "", "user_id" => params["user2_id"])
-  char2.edit_object("team_id" => "", "user_id" => session[:user].id)
+  char1.edit_object("team_id" => 0, "user_id" => params["user2_id"])
+  char2.edit_object("team_id" => 0, "user_id" => session[:user].id)
   char1.save("characters")
   char2.save("characters")
   erb :"trade/trade_finished"

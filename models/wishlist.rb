@@ -73,9 +73,11 @@ class Wishlist
   
   def check_offer(user)
     offered_char = Character.search_where("characters", "name", offer)[0]
-    if offered_char.user_id != user.id
-      @offer = ""
-      self.save("wishlists")
+    if offered_char != nil
+      if offered_char.user_id != user.id
+        @offer = ""
+        self.save("wishlists")
+      end
     end
   end
     
