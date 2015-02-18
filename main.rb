@@ -3,8 +3,8 @@ require 'sqlite3'
 DATABASE = SQLite3::Database.new('database/f_m_l.db')
 require 'marvelite'
 require_relative "database/db_setup"
-require_relative "helper_modules/model_helper"
 require_relative "helper_modules/main_helper"
+require_relative "helper_modules/model_helper"
 require_relative "database/database_methods"
 require "sinatra"
 require_relative "models/wishlist"
@@ -12,11 +12,12 @@ require_relative "models/user"
 require_relative "models/team"
 require_relative "models/search_engine"
 require_relative "models/character"
+require_relative "trade"
 
 
 enable :sessions
 
-helpers MainHelper
+helpers MainHelper, ModelHelper
     
 get "/" do
   erb :login, :layout => :layout_login
@@ -94,6 +95,11 @@ get "/teams" do
   end
 end
 
+get "/all_teams" do
+  @users = User.all("users")
+  erb :"team/all_teams"
+end
+
 get "/team_details" do
   @team = Team.find("teams", params["id"])
   @team_chars = @team.get_characters("team_id")
@@ -119,8 +125,13 @@ end
 get "/wishlist" do
   @your_chars = session[:user].get_characters("user_id")
   @wishlist = Wishlist.search_where("wishlists", "user_id", session[:user].id)[0]
-  @chars_on_wishlist = set_wishlist_chars
+  @chars_on_wishlist = @wishlist.set_wishlist_chars(session[:user])
   erb :"wishlist/wishlist"
+end
+
+get "/all_wishlists" do
+  @users = User.all("users")
+  erb :"wishlist/all_wishlists"
 end
 
 get "/add_offer" do
@@ -200,5 +211,24 @@ get "/add_to_wishlist" do
   wishlist.add_to_wishlist(char.id)
   redirect "/wishlist"
 end
-      
+
+get "/start_trade" do
+  @user2 = User.find("users", params["id"])
+  @trade = Trade.new("user1" => session[:user], "user2" => @user2)
+  if @trade.valid_trade
+    erb :"trade/start_trade"
+  else erb :"trade/bad_trade"
+  end
+end
+
+get "/confirm_trade" do
+  char1 = Character.find("characters", params["char1_id"])
+  char2 = Character.find("characters", params["char2_id"])
+  char1.edit_object("team_id" => "", "user_id" => params["user2_id"])
+  char2.edit_object("team_id" => "", "user_id" => session[:user].id)
+  char1.save("characters")
+  char2.save("characters")
+  erb :"trade/trade_finished"
+end
+  
   

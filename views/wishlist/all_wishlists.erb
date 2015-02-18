@@ -1,0 +1,8 @@
+<h1><a href="/wishlist">Your Wishlist</a>---------All Wishlists</h1>
+<% @users.each do |user|  %>
+  <h3><%= user.name %></h3>
+  <% if session[:user].name != user.name  %>
+    <h4><a href="/start_trade?id=<%= user.id %>">Trade</a>
+      <% end  %>
+  <%= display_wishlist(user) %>
+<% end  %>

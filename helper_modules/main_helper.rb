@@ -82,35 +82,25 @@ module MainHelper
     end
   end
   
-  # Public Method: #set_wishlist_chars
-  # Creates an array of Character objects that are on your wishlist
-  #
-  # Parameters: none
-  #
-  # Returns:
-  # results        -  Array: an array of Character objects
-  #
-  # State Changes: none
-
-  def set_wishlist_chars
-    chars = DATABASE.execute("SELECT character_id FROM characters_to_wishlists WHERE wishlist_id = #{@wishlist.id}")
-    results = []
-    chars.each do |char|
-      results << Character.find("characters", char["character_id"]) 
-    end
-    results.each do |char|
-      if char.user_id == session[:user].id
-        @wishlist.remove_from_wishlist(char.id)
-        results.delete(char)
-      end 
-    end
-    results
-  end
-  
   def fetch_id(char_name)
     char = Character.search_where("characters", "name", char_name)[0]
     id = char.id
     id
   end
   
+  def display_wishlist(user)
+    result = "<ul>"
+    wishlist = Wishlist.search_where("wishlists", "user_id", user.id)[0]
+    wishlist_chars = wishlist.set_wishlist_chars(user)
+    wishlist_chars.each do |char|
+      result += "<li>#{char.name}</li>"
+    end
+    result += "</ul><p>Currently Offering: #{wishlist.offer}</p>"
+  end
+  
+  def all_teams(user_id)
+    result = ""
+    teams = Team.search_where("teams", "user_id", user_id)
+    teams
+  end
 end#module end

@@ -45,4 +45,39 @@ class Wishlist
     DATABASE.execute("DELETE FROM characters_to_wishlists WHERE character_id=#{char_id}")
   end
   
+  # Public Method: #set_wishlist_chars
+  # Creates an array of Character objects that are on your wishlist
+  #
+  # Parameters: none
+  #
+  # Returns:
+  # results        -  Array: an array of Character objects
+  #
+  # State Changes: none
+
+  def set_wishlist_chars(user)
+    chars = DATABASE.execute("SELECT character_id FROM characters_to_wishlists WHERE wishlist_id = #{id}")
+    results = []
+    chars.each do |char|
+      results << Character.find("characters", char["character_id"]) 
+    end
+    results.each do |char|
+      if char.user_id == user.id
+        self.remove_from_wishlist(char.id)
+        results.delete(char)
+      end 
+    end
+    check_offer(user)
+    results
+  end
+  
+  def check_offer(user)
+    offered_char = Character.search_where("characters", "name", offer)[0]
+    if offered_char.user_id != user.id
+      @offer = ""
+      self.save("wishlists")
+    end
+  end
+    
+  
 end#class end
