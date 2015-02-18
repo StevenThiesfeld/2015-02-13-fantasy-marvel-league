@@ -11,5 +11,5 @@
 </form>
 
 <% @chars_on_wishlist.each do |char| %>
-<%= partial(:wishlist_display, :char => char) %>
+<%= partial(:"wishlist/wishlist_display", :char => char) %>
 <% end %>

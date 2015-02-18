@@ -1,5 +1,3 @@
-<h1><%= @team.name %></h1>
-
-<% @team_chars.each do |char| %>
+<% @characters.each do |char| %>
 <%= partial(:"character/char_display", :char => char) %>
 <% end %>

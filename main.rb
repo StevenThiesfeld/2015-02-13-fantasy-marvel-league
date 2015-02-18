@@ -120,7 +120,7 @@ get "/wishlist" do
   @your_chars = session[:user].get_characters("user_id")
   @wishlist = Wishlist.search_where("wishlists", "user_id", session[:user].id)[0]
   @chars_on_wishlist = set_wishlist_chars
-  erb :"wishlist"
+  erb :"wishlist/wishlist"
 end
 
 get "/add_offer" do
@@ -132,13 +132,13 @@ end
   
 
 get "/search" do
-  erb :"search"
+  erb :"character/search"
 end
 
 get "/search_results" do
   results = SearchEngine.new(params)
   @char_results = results.create_character
-  erb :"search_results"
+  erb :"character/search_results"
 end
 
 get "/char_add" do
@@ -158,7 +158,7 @@ end
 
 get "/characters" do
   @characters = session[:user].get_characters("user_id")
-  erb :"characters"
+  erb :"character/characters"
 end
 
 get "/assign" do
