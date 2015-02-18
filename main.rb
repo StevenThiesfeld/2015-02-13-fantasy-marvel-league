@@ -12,7 +12,7 @@ require_relative "models/user"
 require_relative "models/team"
 require_relative "models/search_engine"
 require_relative "models/character"
-require_relative "trade"
+require_relative "models/trade"
 
 
 enable :sessions
