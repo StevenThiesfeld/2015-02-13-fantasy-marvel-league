@@ -1,3 +1,11 @@
+# Module: ModelHelper
+# A collection of methods to help models display their info to html
+#
+# Public Methods:
+# #display_attributes
+# #list_chars_in_team
+# #display_wishlist
+
 module ModelHelper
     
   # Public: #display_attributes
@@ -7,7 +15,7 @@ module ModelHelper
    # attributes              - Array: an array for the column headings      
    #
    # Returns:
-   # Table -  String:  a detailed table for the object
+   # Table -  String:  a table for the object
    #
    # State changes:
    # creates a new row in table for each attribute of the object.
@@ -15,7 +23,6 @@ module ModelHelper
   def display_attributes
      attributes = []
      instance_variables.each do |i|
-       # Example  :@name
        attributes << i.to_s.delete("@")
      end
     table = "<table><tr><th>FIELD</th><th>VALUE</th></tr>"
@@ -28,8 +35,9 @@ module ModelHelper
   
   # Public Method: #list_chars_in_team
  #  Displays a list of Character names in a team with an option to unassign them
- #
- #  Parameters: none
+ #  Will display additional options if displaying the user's team
+ #  Parameters: 
+ #  check          - String: tells the method what version of list to display
  #
  #  Returns:
  #  result         - String: a formatted unordered list of characters
@@ -46,6 +54,28 @@ module ModelHelper
       else result += "<li>#{char.name}</li>"
       end
     end
+    result
+  end
+  
+  # Public Method: #display_wishlist
+ #  Displays the wishlist of another user, and their offer
+ #
+ #  Parameters:
+ #  user        - User: the user object the wishlist is gotten from
+ #
+ #  Returns:
+ #  result      - String: an response formatted in html
+ #
+ #  State Changes: none
+  
+  def display_wishlist
+    result = "<ul>"
+    wishlist = Wishlist.search_where("wishlists", "user_id", id)[0]
+    wishlist_chars = wishlist.set_wishlist_chars(self)
+    wishlist_chars.each do |char|
+      result += "<li>#{char.name}</li>"
+    end
+    result += "</ul><p>Currently Offering: #{wishlist.offer}</p>"
     result
   end
   

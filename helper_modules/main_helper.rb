@@ -6,7 +6,7 @@
 # #set_unassigned_chars
 # #team_full?
 # #char_taken?
-# #make_wishlist_chars
+# #fetch_id
 
 module MainHelper
   
@@ -63,8 +63,9 @@ module MainHelper
  #  char         - Character:  the character object created by the search engine
  #
  #  Returns:
- #  false if the character is available
- #  the user name of the user who has claimed the character
+ #  "no_entry" if the character doesn't exist in the local database
+ #  "unassigned" if it exists in the database but isn't assigned to a user
+ #  user_name: the user name of the user who has claimed the character
  #
  #  State Changes: none
 
@@ -82,25 +83,21 @@ module MainHelper
     end
   end
   
+  # Public Method: #fetch_id
+ #  will return the id of a character based on their name
+ #
+ #  Parameters:
+ #  char_name          - String: the character's name to find the id for
+ #
+ #  Returns:
+ #  id                 - Integer: the character's id number
+ #
+ #  State Changes: none
+  
   def fetch_id(char_name)
     char = Character.search_where("characters", "name", char_name)[0]
     id = char.id
     id
   end
   
-  def display_wishlist(user)
-    result = "<ul>"
-    wishlist = Wishlist.search_where("wishlists", "user_id", user.id)[0]
-    wishlist_chars = wishlist.set_wishlist_chars(user)
-    wishlist_chars.each do |char|
-      result += "<li>#{char.name}</li>"
-    end
-    result += "</ul><p>Currently Offering: #{wishlist.offer}</p>"
-  end
-  
-  def all_teams(user_id)
-    result = ""
-    teams = Team.search_where("teams", "user_id", user_id)
-    teams
-  end
 end#module end

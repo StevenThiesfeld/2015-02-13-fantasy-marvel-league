@@ -4,5 +4,5 @@
   <% if session[:user].name != user.name  %>
     <h4><a href="/start_trade?id=<%= user.id %>">Trade</a>
       <% end  %>
-  <%= display_wishlist(user) %>
+  <%= user.display_wishlist %>
 <% end  %>

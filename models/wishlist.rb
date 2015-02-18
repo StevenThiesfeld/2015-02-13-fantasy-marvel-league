@@ -71,6 +71,17 @@ class Wishlist
     results
   end
   
+  # Public Method: #check_offer
+ #  checks that the offered character is still owned by the user
+ #
+ #  Parameters:
+ #  user             -  User: the user object
+ #
+ #  Returns: none
+ #
+ #  State Changes:
+ #  @offer is set to "" if the user no longer has that character
+  
   def check_offer(user)
     offered_char = Character.search_where("characters", "name", offer)[0]
     if offered_char != nil

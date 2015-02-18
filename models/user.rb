@@ -11,6 +11,7 @@
 # .login
 # #user_setup
 # #get_unassigned_chars
+# #all_teams
 
 class User
   include DatabaseMethods
@@ -96,6 +97,22 @@ class User
       unassigned_chars << Character.new(char) if char != nil
     end
     unassigned_chars
+  end
+  
+  # Public Method: all_teams
+#   Returns a list of all teams that belong to the user
+#
+#   Parameters: none
+#
+#   Returns
+#   result       - Array: An array of team objects that belong to the user
+#
+#   State Changes: none
+  
+  def all_teams
+    result = ""
+    teams = Team.search_where("teams", "user_id", id)
+    teams
   end
       
 end#class end

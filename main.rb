@@ -18,7 +18,10 @@ require_relative "models/trade"
 enable :sessions
 
 helpers MainHelper, ModelHelper
-    
+
+#------------------------------------------------------------------------------
+#LOGIN/USER ROUTES
+#------------------------------------------------------------------------------    
 get "/" do
   erb :login, :layout => :layout_login
 end
@@ -79,6 +82,10 @@ get "/confirm_delete_user" do
   redirect "/logout"
 end
 
+#------------------------------------------------------------------------------
+#TEAM ROUTES
+#------------------------------------------------------------------------------
+
 before "/teams" do
   if request.referrer.include?("create_team")
     new_team = Team.new(params)
@@ -122,6 +129,22 @@ get "/confirm_team_edit" do
   redirect "/teams"
 end
 
+get "/delete_team" do
+  @team = Team.find("teams", params["id"])
+  erb :"team/confirm_delete_team"
+end
+
+get "/confirm_delete_team" do
+  team = Team.find("teams", params["id"]) 
+  team.delete
+  redirect "/teams" 
+end
+
+
+#------------------------------------------------------------------------------
+#WISHLIST ROUTES
+#------------------------------------------------------------------------------
+
 get "/wishlist" do
   @your_chars = session[:user].get_characters("user_id")
   @wishlist = Wishlist.search_where("wishlists", "user_id", session[:user].id)[0]
@@ -140,6 +163,17 @@ get "/add_offer" do
   @wishlist.save("wishlists")
   redirect "/wishlist"
 end
+
+get "/add_to_wishlist" do
+  wishlist = Wishlist.search_where("wishlists", "user_id", session[:user].id)[0]
+  char = Character.search_where("characters", "name", params["name"])[0]
+  wishlist.add_to_wishlist(char.id)
+  redirect "/wishlist"
+end
+
+#------------------------------------------------------------------------------
+#CHARACTER AND SEARCH ROUTES
+#------------------------------------------------------------------------------
   
 
 get "/search" do
@@ -186,17 +220,6 @@ get "/unassign" do
   redirect "/teams"
 end
 
-get "/delete_team" do
-  @team = Team.find("teams", params["id"])
-  erb :"team/confirm_delete_team"
-end
-
-get "/confirm_delete_team" do
-  team = Team.find("teams", params["id"]) 
-  team.delete
-  redirect "/teams" 
-end
-
 get "/delete_char" do
   char =  Character.find("characters", params["id"])
   char.user_id = 0
@@ -205,12 +228,9 @@ get "/delete_char" do
   redirect "/characters"
 end  
 
-get "/add_to_wishlist" do
-  wishlist = Wishlist.search_where("wishlists", "user_id", session[:user].id)[0]
-  char = Character.search_where("characters", "name", params["name"])[0]
-  wishlist.add_to_wishlist(char.id)
-  redirect "/wishlist"
-end
+#------------------------------------------------------------------------------
+#TRADE ROUTES
+#------------------------------------------------------------------------------
 
 get "/start_trade" do
   @user2 = User.find("users", params["id"])
