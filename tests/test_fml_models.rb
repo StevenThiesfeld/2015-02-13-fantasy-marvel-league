@@ -91,10 +91,23 @@ class TestModels < Minitest::Test
    end
 end#class end
 
-
-
-
-
+class TestDatabaseModule < Minitest::Test
+  
+  def setup
+    DATABASE.execute("DELETE FROM users")
+    DATABASE.execute("DELETE FROM characters")
+    DATABASE.execute("DELETE FROM teams")
+    DATABASE.execute("DELETE FROM wishlists")
+    DATABASE.execute("DELETE FROM characters_to_wishlists")
+  end
+  
+  def test_insert
+    t = User.new("name" => "D'hargo", "password" => "p'a's's'w'o'r'd")
+    t.insert("users")
+    test = DATABASE.execute("SELECT * FROM users")
+  end
+  
+end#class end
 
 
 

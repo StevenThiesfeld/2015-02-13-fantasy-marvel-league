@@ -98,6 +98,18 @@ get "/create_team" do
   erb :"team/create_team"
 end  
 
+get "/edit_team" do 
+  @team = Team.find("teams", params["id"])
+  erb :"team/edit_team"
+end
+
+get "/confirm_team_edit" do
+  team = Team.find("teams", params["id"])
+  team.edit_object(params)
+  team.save("teams")
+  redirect "/teams"
+end
+
 get "/wishlist" do
   @your_chars = session[:user].get_characters("user_id")
   @wishlist = Wishlist.search_where("wishlists", "user_id", session[:user].id)[0]

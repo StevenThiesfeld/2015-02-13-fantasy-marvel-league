@@ -14,30 +14,30 @@ module DatabaseMethods
    # State changes:
    # Object's attributes are inserted into the database.
   
-  def insert(table) 
-    attributes = []
-    values = []
-    instance_variables.each do |i|
-    
-      attributes << i.to_s.delete("@") if i != :@id
-    end
+   def insert(table) 
+     attributes = []
+     values = []
+     instance_variables.each do |i|
+  
+       attributes << i.to_s.delete("@") if i != :@id
+     end
 
-    attributes.each do |a|
-      value = self.send(a)
-      if value.is_a?(Integer)
-        values << "#{value}"
-      elsif value.is_a?(String)
-        if value.include?("'")
-          value.delete!("'")
-        end
-        values << "'#{value}'"
-      else values << "'#{value}'"
-      end
-    end
-    DATABASE.execute("INSERT INTO #{table} (#{attributes.join(", ")})
-                                        VALUES (#{values.join(", ")})")
-    @id = DATABASE.last_insert_row_id  
-  end
+     attributes.each do |a|
+       value = self.send(a)
+       if value.is_a?(Integer)
+         values << "#{value}"
+       elsif value.is_a?(String)
+         if value.include?("'")
+           value.delete!("'")
+         end
+         values << "'#{value}'"
+       else values << "'#{value}'"
+       end
+     end
+     DATABASE.execute("INSERT INTO #{table} (#{attributes.join(", ")})
+                                         VALUES (#{values.join(", ")})")
+     @id = DATABASE.last_insert_row_id  
+   end
   
   # #Public: #edit_object
  #  Changes an object's attributes to the values given.
