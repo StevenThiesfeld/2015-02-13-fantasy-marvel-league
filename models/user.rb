@@ -25,6 +25,7 @@ class User
     @name = options["name"]
     @password = options["password"]
     @image = options["image"]
+    @image = "http://shackmanlab.org/wp-content/uploads/2013/07/person-placeholder.jpg" if options["image"] == ""
   end
   
   # Public Method: #delete_user
@@ -110,7 +111,6 @@ class User
 #   State Changes: none
   
   def all_teams
-    result = ""
     teams = Team.search_where("teams", "user_id", id)
     teams
   end

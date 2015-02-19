@@ -89,7 +89,9 @@ class Wishlist
         @offer = ""
         self.save("wishlists")
       end
-    end
+    else @offer = ""
+      self.save("wishlists")
+    end 
   end
     
   

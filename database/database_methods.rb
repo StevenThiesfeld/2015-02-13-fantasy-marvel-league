@@ -161,7 +161,7 @@ module ClassMethods
     end
       
     search_results = []
-    results = DATABASE.execute("SELECT * FROM #{table} WHERE #{search_for} = #{search}")
+    results = DATABASE.execute("SELECT * FROM #{table} WHERE #{search_for} = ?", user_search)
     results.each do |r|
       search_results << self.new(r) if r != nil
     end

@@ -12,6 +12,7 @@ require_relative "../models/character"
 require_relative "../models/team"
 require_relative "../models/wishlist"
 require_relative "../models/search_engine"
+require_relative "../models/trade"
 
 
 
@@ -54,11 +55,22 @@ class TestModels < Minitest::Test
     user.insert("users")
     char = Character.new("name" => "test", "user_id" => user.id, "team_id" => 1)
     char.insert("characters")
-    char2 = Character.new("name" => "test2", "user_id" => user.id, "team_id" => '')
+    char2 = Character.new("name" => "test2", "user_id" => user.id, "team_id" => 0)
     char2.insert("characters")
     check = user.get_unassigned_chars
     assert_equal("test2", check[0].name)
   end
+  
+  def test_all_teams #test pass
+    user = User.new("name" => "allteam_test", "password" => "password")
+    user.insert("users")
+    team1 = Team.new("name" => "allteam1", "user_id" => user.id)
+    team2 = Team.new("name" => "allteam2", "user_id" => user.id)
+    team1.insert("teams")
+    team2.insert("teams")
+    assert_equal(2, user.all_teams.length)
+  end
+
   #-----------------------------------------------------------------------------
   #WISHLIST TESTS---------------------------------------------------------------
   def test_add_to_wishlist #test pass
@@ -69,6 +81,32 @@ class TestModels < Minitest::Test
      character_id=1 AND wishlist_id=#{wishlist.id}")
      refute_equal([], check)
    end
+   
+   def test_set_wishlist_chars #test pass
+     user = User.new("name" => "wishlist_test", "password" => "password")
+     user.insert("users")
+     wishlist = Wishlist.new("name" => "testlist")
+     wishlist.insert("wishlists")
+     char = Character.new("name" => "wishlist_test", "user_id" => user.id, "team_id" => 1)
+     char2 = Character.new("name" => "wishlist_test2", "user_id" => 0, "team_id" => 1)
+     char2.insert("characters")
+     char.insert("characters")
+     wishlist.add_to_wishlist(char.id)
+     wishlist.add_to_wishlist(char2.id)
+     check = wishlist.set_wishlist_chars(user)
+     assert_kind_of(Character, check[0])
+     assert_equal(1, check.length)
+   end
+   
+   def test_check_offer #test pass
+     user = User.new("name" => "offer_test", "password" => "password")
+     user.insert("users")
+     wishlist = Wishlist.new("name" => "testlist", "offer" => "this shouldn't be here")
+     wishlist.insert("wishlists")
+     wishlist.check_offer(user)
+     assert_equal("", wishlist.offer)
+   end
+     
    #----------------------------------------------------------------------------
    #TEAM TESTS------------------------------------------------------------------
    def test_delete #test pass
@@ -89,6 +127,20 @@ class TestModels < Minitest::Test
      assert_kind_of(Character, char)
      assert_equal("Spider-Man", char.name)
    end
+   
+   #----------------------------------------------------------------------------
+   #TRADE TESTS-----------------------------------------------------------------
+   def test_trade
+     user1 = User.new("name" => "trade_test1", "password" => "password")
+     user2 = User.new("name" => "trade_test2", "password" => "password")
+     user1.insert("users")
+     user2.insert("users")
+     wishlist = Wishlist.new("name" => "testlist", "user_id" => user2.id)
+     wishlist.insert("wishlists")
+     trade = Trade.new("user1" => user1, "user2" => user2)
+     assert_equal(false, trade.valid_trade)
+   end
+     
 end#class end
 
 class TestDatabaseModule < Minitest::Test

@@ -51,12 +51,11 @@ get "/confirm_creation" do
   erb :"user/confirm_creation", :layout => :layout_login
 end
 
-before "/user_profile" do
-  if request.referrer.include?("confirm_creation")
-    session[:user] = User.new(params)
-    session[:user].insert("users")
-    session[:user].user_setup
-  end
+get "/create_profile" do
+  session[:user] = User.new(params)
+  session[:user].insert("users")
+  session[:user].user_setup
+  redirect "/user_profile"
 end
 
 get "/user_profile" do

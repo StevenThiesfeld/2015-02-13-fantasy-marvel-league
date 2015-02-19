@@ -4,7 +4,12 @@ nav {
   width: 120px;
   float: left;
   padding: 5px;
-  background-color: blue;  
+  background-color: #990000;  
+  font-weight: bold;
+}
+
+a {
+  color: #000066;
 }
 
 p.profile {
@@ -18,3 +23,4 @@ p.profile {
 body {
   background-color:#CC0000;
 }
+

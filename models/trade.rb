@@ -70,6 +70,7 @@ class Trade
       end
     else @valid_trade = false
     end
+    @valid_trade = false if @user2_char == nil
   end
   
 end# class end
