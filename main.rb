@@ -5,7 +5,7 @@ require 'marvelite'
 require_relative "database/db_setup"
 require_relative "helper_modules/main_helper"
 require_relative "helper_modules/model_helper"
-require_relative "database/database_methods"
+require_relative "models/model_db_methods"
 require "sinatra"
 require_relative "models/wishlist"
 require_relative "models/user"

@@ -4,7 +4,7 @@ DATABASE = SQLite3::Database.new('../database/test_f_m_l.db')
 require 'minitest/autorun'
 require 'marvelite'
 require_relative "../database/db_setup"
-require_relative "../database/database_methods"
+require_relative "../models/model_db_methods"
 require_relative "../helper_modules/model_helper"
 require_relative "../helper_modules/main_helper"
 require_relative "../models/user"
