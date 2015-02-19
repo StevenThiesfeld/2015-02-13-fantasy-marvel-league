@@ -4,7 +4,7 @@
   <img src="<%= result.image %>" alt="Woops, no picture" width="240" height="180">
 
   <p><%= result.description %></p>
-  <p>Popularity: <%= result.popularity %></p>
+  <p>Number of Comics: <%= result.popularity %></p>
   <% if char_taken?(result) == "no_entry"  %>
     <p>Click here to add Character to your roster!</p>
     <form action="/char_add">

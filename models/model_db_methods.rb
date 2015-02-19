@@ -158,28 +158,21 @@ module ClassMethods
     if user_search.is_a?(Integer)
       search = user_search
     else search = "'#{user_search}'"
-    end
-      
-    search_results = []
+    end   
     results = DATABASE.execute("SELECT * FROM #{table} WHERE #{search_for} = ?", user_search)
-    results.each do |r|
-      search_results << self.new(r) if r != nil
-    end
-    search_results
+    results_as_objects(results)
   end
   
   # Public: .find
-    # Fetches items from the database based on the search criteria.
+    # Fetches an object from the database based on ID.
     #
     # Parameters:
     # table               - String:  the table being searched.
     # id_to_find          - Integer: the id number to search for in the                                        database.
     # result              - Array: an array to hold the search results.
-    # record_details      - Array: an array to hold the first row of the results.
-    #
-    #
+    # 
     # Returns:
-    # returns the matching record for the specified ID.
+    # returns the matching object for the specified ID.
     #
     # State changes:
     # none.
@@ -187,8 +180,7 @@ module ClassMethods
   
   def find(table, id_to_find)
     result = DATABASE.execute("SELECT * FROM #{table} WHERE id = #{id_to_find}")
-    record_details = result[0]
-    self.new(record_details) if record_details != nil
+    results_as_objects(result)[0]
   end
   
   # # Public: .all
@@ -204,13 +196,18 @@ module ClassMethods
   # Pushes created objects into the objects array.
   
   def all(table)
-    objects = []
     results = DATABASE.execute("SELECT * FROM #{table}")
+    results_as_objects(results)
+  end
+  
+  def results_as_objects(results)
+    objects = []
     results.each do |result|
       objects << self.new(result) if result != nil
     end
     objects
   end
+      
   
   
 end#module_end

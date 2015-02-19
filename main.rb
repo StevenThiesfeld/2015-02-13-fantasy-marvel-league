@@ -205,6 +205,11 @@ get "/characters" do
   erb :"character/characters"
 end
 
+get "/all_characters" do
+  @users = User.all("users")
+  erb :"character/all_characters"
+end
+
 get "/assign" do
   char_to_assign = Character.find("characters", params["char_to_assign"])
   char_to_assign.team_id = params["team_id"]

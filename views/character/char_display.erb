@@ -3,5 +3,7 @@
 <img src="<%= char.image %>" alt="Woops, no picture" width="240" height="180">
 
 <p><%= char.description %></p>
-<p>Popularity: <%= char.popularity %></p>
+<p>Number of Comics: <%= char.popularity %></p>
+<% if session[:user].id == char.user_id  %>
 <p><a href="delete_char?id=<%= char.id %>">Delete Character</a></p>
+<% end  %>

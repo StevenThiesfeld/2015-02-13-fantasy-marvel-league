@@ -1,0 +1,7 @@
+<h1><a href="/characters">Your Characters</a>---------All Characters</h1>
+<% @users.each do |user|  %>
+  <h2><%= user.name %></h2>
+  <% user.get_characters("user_id").each do |char|  %>
+    <%= partial(:"character/char_display", :char => char) %>
+  <% end %>
+<% end  %>
