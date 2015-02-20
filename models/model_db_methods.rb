@@ -79,21 +79,16 @@ module DatabaseMethods
       attributes << i.to_s.delete("@") # "name"
     end
   
-    query_components_array = []
+    query_hash = {}
 
     attributes.each do |a|
       value = self.send(a)
-
-      if value.is_a?(Integer)
-        query_components_array << "#{a} = #{value}"
-      else
-        query_components_array << "#{a} = '#{value}'"
-      end
+      query_hash[a] = value
     end
-
-    query_string = query_components_array.join(", ")
-
-    DATABASE.execute("UPDATE #{table} SET #{query_string} WHERE id = #{id}")
+    
+    query_hash.each do |key, value|
+      DATABASE.execute("UPDATE #{table} SET #{key} = ? WHERE id = #{id}", value )
+    end
   end
   
   # Public Method: #get_characters

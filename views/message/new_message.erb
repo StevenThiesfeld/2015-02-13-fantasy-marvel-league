@@ -1,0 +1,6 @@
+<h1>New Message to <%= @to_user.name %></h1>
+<form action="/send_message">
+  <input type="hidden" name="to_user_id" value="<%= @to_user.id %>">
+  <textarea name="body" placeholder="Type message here..." rows="4" cols="60"></textarea>
+  <input type="submit" value="Send Message">
+</form>

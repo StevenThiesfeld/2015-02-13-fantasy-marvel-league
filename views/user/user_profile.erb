@@ -3,3 +3,14 @@
 <img src="<%= session[:user].image %>" height="200" width="300">
 <a href="/edit_profile">Edit Profile</a>
 <a href="/delete_profile">Delete Profile</a>
+
+<% if @unviewed_messages == []  %>
+  <h3> No new messages</h3>
+<% else %> 
+  <% @unviewed_messages.each do |message|  %>
+    <h4>From: <%= message.get_sender_name %></h4>
+    <p><%= message.body %></p>
+    <a href="/new_message?id=<%= message.from_user_id %>">Reply</a>
+    <% message.mark_as_viewed  %>
+  <% end  %>
+<% end %>
