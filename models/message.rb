@@ -3,7 +3,8 @@ class Message
   extend ClassMethods
   include ModelHelper
   
-  attr_reader :from_user_id, :to_user_id, :body, :id
+  attr_reader :from_user_id, :to_user_id, :body, :id, :trade, :offered_char,
+  :requested_char
   attr_accessor :viewed
   
   def initialize(options)
@@ -13,6 +14,9 @@ class Message
     @to_user_id = options["to_user_id"]
     @viewed = options["viewed"]
     @viewed = "no" if options["viewed"] == nil
+    @trade = options["trade"]
+    @offered_char = options["offered_char"]
+    @requested_char = options["requested_char"]
   end
   
   def self.get_unviewed_messages(user_id)
@@ -27,20 +31,19 @@ class Message
     results_as_objects(results)
   end
   
-  def get_sender_name
-    sender = DATABASE.execute("SELECT name FROM users WHERE id = #{from_user_id}")[0]["name"]
-    sender
+  def get_user_name(id)
+    name = DATABASE.execute("SELECT name FROM users WHERE id = #{id}")[0]["name"]
+    name
   end
-  
-  def get_to_name
-    recieved = DATABASE.execute("SELECT name FROM users WHERE id = #{to_user_id}")[0]["name"]
-    recieved
-  end
-  
+    
   def mark_as_viewed
     @viewed = "yes"
     self.save("messages")
   end
-    
   
+  def get_char_name(id)
+    name = DATABASE.execute("SELECT name FROM characters WHERE id = #{id}")[0]["name"]  
+    name
+  end
+    
 end#class end

@@ -93,6 +93,11 @@ class Wishlist
       self.save("wishlists")
     end 
   end
+  
+  def delete_wishlist
+    DATABASE.execute("DELETE FROM characters_to_wishlists WHERE wishlist_id = #{id}")
+    DATABASE.execute("DELETE FROM wishlists WHERE id = #{id}")
+  end
     
   
 end#class end

@@ -6,6 +6,7 @@
     <% @your_chars.each do |char| %>
     <option value="<%= char.name %>"><%= char.name %></option>
     <%end  %>
+    <option value="">No Offer</option>
   </select>
   <input type="submit" value="Submit">
 </form>

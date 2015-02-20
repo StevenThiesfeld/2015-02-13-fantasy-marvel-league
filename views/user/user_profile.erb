@@ -8,9 +8,7 @@
   <h3> No new messages</h3>
 <% else %> 
   <% @unviewed_messages.each do |message|  %>
-    <h4>From: <%= message.get_sender_name %></h4>
-    <p><%= message.body %></p>
-    <a href="/new_message?id=<%= message.from_user_id %>">Reply</a>
+    <%= partial(:"message/message_display", :message => message) %>
     <% message.mark_as_viewed  %>
   <% end  %>
 <% end %>

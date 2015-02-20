@@ -4,13 +4,6 @@
   <h3> No messages</h3>
 <% else %> 
   <% @messages.each do |message|  %>
-    <% if message.to_user_id == session[:user].id  %>
-      <h4>From: <%= message.get_sender_name %></h4>
-      <p><%= message.body %></p>
-      <a href="/new_message?id=<%= message.from_user_id %>">Reply</a>
-    <% else  %>
-      <h4>To: <%= message.get_to_name %></h4>
-      <p><%= message.body %></p>
-    <% end  %>
+    <%= partial(:"message/message_display", :message => message) %>
   <% end  %>
 <% end %>

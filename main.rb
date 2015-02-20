@@ -2,17 +2,17 @@ require 'pry'
 require 'sqlite3'
 DATABASE = SQLite3::Database.new('database/f_m_l.db')
 require 'marvelite'
+require "sinatra"
 require_relative "database/db_setup"
 require_relative "helper_modules/main_helper"
 require_relative "helper_modules/model_helper"
 require_relative "models/model_db_methods"
-require "sinatra"
 require_relative "models/wishlist"
 require_relative "models/user"
 require_relative "models/team"
 require_relative "models/search_engine"
 require_relative "models/character"
-require_relative "models/trade"
+require_relative "models/wishlist_trade"
 require_relative "models/message"
 
 
@@ -39,7 +39,7 @@ get "/user_verification" do
     erb :login, :layout => :layout_login
   else
     session[:user] = user_check
-    erb :"user/user_profile"
+    redirect "/user_profile"
   end
 end
 
@@ -238,11 +238,11 @@ end
 #TRADE ROUTES
 #------------------------------------------------------------------------------
 
-get "/start_trade" do
+get "/start_wishlist_trade" do
   @user2 = User.find("users", params["id"])
   @trade = Trade.new("user1" => session[:user], "user2" => @user2)
   if @trade.valid_trade
-    erb :"trade/start_trade"
+    erb :"trade/start_wishlist_trade"
   else erb :"trade/bad_trade"
   end
 end

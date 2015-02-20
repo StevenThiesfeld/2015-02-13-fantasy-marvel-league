@@ -21,7 +21,7 @@ REFERENCES wishlists(id), FOREIGN KEY(character_id) REFERENCES characters(id))")
 
 DATABASE.execute("CREATE TABLE IF NOT EXISTS messages (id INTEGER PRIMARY KEY, 
 body TEXT, from_user_id INTEGER NOT NULL, to_user_id INTEGER NOT NULL,
-viewed TEXT DEFAULT 'no')")
+viewed TEXT, trade TEXT, offered_char INTEGER, requested_char INTEGER)")
   
         
         

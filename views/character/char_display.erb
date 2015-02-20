@@ -6,4 +6,6 @@
 <p>Number of Comics: <%= char.popularity %></p>
 <% if session[:user].id == char.user_id  %>
 <p><a href="delete_char?id=<%= char.id %>">Delete Character</a></p>
+<% else  %>
+<a href="add_to_wishlist?name=<%= char.name %>">Add to Wishlist</a>
 <% end  %>

@@ -39,10 +39,15 @@ class User
 #   Removes all entries from the database related to the user
   
   def delete_user
-    DATABASE.execute("DELETE FROM characters WHERE user_id = #{@id}")
-    DATABASE.execute("DELETE FROM teams WHERE user_id = #{@id}")
-    DATABASE.execute("DELETE FROM wishlists WHERE user_id = #{@id}")
-    DATABASE.execute("DELETE FROM users WHERE id = #{@id}")
+    wishlist = Wishlist.search_where("wishlists", "user_id", id)[0]
+    wishlist.delete_wishlist
+    DATABASE.execute("DELETE FROM teams WHERE user_id = #{id}")
+    self.get_characters("user_id").each do |char|
+      char.team_id = 0
+      char.user_id = 0
+      char.save("characters")
+    end
+    DATABASE.execute("DELETE FROM users WHERE id = #{id}")
   end
   
   # Public Method: .login

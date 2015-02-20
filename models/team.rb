@@ -35,7 +35,7 @@ class Team
   def delete
     chars = self.get_characters("team_id")
     chars.each do |char|
-      char.team_id = ""
+      char.team_id = 0
       char.save("characters")
     end
     DATABASE.execute("DELETE FROM teams WHERE id = #{id}")

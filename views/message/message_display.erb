@@ -1,0 +1,21 @@
+<% if message.to_user_id == session[:user].id %>
+
+  <h4>From: <%= message.get_user_name(message.from_user_id) %></h4>
+  <p><%= message.body %></p>
+  <a href="/new_message?id=<%= message.from_user_id %>">Reply</a>
+  <% if message.trade == "yes" %>
+    <p> Offered <%= message.get_char_name(message.offered_char) %> for <%= message.get_char_name(message.requested_char) %></p>
+  <form action="/confirm_trade">
+    <input type="hidden" name="user2_id" value="<%= message.from_user_id %>">
+    <input type="hidden" name="char2_id" value="<%= message.offered_char %>">
+    <input type="hidden" name="char1_id" value="<%= message.requested_char %>">
+    <input type="submit" value="Accept Trade">
+  </form>
+  <% end  %>
+  <% else  %>
+  <h4>To: <%= message.get_user_name(message.to_user_id) %></h4>
+  <p><%= message.body %></p>
+  <% if message.trade == "yes" %>
+    <p> Offered <%= message.get_char_name(message.offered_char) %> for <%=     message.get_char_name(message.requested_char) %></p>
+  <% end  %>
+<% end  %>
