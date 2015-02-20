@@ -1,3 +1,5 @@
+require 'marvelite'
+require 'pry'
 # Class: SearchEngine
 # Accesses the Marvel API client and searches for the user's query
 #
@@ -71,6 +73,13 @@ class SearchEngine
     results    
   end
   
+  def fetch_comics(name)
+    response = @client.character_comics(
+    "#{name}",
+    { :noVariants => true, :limit => 10, :orderBy => 'unlimitedDate' }
+    )
+    response
+  end
+  
 end#class end
-
  

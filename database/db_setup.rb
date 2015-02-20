@@ -17,6 +17,11 @@ DATABASE.execute("CREATE TABLE IF NOT EXISTS wishlists (id INTEGER PRIMARY KEY,
  
 DATABASE.execute("CREATE TABLE IF NOT EXISTS characters_to_wishlists 
 (character_id INTEGER NOT NULL, wishlist_id INTEGER NOT NULL, FOREIGN KEY(wishlist_id) 
-REFERENCES wishlists(id), FOREIGN KEY(character_id) REFERENCES characters(id))")  
+REFERENCES wishlists(id), FOREIGN KEY(character_id) REFERENCES characters(id))")
+
+DATABASE.execute("CREATE TABLE IF NOT EXISTS messages (id INTEGER PRIMARY KEY, 
+body TEXT, from_user_id INTEGER NOT NULL, to_user_id INTEGER NOT NULL,
+viewed TEXT DEFAULT 'no')")
+  
         
         

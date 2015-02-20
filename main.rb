@@ -254,5 +254,12 @@ get "/confirm_trade" do
   char2.save("characters")
   erb :"trade/trade_finished"
 end
+
+#------------------------------------------------------------------------------
+#MESSAGE ROUTES
+#------------------------------------------------------------------------------
+
+get "/new_message" do
+end
   
   

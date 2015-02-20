@@ -31,4 +31,9 @@ class Character
     @popularity = options["popularity"]
   end
   
+  def find_owner
+    owner = User.find("users", user_id) 
+    owner
+  end
+  
 end#class end  

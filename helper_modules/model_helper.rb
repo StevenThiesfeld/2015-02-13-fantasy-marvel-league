@@ -73,7 +73,7 @@ module ModelHelper
     wishlist = Wishlist.search_where("wishlists", "user_id", id)[0]
     wishlist_chars = wishlist.set_wishlist_chars(self)
     wishlist_chars.each do |char|
-      result += "<li>#{char.name}</li>"
+      result += "<li>#{char.name}----Owned By: #{char.find_owner.name}</li>"
     end
     result += "</ul><p>Currently Offering: #{wishlist.offer}</p>"
     result
