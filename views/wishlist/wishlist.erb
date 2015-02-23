@@ -4,7 +4,9 @@
   Put a new Character up for trade.
   <select name="name">
     <% @your_chars.each do |char| %>
-    <option value="<%= char.name %>"><%= char.name %></option>
+      <% if char.name != @wishlist.offer  %>
+        <option value="<%= char.name %>"><%= char.name %></option>
+      <% end  %>
     <%end  %>
     <option value="">No Offer</option>
   </select>

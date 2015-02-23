@@ -100,4 +100,23 @@ module MainHelper
     id
   end
   
+  def make_trade(params)
+    char1 = Character.find("characters", params["char1_id"])
+    char2 = Character.find("characters", params["char2_id"])
+    char1.edit_object("team_id" => 0, "user_id" => params["user2_id"])
+    char2.edit_object("team_id" => 0, "user_id" => session[:user].id)
+    char1.save("characters")
+    char2.save("characters")
+    if params["message_id"] != nil
+      message = Message.find("messages", params["message_id"])
+      message.trade = "finished"
+      message.save("messages")
+    end
+  end
+  
+  def display_trade_option?(user)
+    trade = Trade.new("user1" => session[:user], "user2" => user)
+    trade.valid_trade
+  end
+  
 end#module end

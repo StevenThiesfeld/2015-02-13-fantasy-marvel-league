@@ -1,8 +1,11 @@
 <h1><a href="/teams">Your Teams</a>---------All Teams</h1>
 <% @users.each do |user|  %>
-  <h2><%= user.name %></h2>
+  <h2><img src="<%= user.image %>" height="50" width="50"><%= user.name %></h2>
   <% user.all_teams.each do |team| %>
-    <h3><a href="/team_details?id=<%= team.id %>"><%= team.name %></a></h3>
+  <table>
+    <th><a href="/team_details?id=<%= team.id %>"><%= team.name %></a></th>
     <%= team.list_chars_in_team("all") %>
+  </table>
   <%end  %>
+  <hr>
 <% end  %>

@@ -1,28 +1,36 @@
 <h1>Search Results:</h1>
+<% if @char_results == []  %>
+<h2>Sorry, your search returned no results</h2>
+<% end  %>
 <% @char_results.each do |result|  %>
-  <h1><%= result.name %></h1>
+<div class="search_result">
+  <h2><%= result.name %></h2>
 
   <img src="<%= result.image %>" alt="Woops, no picture" width="240" height="180">
 
   <p><%= result.description %></p>
   <p>Number of Comics: <%= result.popularity %></p>
   <% if char_taken?(result) == "no_entry"  %>
-    <p>Click here to add Character to your roster!</p>
     <form action="/char_add">
+      Click here to add Character to your roster!
       <input type="hidden" name="name" value="<%= result.name %>">
       <input type="hidden" name="description" value="<%= result.description %>">
       <input type="hidden" name="user_id" value="<%= result.user_id %>">
       <input type="hidden" name="image" value="<%= result.image %>">
       <input type="hidden" name="popularity" value="<%= result.popularity %>">
       <input type="hidden" name="team_id" value="<%= result.team_id %>">
-      <input type="submit" value="Submit">
+      <input type="submit" value="Add">
     </form>
     <%elsif char_taken?(result) == "unassigned"  %>
-    <p>Click here to add Character to your roster!</p>
     <form action="/char_swap_user">
+      Click here to add Character to your roster!
       <input type="hidden" name="id" value="<%= fetch_id(result.name) %>">
-      <input type="submit" value="Submit">
+      <input type="submit" value="Add">
     </form>
-    <%else %><p>Sorry, <%= char_taken?(result) %> has already claimed this Character, click <a href="add_to_wishlist?name=<%= result.name %>">here</a> to add this Character to your wishlist.</p>
+    <%elsif char_taken?(result) == session[:user].name %>
+    <p>This Character is on your roster.</p>
+    <%else  %>
+    <p>Sorry, <%= char_taken?(result) %> has already claimed this Character, click <a href="add_to_wishlist?name=<%= result.name %>">here</a> to add this Character to your wishlist.</p>
     <%end  %>
 <%end  %>
+</div>

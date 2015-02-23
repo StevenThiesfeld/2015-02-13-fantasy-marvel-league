@@ -19,7 +19,6 @@ require_relative "models/message"
 enable :sessions
 
 helpers MainHelper, ModelHelper
-
 #------------------------------------------------------------------------------
 #LOGIN/USER ROUTES
 #------------------------------------------------------------------------------    
@@ -188,9 +187,9 @@ get "/search_results" do
 end
 
 get "/char_add" do
-  char = Character.new(params)
-  char.insert("characters")
-  redirect "/characters"
+  @char = Character.new(params)
+  @char.insert("characters")
+  erb :"character/confirm_add"
 end
 
 get "/char_swap_user" do
@@ -248,12 +247,7 @@ get "/start_wishlist_trade" do
 end
 
 get "/confirm_trade" do
-  char1 = Character.find("characters", params["char1_id"])
-  char2 = Character.find("characters", params["char2_id"])
-  char1.edit_object("team_id" => 0, "user_id" => params["user2_id"])
-  char2.edit_object("team_id" => 0, "user_id" => session[:user].id)
-  char1.save("characters")
-  char2.save("characters")
+  make_trade(params)
   erb :"trade/trade_finished"
 end
 

@@ -1,4 +1,15 @@
 <h1>Your Messages</h1>
+<form action="/new_message">
+  <label for="id">Send To:</label>
+  <select name="id">
+  <%User.all("users").each do |user|  %>
+    <% if user.id != session[:user].id  %>
+      <option value="<%= user.id %>"><%= user.name %></option> 
+    <% end  %>
+  <% end %>
+  </select>
+  <input type="submit" value="New Message">
+  
 
 <% if @messages == []  %>
   <h3> No messages</h3>

@@ -50,8 +50,8 @@ module ModelHelper
     chars_array = self.get_characters("team_id")
     chars_array.each do |char|
       if check == "user"
-        result += "<li>#{char.name}---<a href='/unassign?id=#{char.id}'>Unassign</a></li>"
-      else result += "<li>#{char.name}</li>"
+        result += "<tr><td>#{char.name}---<a href='/unassign?id=#{char.id}'>Unassign</a></td></tr>"
+      else result += "<tr><td>#{char.name}</td></tr>"
       end
     end
     result

@@ -1,8 +1,13 @@
 <h1><a href="/wishlist">Your Wishlist</a>---------All Wishlists</h1>
 <% @users.each do |user|  %>
-  <h3><%= user.name %></h3>
+  <h2><img src="<%= user.image %>" height="50" width="50"><%= user.name %></h2>
   <% if session[:user].name != user.name  %>
-    <h4><a href="/start_wishlist_trade?id=<%= user.id %>">Trade</a>
-      <% end  %>
+    <% if display_trade_option?(user) == true  %>
+      <h4><a href="/start_wishlist_trade?id=<%= user.id %>">Perform Offline Trade</a></h4>
+    <% else  %>
+      <h4>No Valid Offline Trade</h4>
+    <% end  %>
+  <% end  %>
   <%= user.display_wishlist %>
+  <hr>
 <% end  %>

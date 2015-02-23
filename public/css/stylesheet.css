@@ -1,11 +1,30 @@
+body{
+  text-align:center;
+}
 nav {
+  position:fixed;
+  top:0;
+  bottom:0;
+  text-align:left;
   line-height: 30px;
-  height: 500px;
   width: 120px;
   float: left;
   padding: 5px;
   background-color: #990000;  
   font-weight: bold;
+  font-size:15px;
+}
+
+ul.navlinks {
+   padding:20px;
+}
+
+div.usersetup {
+  text-align:center;
+}
+
+div.confirm_user_creation {
+  text-align:center;
 }
 
 a {
@@ -13,10 +32,14 @@ a {
 }
 
 p.profile {
+  position:fixed;
+  right:15px;
+  text-align:center;
+  font-weight:bold;
   float: right;
   background-color: blue;
   line-height: 30px;
-  height: 500px;
+  height: 150px;
   width: 120px;
   padding: 5px;
 }
@@ -24,3 +47,35 @@ body {
   background-color:#CC0000;
 }
 
+div.login {
+  text-align:center;
+  margin-left:auto;
+  margin-right:auto;
+  float:center;
+}
+
+h1, h2, h3{
+  text-align:center;
+}
+
+div.userinfo {
+  text-align:center;
+  image-align:center;
+}
+
+form.search{
+  text-align:center;
+}
+
+div.search_result, .char_display, .team_display{
+  margin-left:auto;
+  margin-right:auto;
+  width:400px;
+  text-align:center;
+  margin-bottom:30px;
+}
+table{
+  margin-left:auto;
+  margin-right:auto;
+  text-align:center;
+}

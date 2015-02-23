@@ -1,8 +1,10 @@
+<div class="userinfo">
 <h1><%= session[:user].name %></h1>
-<h2> Password: <%= session[:user].password %></h2>
-<img src="<%= session[:user].image %>" height="200" width="300">
-<a href="/edit_profile">Edit Profile</a>
-<a href="/delete_profile">Delete Profile</a>
+<h3> <a href="/edit_profile">Edit Profile</a>--<a href="/delete_profile">Delete Profile</a>
+ </h3>
+<img src="<%= session[:user].image %>" height="300" width="300">
+</div>
+
 
 <% if @unviewed_messages == []  %>
   <h3> No new messages</h3>

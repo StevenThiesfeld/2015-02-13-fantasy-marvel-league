@@ -59,7 +59,8 @@ class Trade
   
   def set_valid_trade
     user1_chars = @user1.get_characters("user_id")
-    valid_ids =  DATABASE.execute("SELECT character_id FROM characters_to_wishlists WHERE wishlist_id = #{@user2_wishlist.id}")[0] 
+    valid_ids =  DATABASE.execute("SELECT character_id FROM characters_to_wishlists
+     WHERE wishlist_id = #{@user2_wishlist.id}")[0] 
     if valid_ids != nil
       user1_chars.each do |char|
        @user1_valid_chars << char if valid_ids.has_value?(char.id)

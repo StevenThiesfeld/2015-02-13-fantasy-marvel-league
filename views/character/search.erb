@@ -1,6 +1,7 @@
 <h1>Search The Marvel Database</h1>
-<form action="/search_results">
-  <p>Enter Name(Full or partial)</p>
+<h3>Type in the name of a character you want on your roster <br>(Full name or partial name)</h3>
+<form class="search" action="/search_results">
+  Enter Search Here
   <input type="text" name="user_search">
   <input type="hidden" name="user_id" value=<%= session[:user].id %>>
   <input type="submit" value="Submit">

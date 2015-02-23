@@ -2,14 +2,16 @@
 <br>
 <br>
 <br>
-<p><%= @error  %></p>
-<form action="/user_verification">
-  Enter User Name
-  <input type="text" name="name">
-  Enter Password
-  <input type="text" name="password">
-  <input type="submit" value="Submit">
-</form>
-<br>
-<br>
-<a href="/user_setup">New to FML? Sign up here!</a>
+<div class="login">
+  <p><%= @error  %></p>
+  <form action="/user_verification">
+    Enter User Name
+    <input type="text" name="name"><br>
+    Enter Password
+    <input type="text" name="password"><br>
+    <input type="submit" value="Submit">
+  </form>
+  <br>
+  <br>
+  <a href="/user_setup">New to FML? Sign up here!</a>
+</div>

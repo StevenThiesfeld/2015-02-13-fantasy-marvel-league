@@ -3,9 +3,9 @@ class Message
   extend ClassMethods
   include ModelHelper
   
-  attr_reader :from_user_id, :to_user_id, :body, :id, :trade, :offered_char,
+  attr_reader :from_user_id, :to_user_id, :body, :id, :offered_char,
   :requested_char
-  attr_accessor :viewed
+  attr_accessor :viewed, :trade
   
   def initialize(options)
     @id = options["id"]
@@ -32,8 +32,10 @@ class Message
   end
   
   def get_user_name(id)
-    name = DATABASE.execute("SELECT name FROM users WHERE id = #{id}")[0]["name"]
+    result = DATABASE.execute("SELECT name FROM users WHERE id = #{id}")
+    result != [] ? name = result[0]["name"] : name = "deleted user"
     name
+   
   end
     
   def mark_as_viewed

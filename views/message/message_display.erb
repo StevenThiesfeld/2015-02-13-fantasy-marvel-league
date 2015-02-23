@@ -6,16 +6,21 @@
   <% if message.trade == "yes" %>
     <p> Offered <%= message.get_char_name(message.offered_char) %> for <%= message.get_char_name(message.requested_char) %></p>
   <form action="/confirm_trade">
+    <input type="hidden" name="message_id" value="<%= message.id %>">
     <input type="hidden" name="user2_id" value="<%= message.from_user_id %>">
     <input type="hidden" name="char2_id" value="<%= message.offered_char %>">
     <input type="hidden" name="char1_id" value="<%= message.requested_char %>">
     <input type="submit" value="Accept Trade">
   </form>
+  <% elsif message.trade == "finished"  %>
+    <p> <%= message.get_char_name(message.requested_char) %> was traded for <%= message.get_char_name(message.offered_char) %></p>
   <% end  %>
   <% else  %>
   <h4>To: <%= message.get_user_name(message.to_user_id) %></h4>
   <p><%= message.body %></p>
   <% if message.trade == "yes" %>
     <p> Offered <%= message.get_char_name(message.offered_char) %> for <%=     message.get_char_name(message.requested_char) %></p>
+  <% elsif message.trade == "finished"  %>
+    <p> <%= message.get_char_name(message.offered_char) %> was traded for <%= message.get_char_name(message.requested_char) %></p>
   <% end  %>
 <% end  %>
