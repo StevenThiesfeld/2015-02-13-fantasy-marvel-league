@@ -3,7 +3,6 @@
 #
 # Public Methods:
 # #partial
-# #set_unassigned_chars
 # #team_full?
 # #char_taken?
 # #fetch_id
@@ -25,18 +24,6 @@ module MainHelper
   
   def partial (template, locals = {})
     erb(template, :layout => false, :locals => locals)
-  end
-  
-  # Public Method: #set_unassigned_chars
-  # Sets an instance variable to an array of characters not assigned to a team
-  #
-  # Parameters: none
-  # Returns: none
-  # State Changes:
-  # sets @unassigned_chars to an array of character objects
-
-  def set_unassigned_chars
-   @unassigned_chars = session[:user].get_unassigned_chars
   end
   
   # Public Method: #team_full?
@@ -72,15 +59,14 @@ module MainHelper
  #  State Changes: none
 
   def char_taken?(char)
-    check_char = Character.search_where("characters", "name", char.name)
-    if check_char == [] 
+    check_char = Character.search_where("characters", "name", char.name)[0]
+    if check_char == nil 
       "no_entry"
     else
-      if check_char[0].user_id == 0
+      if check_char.user_id == 0
         "unassigned"
       else
-        user_name =  DATABASE.execute("SELECT name FROM users WHERE id = #{check_char[0].user_id}")[0]["name"]
-        user_name
+        User.find("users", check_char.user_id).name
       end
     end
   end
@@ -98,9 +84,21 @@ module MainHelper
   
   def fetch_id(char_name)
     char = Character.search_where("characters", "name", char_name)[0]
-    id = char.id
-    id
+    char.id
   end
+  
+  # Public Method: #make_trade
+#   Trades two characters between two users
+#
+#   Parameters:
+#   params     -   Hash: Contains user1_id, user2_id, char1_id and char2_id
+#   params contains message_id if the trade was done through a message
+#
+#   Returns: nil
+#
+#   State Changes:
+#   Edits and saves the character objects to their new users.
+#   Will set a message's "trade" attribute to "finished" if relevant
   
   def make_trade(params)
     char1 = Character.find("characters", params["char1_id"])
@@ -115,6 +113,17 @@ module MainHelper
       message.save("messages")
     end
   end
+  
+  # Public Method: display_trade_option?
+#   Detirmines if a trade link should be displayed
+#
+#   Parameters:
+#   user           - User: the user object being compared to the session user
+#
+#   Returns:
+#   true if there is a valid trade option, false if there is not
+#
+#   State Changes: none
   
   def display_trade_option?(user)
     trade = Trade.new("user1" => session[:user], "user2" => user)

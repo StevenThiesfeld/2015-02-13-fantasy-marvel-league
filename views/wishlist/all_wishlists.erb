@@ -8,6 +8,11 @@
       <h4>No Valid Offline Trade</h4>
     <% end  %>
   <% end  %>
-  <%= user.display_wishlist %>
+  <ul>
+    <% user.get_wishlist.set_wishlist_chars.each do |char| %>
+      <li><%= char.name %>------Owned By: <%= char.find_owner.name  %></li>
+    <% end  %>
+  </ul>
+  <p>Currently Offering: <%= user.get_wishlist.offer %></p>
   <hr>
 <% end  %>

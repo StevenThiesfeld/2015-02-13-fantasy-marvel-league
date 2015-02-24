@@ -2,10 +2,12 @@
 <% @users.each do |user|  %>
   <h2><img src="<%= user.image %>" height="50" width="50"><%= user.name %></h2>
   <% user.all_teams.each do |team| %>
-  <table>
-    <th><a href="/team_details?id=<%= team.id %>"><%= team.name %></a></th>
-    <%= team.list_chars_in_team("all") %>
-  </table>
+    <table>
+      <th><a href="/team_details?id=<%= team.id %>"><%= team.name %></a></th>
+      <% team.get_characters("team_id").each do |char|  %>
+        <tr><td><%= char.name %></td></tr>
+      <% end  %>
+    </table>
   <%end  %>
   <hr>
 <% end  %>

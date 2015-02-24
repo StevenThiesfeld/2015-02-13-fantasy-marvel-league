@@ -119,5 +119,10 @@ class User
     teams = Team.search_where("teams", "user_id", id)
     teams
   end
+  
+  def get_wishlist
+    wishlist = Wishlist.search_where("wishlists", "user_id", id)[0]
+    wishlist
+  end
       
 end#class end

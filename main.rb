@@ -1,6 +1,5 @@
 require 'pry'
 require 'sqlite3'
-DATABASE = SQLite3::Database.new('database/f_m_l.db')
 require 'marvelite'
 require "sinatra"
 require_relative "database/db_setup"
@@ -17,7 +16,6 @@ require_relative "models/message"
 
 
 enable :sessions
-
 helpers MainHelper, ModelHelper
 #------------------------------------------------------------------------------
 #LOGIN/USER ROUTES
@@ -148,7 +146,7 @@ end
 get "/wishlist" do
   @your_chars = session[:user].get_characters("user_id")
   @wishlist = Wishlist.search_where("wishlists", "user_id", session[:user].id)[0]
-  @chars_on_wishlist = @wishlist.set_wishlist_chars(session[:user])
+  @chars_on_wishlist = @wishlist.set_wishlist_chars
   erb :"wishlist/wishlist"
 end
 

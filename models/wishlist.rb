@@ -9,6 +9,10 @@
 #
 # Public Methods: 
 # #add_to_wishlist
+# #remove_from_wishlist
+# #set_wishlist_chars
+# #check_offer
+# #delete_wishlist
 
 class Wishlist
   include DatabaseMethods
@@ -51,41 +55,41 @@ class Wishlist
   # Parameters: none
   #
   # Returns:
-  # results        -  Array: an array of Character objects
+  # char_objects        -  Array: an array of Character objects
   #
-  # State Changes: none
+  # State Changes: will call remove_from_wishlist if the character has been aquired
 
-  def set_wishlist_chars(user)
-    chars = DATABASE.execute("SELECT character_id FROM characters_to_wishlists WHERE wishlist_id = #{id}")
-    results = []
-    chars.each do |char|
-      results << Character.find("characters", char["character_id"]) 
+  def set_wishlist_chars
+    response = DATABASE.execute("SELECT character_id FROM characters_to_wishlists WHERE wishlist_id = #{id}")
+    char_objects = []
+    response.each do |char|
+      char_objects << Character.find("characters", char["character_id"]) 
     end
-    results.each do |char|
-      if char.user_id == user.id
+    char_objects.each do |char|
+      if char.user_id == user_id
         self.remove_from_wishlist(char.id)
-        results.delete(char)
+        char_objects.delete(char)
       end 
     end
-    check_offer(user)
-    results
+    check_offer
+    char_objects
   end
   
   # Public Method: #check_offer
  #  checks that the offered character is still owned by the user
  #
  #  Parameters:
- #  user             -  User: the user object
+ #  none
  #
  #  Returns: none
  #
  #  State Changes:
  #  @offer is set to "" if the user no longer has that character
   
-  def check_offer(user)
+  def check_offer
     offered_char = Character.search_where("characters", "name", offer)[0]
     if offered_char != nil
-      if offered_char.user_id != user.id
+      if offered_char.user_id != user_id
         @offer = ""
         self.save("wishlists")
       end
@@ -93,6 +97,15 @@ class Wishlist
       self.save("wishlists")
     end 
   end
+  
+  # Public Method: #delete_wishlist
+#   Deletes relevant info from the wishlist and characters_to_wishlists tables
+#
+#   Returns: none
+#
+#   State Changes:
+#   Deletes entries from characters_to_wishlists where the wishlist ids match
+#   Deletes the corresponding wishlist entry from the table
   
   def delete_wishlist
     DATABASE.execute("DELETE FROM characters_to_wishlists WHERE wishlist_id = #{id}")

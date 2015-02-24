@@ -93,7 +93,7 @@ class TestModels < Minitest::Test
      char.insert("characters")
      wishlist.add_to_wishlist(char.id)
      wishlist.add_to_wishlist(char2.id)
-     check = wishlist.set_wishlist_chars(user)
+     check = wishlist.set_wishlist_chars
      assert_kind_of(Character, check[0])
      assert_equal(1, check.length)
    end
