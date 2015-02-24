@@ -1,7 +1,7 @@
 <h1><a href="/teams">Your Teams</a>---------All Teams</h1>
 <% @users.each do |user|  %>
   <h2><img src="<%= user.image %>" height="50" width="50"><%= user.name %></h2>
-  <% user.all_teams.each do |team| %>
+  <% Team.search_where("teams", "user_id", user.id).each do |team| %>
     <table>
       <th><a href="/team_details?id=<%= team.id %>"><%= team.name %></a></th>
       <% team.get_characters("team_id").each do |char|  %>

@@ -2,6 +2,7 @@ require 'pry'
 require 'sqlite3'
 require 'marvelite'
 require "sinatra"
+DATABASE = SQLite3::Database.new("f_m_l.db")
 require_relative "database/db_setup"
 require_relative "helper_modules/main_helper"
 require_relative "helper_modules/model_helper"
@@ -11,7 +12,7 @@ require_relative "models/user"
 require_relative "models/team"
 require_relative "models/search_engine"
 require_relative "models/character"
-require_relative "models/wishlist_trade"
+require_relative "models/trade"
 require_relative "models/message"
 
 
@@ -179,8 +180,8 @@ get "/search" do
 end
 
 get "/search_results" do
-  results = SearchEngine.new(params)
-  @char_results = results.create_character
+  client = SearchEngine.new(params)
+  @char_results = client.search_for_chars
   erb :"character/search_results"
 end
 
@@ -235,11 +236,11 @@ end
 #TRADE ROUTES
 #------------------------------------------------------------------------------
 
-get "/start_wishlist_trade" do
+get "/start_trade" do
   @user2 = User.find("users", params["id"])
   @trade = Trade.new("user1" => session[:user], "user2" => @user2)
   if @trade.valid_trade
-    erb :"trade/start_wishlist_trade"
+    erb :"trade/start_trade"
   else erb :"trade/bad_trade"
   end
 end

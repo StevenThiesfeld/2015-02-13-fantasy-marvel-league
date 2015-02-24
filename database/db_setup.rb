@@ -1,4 +1,3 @@
-DATABASE = SQLite3::Database.new("f_m_l.db")
 DATABASE.results_as_hash = true
 
 DATABASE.execute("CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY,

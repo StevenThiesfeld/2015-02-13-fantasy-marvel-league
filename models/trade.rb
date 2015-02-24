@@ -16,7 +16,9 @@
 
 class Trade
   
-  attr_accessor :user1, :user2, :user2_char, :user1_valid_chars, :valid_trade, :user2_wishlist
+  attr_reader :valid_trade
+  
+  attr_accessor :user1, :user2, :user2_char, :user1_valid_chars, :user2_wishlist
   
   def initialize(options)
     @user1 = options["user1"]
@@ -24,6 +26,7 @@ class Trade
     @user2_wishlist = @user2.get_wishlist
     @user1_valid_chars = []
     set_user2_char
+    @user2_char != nil ? set_valid_trade : @valid_trade = false
   end
   
   private
@@ -35,13 +38,11 @@ class Trade
 #   Returns: none
 #
 #   State Changes:
-#   @user2_char is set to a character object that matches the name of the wishlist
-#               offered attribute
+#   @user2_char is set to the character object that matches the name of the wishlist's offered attribute
 
   def set_user2_char
     char_name = user2_wishlist.offer
     @user2_char = Character.search_where("characters", "name", char_name)[0]
-    set_valid_trade if user2_char != nil
   end
   
   # Private Method: set_valid_trade
@@ -52,8 +53,7 @@ class Trade
  #  Returns: none
  #
  #  State Changes:
- #  @user1_valid_chars set to any character objects the first user owns that appear
- #                     on the 2nd user's wishlist
+ #  @user1_valid_chars set to an array of character objects the first user owns that appears on the 2nd user's wishlist
  #  @valid_trade is set to true if the 1st user has trade candidates, is false if not
   
   def set_valid_trade 

@@ -11,7 +11,7 @@
 # .login
 # #user_setup
 # #get_unassigned_chars
-# #all_teams
+# #get_wishlist
 
 class User
   include DatabaseMethods
@@ -29,14 +29,14 @@ class User
   end
   
   # Public Method: #delete_user
-#   Deletes a user's profile and all table entries associated with his account.
+#   Deletes a user's profile and all table entries associated with his account.  Changes the user id and team id of user's characters to 0
 #
 #   Parameters: none
 #
 #   Returns: nil
 #
 #   State Changes:
-#   Removes all entries from the database related to the user
+#   Removes all entries from the database related to the user and clears character assignments
   
   def delete_user
     wishlist = Wishlist.search_where("wishlists", "user_id", id)[0]
@@ -105,20 +105,15 @@ class User
     unassigned_chars
   end
   
-  # Public Method: all_teams
-#   Returns a list of all teams that belong to the user
-#
-#   Parameters: none
-#
-#   Returns
-#   result       - Array: An array of team objects that belong to the user
-#
-#   State Changes: none
-  
-  def all_teams
-    teams = Team.search_where("teams", "user_id", id)
-    teams
-  end
+  # Public Method: #get_wishlist
+ #  Returns the wishlist that belongs to the user
+ #
+ #  Parameters: none
+ #
+ #  Returns:
+ #  wishlist        - Wishlist the wishlist object assigned to the user
+ #
+ #  State Changes: none
   
   def get_wishlist
     wishlist = Wishlist.search_where("wishlists", "user_id", id)[0]

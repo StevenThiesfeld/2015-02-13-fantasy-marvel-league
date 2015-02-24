@@ -30,7 +30,7 @@ class Team
  #
  #  Returns: none
  #  State Changes:
- #  Edits each character assigned to the team, and deletes the team from the table
+ #  Changes the team_id of characters on the team to 0, and deletes the team from the table
   
   def delete
     chars = self.get_characters("team_id")

@@ -9,11 +9,10 @@ require 'pry'
 # @user_id     - Integer: the id of the user making the search
 #
 # Public Methods:
-# #generate_character_list
-# #create_character
+# #search_for_chars
 
 class SearchEngine
-  attr_reader :response
+  attr_reader :user_search, :client, :user_id
 
   def initialize(options)
     @client = Marvelite::API::Client.new( :public_key =>  
@@ -24,7 +23,7 @@ class SearchEngine
     @user_id = options["user_id"]
   end
   
-# Public Method: #create_character
+# Public Method: #search_for_chars
 # Searches the Marvel database and returns an array of Character objects
 #
 # Parameters:
@@ -38,9 +37,9 @@ class SearchEngine
 # Creates new character objects with data from the API and inserts them into the
 # results array
   
-  def create_character
+  def search_for_chars
     results = []
-    response = @client.characters(:nameStartsWith => @user_search)
+    response = client.characters(:nameStartsWith => user_search)
     response["data"]["results"].each do |result|
       options = {}
       options["name"] = result["name"]
@@ -51,19 +50,11 @@ class SearchEngine
       end
       options["popularity"] = result["comics"]["available"]
       options["image"] = result["thumbnail"]["path"] + "." + result["thumbnail"]["extension"] if result["thumbnail"] != nil
-      options["user_id"] = @user_id
+      options["user_id"] = user_id
       options["team_id"] = 0
       results << Character.new(options)
     end
     results    
-  end
-  
-  def fetch_comics(name)
-    response = @client.character_comics(
-    "#{name}",
-    { :noVariants => true, :limit => 10, :orderBy => 'unlimitedDate' }
-    )
-    response
   end
   
 end#class end

@@ -1,6 +1,6 @@
 require 'sqlite3'
 require 'pry'
-DATABASE = SQLite3::Database.new('../database/test_f_m_l.db')
+DATABASE = SQLite3::Database.new('../test_f_m_l.db')
 require 'minitest/autorun'
 require 'marvelite'
 require_relative "../database/db_setup"
@@ -12,7 +12,7 @@ require_relative "../models/character"
 require_relative "../models/team"
 require_relative "../models/wishlist"
 require_relative "../models/search_engine"
-require_relative "../models/wishlist_trade"
+require_relative "../models/trade"
 
 
 
@@ -85,7 +85,7 @@ class TestModels < Minitest::Test
    def test_set_wishlist_chars #test pass
      user = User.new("name" => "wishlist_test", "password" => "password")
      user.insert("users")
-     wishlist = Wishlist.new("name" => "testlist")
+     wishlist = Wishlist.new("name" => "testlist", "user_id" => user.id)
      wishlist.insert("wishlists")
      char = Character.new("name" => "wishlist_test", "user_id" => user.id, "team_id" => 1)
      char2 = Character.new("name" => "wishlist_test2", "user_id" => 0, "team_id" => 1)
@@ -103,7 +103,7 @@ class TestModels < Minitest::Test
      user.insert("users")
      wishlist = Wishlist.new("name" => "testlist", "offer" => "this shouldn't be here")
      wishlist.insert("wishlists")
-     wishlist.check_offer(user)
+     wishlist.check_offer
      assert_equal("", wishlist.offer)
    end
      
@@ -121,9 +121,9 @@ class TestModels < Minitest::Test
    end
    #----------------------------------------------------------------------------
    #SEARCH ENGINE TESTS---------------------------------------------------------
-   def test_create_character #test pass
+   def test_search_for_chars #test pass
      test = SearchEngine.new("user_search" => "Spider-Man")
-     char = test.create_character[0]
+     char = test.search_for_chars[0]
      assert_kind_of(Character, char)
      assert_equal("Spider-Man", char.name)
    end
