@@ -1,5 +1,5 @@
 <h1> Your Wishlist---------<a href="/all_wishlists">All Wishlists</a></h1>
-<h3>Currently offering: <%= @wishlist.offer %>
+<h3>Currently offering: <%= @wishlist.offer %></h3>
 <form action="/add_offer">
   Put a new Character up for trade.
   <select name="name">
@@ -12,6 +12,7 @@
   </select>
   <input type="submit" value="Submit">
 </form>
+<br>
 
 <% @chars_on_wishlist.each do |char| %>
 <%= partial(:"wishlist/wishlist_display", :char => char) %>

@@ -24,21 +24,6 @@ class SearchEngine
     @user_id = options["user_id"]
   end
   
-  #NOT USED----------------------------------
-  # def generate_character_list
-#     response = @client.characters
-#     response["data"]["results"].each do |result|
-#       options = {}
-#       options["name"] = result["name"]
-#       options["description"] = result["description"]
-#       options["popularity"] = result["comics"]["available"]
-#       options["image"] = result["thumbnail"]["path"] + "." + result["thumbnail"]["extension"] if result["thumbnail"] != nil
-#       options["user_id"] = nil
-#       char = Character.new(options)
-#       char.insert("characters")
-#     end
-#   end-------------------------------------
-  
 # Public Method: #create_character
 # Searches the Marvel database and returns an array of Character objects
 #

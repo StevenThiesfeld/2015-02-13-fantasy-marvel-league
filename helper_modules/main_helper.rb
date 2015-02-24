@@ -7,6 +7,8 @@
 # #team_full?
 # #char_taken?
 # #fetch_id
+# #make_trade
+# #display_trade_option?
 
 module MainHelper
   

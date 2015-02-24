@@ -27,8 +27,8 @@ get "/" do
 end
 
 get "/logout" do
-  session[:user] == nil
-  erb :login, :layout => :layout_login
+  session.clear
+  redirect "/"
 end
 
 get "/user_verification" do

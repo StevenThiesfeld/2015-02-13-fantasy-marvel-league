@@ -5,8 +5,11 @@
   <%= team.list_chars_in_team("user") %>
 </table>
 <% if team_full?(team) == false %>
-<p>Assign New Character</p>
 <%set_unassigned_chars%>
+<% if @unassigned_chars == []  %>
+  <p>No Characters to Assign</p>
+<% else  %>
+<p>Assign New Character</p>
 <form action="/assign">
   <input type="hidden" name="team_id" value="<%= team.id %>">
   <select name="char_to_assign">
@@ -16,6 +19,7 @@
   </select>
   <input type="submit" value="Submit">
 </form>
+<% end  %>
 <%else%><p>This Team is full.</p>
 <% end %>
 </div>
