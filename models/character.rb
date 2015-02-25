@@ -11,7 +11,7 @@
 # @popularity   - Integer: The number of comics the character appears in
 #
 # Public Methods:
-# none
+# #find_owner
 
 class Character
   include DatabaseMethods
@@ -30,6 +30,16 @@ class Character
     options["image"] != nil ? @image = options["image"] : @image = "http://cdn-static.denofgeek.com/sites/denofgeek/files/styles/article_main_half/public/images/86941.jpg?itok=xEKeqXcW"
     @popularity = options["popularity"]
   end
+  
+  # Public Method: #find_owner
+#   returns the user object the character is assigned to
+#
+#   Parameters: none
+#
+#   Returns:
+#   owner      - User: the user the character is assigned to
+#
+#   State Changes: none
   
   def find_owner
     owner = User.find("users", user_id) 
