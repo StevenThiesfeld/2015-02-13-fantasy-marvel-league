@@ -6,8 +6,8 @@
 <p><%= char.description %></p>
 <p>Popularity: <%= char.popularity %></p>
 <% if char.user_id == 0 %>
-<p>This Character is available! <a href="/char_swap_user?id=<%= char.id %>">Click here</a> to claim it!</p>
+<p>This Character is available! <a href="/char_swap_user/<%= char.id %>">Click here</a> to claim it!</p>
 <%else  %> 
-<p>Current Owner: <%= char.find_owner.name %>----<a href="/new_message?id=<%= char.find_owner.id %>">Send Message</a></p>
+<p>Current Owner: <%= char.find_owner.name %>----<a href="/new_message/<%= char.find_owner.id %>">Send Message</a></p>
 <% end  %>
 </div>

@@ -10,6 +10,7 @@
 # Public Methods: 
 # #add_to_wishlist
 # #remove_from_wishlist
+# #get_char_ids
 # #set_wishlist_chars
 # #check_offer
 # #delete_wishlist
@@ -49,6 +50,24 @@ class Wishlist
     DATABASE.execute("DELETE FROM characters_to_wishlists WHERE character_id=#{char_id}")
   end
   
+  # Public Method: #get_char_ids
+#   returns an array of character ids on the wishlist
+#
+#   Parameters: none
+#
+#   Returns:
+#   char_ids        - Array: an array of character IDs that are on the user's wishlist
+#
+#   State Changes: none
+  
+  def get_char_ids
+   response = DATABASE.execute("SELECT character_id FROM characters_to_wishlists WHERE wishlist_id = #{id}")
+   char_ids = []
+   response.each{|id| char_ids << id["character_id"] if response != []}
+   char_ids
+ end
+    
+  
   # Public Method: #set_wishlist_chars
   # Creates an array of Character objects that are on your wishlist
   #
@@ -60,10 +79,10 @@ class Wishlist
   # State Changes: will call remove_from_wishlist if the character has been aquired
 
   def set_wishlist_chars
-    response = DATABASE.execute("SELECT character_id FROM characters_to_wishlists WHERE wishlist_id = #{id}")
+    # response = DATABASE.execute("SELECT character_id FROM characters_to_wishlists WHERE wishlist_id = #{id}")
     char_objects = []
-    response.each do |char|
-      char_objects << Character.find("characters", char["character_id"]) 
+    get_char_ids.each do |char_id|
+      char_objects << Character.find("characters", char_id) 
     end
     char_objects.each do |char|
       if char.user_id == user_id

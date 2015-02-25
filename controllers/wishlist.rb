@@ -21,7 +21,7 @@ get "/add_offer" do
   redirect "/wishlist"
 end
 
-get "/add_to_wishlist" do
+get "/add_to_wishlist/:name" do
   wishlist = Wishlist.search_where("wishlists", "user_id", session[:user].id)[0]
   char = Character.search_where("characters", "name", params["name"])[0]
   wishlist.add_to_wishlist(char.id)

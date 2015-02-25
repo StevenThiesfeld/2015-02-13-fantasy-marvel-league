@@ -2,7 +2,7 @@
 #MESSAGE ROUTES
 #------------------------------------------------------------------------------
 
-get "/new_message" do
+get "/new_message/:id" do
   @to_user = User.find("users", params["id"])
   erb :"message/new_message"
 end

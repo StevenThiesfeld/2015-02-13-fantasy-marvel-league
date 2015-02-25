@@ -7,7 +7,7 @@ get "/char_add" do
   erb :"character/confirm_add"
 end
 
-get "/char_swap_user" do
+get "/char_swap_user/:id" do
   char = Character.find("characters", params["id"])
   char.user_id = session[:user].id
   char.team_id = 0
@@ -26,7 +26,7 @@ get "/all_characters" do
   erb :"character/all_characters"
 end
 
-get "/delete_char" do
+get "/delete_char/:id" do
   char =  Character.find("characters", params["id"])
   char.user_id = 0
   char.team_id = 0

@@ -2,7 +2,7 @@
 #LOGIN/USER ROUTES
 #------------------------------------------------------------------------------    
 get "/" do
-  erb :"user/login", :layout => :"layouts/layout_login"
+  erb :"user/login", :layout => :"layout_login"
 end
 
 get "/logout" do
@@ -14,7 +14,7 @@ get "/user_verification" do
   user_check = User.login(params)
   if user_check == nil
     @error = "Invalid Login Info" 
-    erb :"user/login", :layout => :"layouts/layout_login"
+    erb :"user/login", :layout => :"layout_login"
   else
     session[:user] = user_check
     redirect "/user_profile"
@@ -22,12 +22,12 @@ get "/user_verification" do
 end
 
 get "/user_setup" do
-  erb :"user/user_setup", :layout => :"layouts/layout_login" 
+  erb :"user/user_setup", :layout => :"layout_login" 
 end
 
 get "/confirm_creation" do
   @new_user = User.new(params)
-  erb :"user/confirm_creation", :layout => :"layouts/layout_login"
+  erb :"user/confirm_creation", :layout => :"layout_login"
 end
 
 get "/create_profile" do

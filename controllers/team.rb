@@ -23,7 +23,7 @@ get "/all_teams" do
   erb :"team/all_teams"
 end
 
-get "/team_details" do
+get "/team_details/:id" do
   @team = Team.find("teams", params["id"])
   @team_chars = @team.get_characters("team_id")
   erb :"team/team_details"
@@ -33,7 +33,7 @@ get "/create_team" do
   erb :"team/create_team"
 end  
 
-get "/edit_team" do 
+get "/edit_team/:id" do 
   @team = Team.find("teams", params["id"])
   erb :"team/edit_team"
 end
@@ -45,12 +45,12 @@ get "/confirm_team_edit" do
   redirect "/teams"
 end
 
-get "/delete_team" do
+get "/delete_team/:id" do
   @team = Team.find("teams", params["id"])
   erb :"team/confirm_delete_team"
 end
 
-get "/confirm_delete_team" do
+get "/confirm_delete_team/:id" do
   team = Team.find("teams", params["id"]) 
   team.delete
   redirect "/teams" 
@@ -63,7 +63,7 @@ get "/assign" do
   redirect "/teams"
 end
 
-get "/unassign" do
+get "/unassign/:id" do
   char_to_unassign = Character.find("characters", params["id"])
   char_to_unassign.team_id = 0
   char_to_unassign.save("characters")

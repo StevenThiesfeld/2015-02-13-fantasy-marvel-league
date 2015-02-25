@@ -23,7 +23,7 @@ module MainHelper
 #   State Changes: none
   
   def partial (template, locals = {})
-    erb(template, :layout => false, :locals => locals)
+    erb(template, :locals => locals)
   end
   
   # Public Method: #team_full?

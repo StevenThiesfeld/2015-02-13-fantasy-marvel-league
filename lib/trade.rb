@@ -58,10 +58,8 @@ class Trade
   
   def set_valid_trade 
     user1_chars = user1.get_characters("user_id")
-     valid_ids = []
-     user2_wishlist.set_wishlist_chars.each{|char| valid_ids << char.id} 
       user1_chars.each do |char|
-       @user1_valid_chars << char if valid_ids.include?(char.id)
+       @user1_valid_chars << char if user2_wishlist.get_char_ids.include?(char.id)
       end
       if user1_valid_chars == []
         @valid_trade = false

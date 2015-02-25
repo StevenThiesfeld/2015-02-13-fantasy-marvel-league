@@ -2,7 +2,7 @@
 #TRADE ROUTES
 #------------------------------------------------------------------------------
 
-get "/start_trade" do
+get "/start_trade/:id" do
   @user2 = User.find("users", params["id"])
   @trade = Trade.new("user1" => session[:user], "user2" => @user2)
   if @trade.valid_trade

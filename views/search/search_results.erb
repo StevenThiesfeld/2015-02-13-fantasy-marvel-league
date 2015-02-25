@@ -21,16 +21,18 @@
       <input type="hidden" name="team_id" value="<%= result.team_id %>">
       <input type="submit" value="Add">
     </form>
-    <%elsif char_taken?(result) == "unassigned"  %>
+  <%elsif char_taken?(result) == "unassigned"  %>
     <form action="/char_swap_user">
       Click here to add Character to your roster!
       <input type="hidden" name="id" value="<%= fetch_id(result.name) %>">
       <input type="submit" value="Add">
     </form>
-    <%elsif char_taken?(result) == session[:user].name %>
+  <%elsif char_taken?(result) == session[:user].name %>
     <p>This Character is on your roster.</p>
-    <%else  %>
-    <p>Sorry, <%= char_taken?(result) %> has already claimed this Character, click <a href="/add_to_wishlist?name=<%= result.name %>">here</a> to add this Character to your wishlist.</p>
+  <%elsif session[:user].get_wishlist.get_char_ids.include?(result.id)  %>
+    <p>This Character is on your Wishlist</p>
+  <% else  %>
+    <p>Sorry, <%= char_taken?(result) %> has already claimed this Character, click <a href="/add_to_wishlist/<%= result.name %>">here</a> to add this Character to your wishlist.</p>
     <%end  %>
     </div>
 <%end  %>
