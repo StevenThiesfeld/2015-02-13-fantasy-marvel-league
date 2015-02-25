@@ -1,10 +1,11 @@
 #------------------------------------------------------------------------------
 #MESSAGE ROUTES
 #------------------------------------------------------------------------------
-
-get "/new_message/:id" do
-  @to_user = User.find("users", params["id"])
-  erb :"message/new_message"
+["/new_message/:id", "/new_message"].each do |route|
+  get route do
+    @to_user = User.find("users", params["id"])
+    erb :"message/new_message"
+  end
 end
 
 get "/send_message" do

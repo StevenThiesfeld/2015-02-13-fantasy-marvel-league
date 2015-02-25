@@ -1,5 +1,3 @@
-require 'marvelite'
-require 'pry'
 # Class: SearchEngine
 # Accesses the Marvel API client and searches for the user's query
 #
