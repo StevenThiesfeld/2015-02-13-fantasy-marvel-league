@@ -1,6 +1,6 @@
 <div class="team_display">
-<h2><a href="/team_details/<%= team.id %>"><%= team.name %></a></h2>
-<p><a href="/edit_team/<%= team.id %>">Change Name</a>---<a href="/delete_team/<%= team.id %>">Delete</a></p>
+<h2><a href="/teams/details/<%= team.id %>"><%= team.name %></a></h2>
+<p><a href="/teams/edit/<%= team.id %>">Change Name</a>---<a href="/teams/delete/<%= team.id %>">Delete</a></p>
 <table>
   <% team.get_characters("team_id").each do |char|  %>
     <tr><td><%= char.name %>---<a href='/unassign/<%= char.id %>'>Unassign</a></td></tr>
@@ -11,7 +11,7 @@
   <p>No Characters to Assign</p>
 <% else  %>
 <p>Assign New Character</p>
-<form action="/assign">
+<form action="/teams/assign" method="post">
   <input type="hidden" name="team_id" value="<%= team.id %>">
   <select name="char_to_assign">
     <% session[:user].get_unassigned_chars.each do |char| %>

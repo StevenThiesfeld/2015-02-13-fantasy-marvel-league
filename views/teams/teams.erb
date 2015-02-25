@@ -1,0 +1,7 @@
+<h1> Your Teams---------<a href="/teams/all">All Teams</a></h1>
+
+<h4><a href="/teams/new">Create New Team</a></h4>
+  
+<%@teams.each do |team|  %>
+<%= partial(:"teams/team_display", :team => team) %>
+<% end %>

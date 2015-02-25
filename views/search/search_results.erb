@@ -11,7 +11,7 @@
   <p><%= result.description %></p>
   <p>Number of Comics: <%= result.popularity %></p>
   <% if char_taken?(result) == "no_entry"  %>
-    <form action="/char_add">
+    <form action="/char_add" method="post">
       Click here to add Character to your roster!
       <input type="hidden" name="name" value="<%= result.name %>">
       <input type="hidden" name="description" value="<%= result.description %>">

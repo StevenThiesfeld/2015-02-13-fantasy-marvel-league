@@ -14,7 +14,7 @@ get "/all_wishlists" do
   erb :"wishlist/all_wishlists"
 end
 
-get "/add_offer" do
+post "/add_offer" do
   @wishlist = Wishlist.search_where("wishlists", "user_id", session[:user].id)[0]
   @wishlist.offer = params["name"]
   @wishlist.save("wishlists")

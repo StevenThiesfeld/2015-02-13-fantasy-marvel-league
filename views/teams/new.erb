@@ -1,7 +1,7 @@
 <h1> Team Creation </h1>
 <br>
 <br>
-<form action="/teams">
+<form action="/teams/create" method="post">
   <input type="hidden" name="user_id" value="<%= session[:user].id %>">
   Name of Team
   <input type="text" name="name">

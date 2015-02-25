@@ -1,5 +1,5 @@
 <h1>Edit Profile</h1>
-<form action="/confirm_edit">
+<form action="/user/confirm_edit" method="post">
   Enter New User Name
   <input type="text" name="name" value="<%= session[:user].name %>">
   Enter New Password

@@ -3,7 +3,7 @@
   <h2><img src="<%= user.image %>" height="50" width="50"><%= user.name %></h2>
   <% Team.search_where("teams", "user_id", user.id).each do |team| %>
     <table>
-      <th><a href="/team_details/<%= team.id %>"><%= team.name %></a></th>
+      <th><a href="/teams/details/<%= team.id %>"><%= team.name %></a></th>
       <% team.get_characters("team_id").each do |char|  %>
         <tr><td><%= char.name %></td></tr>
       <% end  %>

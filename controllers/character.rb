@@ -1,7 +1,7 @@
 #------------------------------------------------------------------------------
 #CHARACTER AND SEARCH ROUTES
 #------------------------------------------------------------------------------
-get "/char_add" do
+post "/char_add" do
   @char = Character.new(params)
   @char.insert("characters")
   erb :"character/confirm_add"

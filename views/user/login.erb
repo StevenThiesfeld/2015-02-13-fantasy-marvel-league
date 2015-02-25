@@ -4,7 +4,7 @@
 <br>
 <div class="login">
   <p><%= @error  %></p>
-  <form action="/user_verification">
+  <form action="/user/verification" method="post">
     Enter User Name
     <input type="text" name="name"><br>
     Enter Password
@@ -13,5 +13,5 @@
   </form>
   <br>
   <br>
-  <a href="/user_setup">New to FML? Sign up here!</a>
+  <a href="/user/setup">New to FML? Sign up here!</a>
 </div>
