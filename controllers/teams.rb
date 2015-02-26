@@ -11,8 +11,8 @@ get "/teams/all" do
   erb :"teams/all"
 end
 
-get "/teams/details/:id" do
-  @team = Team.find("teams", params["id"])
+get "/teams/details/:slug" do
+  @team = Team.search_where("teams", "slug", params["slug"])[0]
   @team_chars = @team.get_characters("team_id")
   erb :"teams/details"
 end
@@ -36,6 +36,7 @@ end
 get "/teams/confirm_edit" do
   team = Team.find("teams", params["id"])
   team.edit_object(params)
+  team.set_slug
   team.save("teams")
   redirect "/teams"
 end

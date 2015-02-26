@@ -1,3 +1,4 @@
+<div class="message">
 <% if message.to_user_id == session[:user].id %>
 
   <h4>From: <%= message.get_from_user_name %></h4>
@@ -24,3 +25,4 @@
     <p> <%= message.get_requested_char_name %> was traded for <%= message.get_offered_char_name %></p>
   <% end  %>
 <% end  %>
+</div>

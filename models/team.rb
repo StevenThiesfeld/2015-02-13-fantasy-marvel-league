@@ -14,15 +14,19 @@ class Team
   extend ClassMethods
   include ModelHelper
   
-  attr_reader :id, :user_id
+  attr_reader :id, :user_id, :slug
   attr_accessor :name
   
   def initialize(options)
     @id = options["id"]
     @name = options["name"]
     @user_id = options["user_id"]
+    options["slug"] ? @slug = options["slug"] : set_slug  
   end
   
+  def set_slug
+    @slug = name.downcase.strip.gsub(' ', '-').gsub(/[^\w-]/, '')
+  end
   # Public Method: #delete
  #  deletes the and unassigns any character assigned to it
  #

@@ -1,4 +1,4 @@
-<h1><a href="/wishlist">Your Wishlist</a>---------All Wishlists</h1>
+<h1><a href="/wishlist">Your Wishlist</a><br>All Wishlists</h1>
 <% @users.each do |user|  %>
   <h2><img src="<%= user.image %>" height="50" width="50"><%= user.name %></h2>
   <% if session[:user].name != user.name  %>
@@ -10,7 +10,8 @@
   <% end  %>
   <ul>
     <% user.get_wishlist.set_wishlist_chars.each do |char| %>
-      <li><%= char.name %>------Owned By: <%= char.find_owner.name  %></li>
+      <li><%= char.name %><br>Owned By: <%= char.find_owner.name  %></li>
+      <hr>
     <% end  %>
   </ul>
   <p>Currently Offering: <%= user.get_wishlist.offer %></p>

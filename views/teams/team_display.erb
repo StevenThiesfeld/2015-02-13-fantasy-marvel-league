@@ -1,9 +1,9 @@
 <div class="team_display">
-<h2><a href="/teams/details/<%= team.id %>"><%= team.name %></a></h2>
+<h2><a href="/teams/details/<%= team.slug %>"><%= team.name %></a></h2>
 <p><a href="/teams/edit/<%= team.id %>">Change Name</a>---<a href="/teams/delete/<%= team.id %>">Delete</a></p>
 <table>
   <% team.get_characters("team_id").each do |char|  %>
-    <tr><td><%= char.name %>---<a href='/unassign/<%= char.id %>'>Unassign</a></td></tr>
+    <tr><td><%= char.name %>---<a href='/teams/unassign/<%= char.id %>'>Unassign</a></td></tr>
   <% end  %>
 </table>
 <% if team_full?(team) == false %>
