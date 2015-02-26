@@ -11,7 +11,7 @@ get "/start_trade/:id" do
   end
 end
 
-get "/confirm_trade" do
+post "/confirm_trade" do
   make_trade(params)
   erb :"trade/trade_finished"
 end

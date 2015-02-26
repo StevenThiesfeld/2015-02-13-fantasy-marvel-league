@@ -27,7 +27,7 @@ class Wishlist
     @id = options["id"]
     @name = options["name"]
     @user_id = options["user_id"]
-    @offer = options["offer"]
+    options["offer"] ? @offer = options["offer"] : @offer = "none"
   end
   
   # Public Method: #add_to_wishlist
@@ -109,10 +109,10 @@ class Wishlist
     offered_char = Character.search_where("characters", "name", offer)[0]
     if offered_char != nil
       if offered_char.user_id != user_id
-        @offer = ""
+        @offer = "none"
         self.save("wishlists")
       end
-    else @offer = ""
+    else @offer = "none"
       self.save("wishlists")
     end 
   end

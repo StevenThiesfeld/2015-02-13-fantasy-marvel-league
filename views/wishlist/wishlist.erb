@@ -1,6 +1,6 @@
-<h1> Your Wishlist---------<a href="/all_wishlists">All Wishlists</a></h1>
+<h1> Your Wishlist---------<a href="/wishlist/all">All Wishlists</a></h1>
 <h3>Currently offering: <%= @wishlist.offer %></h3>
-<form action="/add_offer" method="post">
+<form action="/wishlist/add_offer" method="post">
   Put a new Character up for trade.
   <select name="name">
     <% @your_chars.each do |char| %>

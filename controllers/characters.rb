@@ -1,13 +1,13 @@
 #------------------------------------------------------------------------------
 #CHARACTER AND SEARCH ROUTES
 #------------------------------------------------------------------------------
-post "/char_add" do
+post "/characters/add" do
   @char = Character.new(params)
   @char.insert("characters")
-  erb :"character/confirm_add"
+  erb :"characters/confirm_add"
 end
 
-get "/char_swap_user/:id" do
+get "/characters/swap_users/:id" do
   char = Character.find("characters", params["id"])
   char.user_id = session[:user].id
   char.team_id = 0
@@ -18,15 +18,15 @@ end
 
 get "/characters" do
   @characters = session[:user].get_characters("user_id")
-  erb :"character/characters"
+  erb :"characters/characters"
 end
 
-get "/all_characters" do
+get "/characters/all" do
   @users = User.all("users")
-  erb :"character/all_characters"
+  erb :"characters/all"
 end
 
-get "/delete_char/:id" do
+get "/characters/delete/:id" do
   char =  Character.find("characters", params["id"])
   char.user_id = 0
   char.team_id = 0

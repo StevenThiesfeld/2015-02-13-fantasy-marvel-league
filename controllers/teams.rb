@@ -8,7 +8,7 @@ end
 
 get "/teams/all" do
   @users = User.all("users")
-  erb :"teams/all_teams"
+  erb :"teams/all"
 end
 
 get "/teams/details/:id" do

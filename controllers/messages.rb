@@ -1,22 +1,22 @@
 #------------------------------------------------------------------------------
 #MESSAGE ROUTES
 #------------------------------------------------------------------------------
-["/new_message/:id", "/new_message"].each do |route|
+["/messages/new/:id", "/messages/new"].each do |route|
   get route do
     @to_user = User.find("users", params["id"])
-    erb :"message/new_message"
+    erb :"messages/new"
   end
 end
 
-get "/send_message" do
+post "/messages/send/:to_user_id" do
   params["from_user_id"] = session[:user].id
   @message = Message.new(params)
   @message.insert("messages")
-  erb :"message/confirm_sent"
+  redirect "/messages"
 end
 
-get "/your_messages" do
+get "/messages" do
   @messages = Message.get_all_messages(session[:user].id)
   @messages.reverse!
-  erb :"message/your_messages"
+  erb :"messages/messages"
 end

@@ -9,19 +9,19 @@ get "/wishlist" do
   erb :"wishlist/wishlist"
 end
 
-get "/all_wishlists" do
+get "/wishlist/all" do
   @users = User.all("users")
-  erb :"wishlist/all_wishlists"
+  erb :"wishlist/all"
 end
 
-post "/add_offer" do
+post "/wishlist/add_offer" do
   @wishlist = Wishlist.search_where("wishlists", "user_id", session[:user].id)[0]
   @wishlist.offer = params["name"]
   @wishlist.save("wishlists")
   redirect "/wishlist"
 end
 
-get "/add_to_wishlist/:name" do
+get "/wishlist/add/:name" do
   wishlist = Wishlist.search_where("wishlists", "user_id", session[:user].id)[0]
   char = Character.search_where("characters", "name", params["name"])[0]
   wishlist.add_to_wishlist(char.id)

@@ -10,7 +10,7 @@
 # #search_for_chars
 
 class SearchEngine
-  attr_reader :user_search, :client, :user_id
+  attr_reader :user_search, :client, :user_id, :error
 
   def initialize(options)
     @client = Marvelite::API::Client.new( :public_key =>  
@@ -19,6 +19,7 @@ class SearchEngine
             
     @user_search = options["user_search"]
     @user_id = options["user_id"]
+    user_search != "" ? @error = "" : @error = "Please Enter a Search"
   end
   
 # Public Method: #search_for_chars
@@ -38,20 +39,20 @@ class SearchEngine
   def search_for_chars
     results = []
     response = client.characters(:nameStartsWith => user_search)
-    response["data"]["results"].each do |result|
-      options = {}
-      options["name"] = result["name"]
-      if result["description"] == ""
-        options["description"] = "No description found"
-      else
-        options["description"] = result["description"]
+      response["data"]["results"].each do |result|
+        options = {}
+        options["name"] = result["name"]
+        if result["description"] == ""
+          options["description"] = "No description found"
+        else
+          options["description"] = result["description"]
+        end
+        options["popularity"] = result["comics"]["available"]
+        options["image"] = result["thumbnail"]["path"] + "." + result["thumbnail"]["extension"] if result["thumbnail"] != nil
+        options["user_id"] = user_id
+        options["team_id"] = 0
+        results << Character.new(options)
       end
-      options["popularity"] = result["comics"]["available"]
-      options["image"] = result["thumbnail"]["path"] + "." + result["thumbnail"]["extension"] if result["thumbnail"] != nil
-      options["user_id"] = user_id
-      options["team_id"] = 0
-      results << Character.new(options)
-    end
     results    
   end
   

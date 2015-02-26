@@ -11,7 +11,7 @@
   <p><%= result.description %></p>
   <p>Number of Comics: <%= result.popularity %></p>
   <% if char_taken?(result) == "no_entry"  %>
-    <form action="/char_add" method="post">
+    <form action="/characters/add" method="post">
       Click here to add Character to your roster!
       <input type="hidden" name="name" value="<%= result.name %>">
       <input type="hidden" name="description" value="<%= result.description %>">
@@ -22,7 +22,7 @@
       <input type="submit" value="Add">
     </form>
   <%elsif char_taken?(result) == "unassigned"  %>
-    <form action="/char_swap_user">
+    <form action="/characters/swap_user">
       Click here to add Character to your roster!
       <input type="hidden" name="id" value="<%= fetch_id(result.name) %>">
       <input type="submit" value="Add">
@@ -32,7 +32,7 @@
   <%elsif session[:user].get_wishlist.get_char_ids.include?(result.id)  %>
     <p>This Character is on your Wishlist</p>
   <% else  %>
-    <p>Sorry, <%= char_taken?(result) %> has already claimed this Character, click <a href="/add_to_wishlist/<%= result.name %>">here</a> to add this Character to your wishlist.</p>
+    <p>Sorry, <%= char_taken?(result) %> has already claimed this Character, click <a href="/wishlist/add/<%= result.name %>">here</a> to add this Character to your wishlist.</p>
     <%end  %>
     </div>
 <%end  %>

@@ -1,5 +1,5 @@
 <h1>Your Messages</h1>
-<form action="/new_message">
+<form action="/messages/new">
   <label for="id">Send To:</label>
   <select name="id">
   <%User.all("users").each do |user|  %>
@@ -16,6 +16,6 @@
   <h3> No messages</h3>
 <% else %> 
   <% @messages.each do |message|  %>
-    <%= partial(:"message/message_display", :message => message) %>
+    <%= partial(:"messages/message_display", :message => message) %>
   <% end  %>
 <% end %>

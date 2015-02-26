@@ -2,8 +2,13 @@ get "/search" do
   erb :"search/search"
 end
 
-get "/search_results" do
+post "/search_results" do
   client = SearchEngine.new(params)
-  @char_results = client.search_for_chars
-  erb :"search/search_results"
+  if client.error != ""
+    @error = client.error
+    erb :"search/search"
+  else
+    @char_results = client.search_for_chars
+    erb :"search/search_results"
+  end
 end

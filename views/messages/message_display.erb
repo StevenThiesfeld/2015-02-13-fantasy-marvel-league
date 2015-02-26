@@ -2,10 +2,10 @@
 
   <h4>From: <%= message.get_from_user_name %></h4>
   <p><%= message.body %></p>
-  <a href="/new_message/<%= message.from_user_id %>">Reply</a>
+  <a href="/messages/new/<%= message.from_user_id %>">Reply</a>
   <% if message.trade == "yes" %>
     <p> Offered <%= message.get_offered_char_name %> for <%= message.get_requested_char_name %></p>
-  <form action="/confirm_trade">
+  <form action="/confirm_trade" method="post">
     <input type="hidden" name="message_id" value="<%= message.id %>">
     <input type="hidden" name="user2_id" value="<%= message.from_user_id %>">
     <input type="hidden" name="char2_id" value="<%= message.offered_char %>">

@@ -10,7 +10,7 @@
   <h3> No new messages</h3>
 <% else %> 
   <% @unviewed_messages.each do |message|  %>
-    <%= partial(:"message/message_display", :message => message) %>
+    <%= partial(:"messages/message_display", :message => message) %>
     <% message.mark_as_viewed  %>
   <% end  %>
 <% end %>

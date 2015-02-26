@@ -34,8 +34,7 @@ class Message
     @body = options["body"]
     @from_user_id = options["from_user_id"]
     @to_user_id = options["to_user_id"]
-    @viewed = options["viewed"]
-    @viewed = "no" if options["viewed"] == nil
+    options["viewed"] ? @viewed = options["viewed"] : @viewed = "no"
     @trade = options["trade"]
     @offered_char = options["offered_char"]
     @requested_char = options["requested_char"]
@@ -118,7 +117,7 @@ class Message
  #  @viewed set to "yes" and column is updated in the messages table
  
   def mark_as_viewed
-    viewed = "yes"
+    @viewed = "yes"
     self.save("messages")
   end
   

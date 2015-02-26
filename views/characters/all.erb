@@ -2,7 +2,7 @@
 <% @users.each do |user|  %>
   <h2><img src="<%= user.image %>" height="50" width="50"><%= user.name %></h2>
   <% user.get_characters("user_id").each do |char|  %>
-    <%= partial(:"character/char_display", :char => char) %>
+    <%= partial(:"characters/char_display", :char => char) %>
   <% end %>
   <hr>
 <% end  %>
