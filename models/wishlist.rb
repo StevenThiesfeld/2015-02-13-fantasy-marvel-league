@@ -36,7 +36,7 @@ class Wishlist
  #  Parameters:
  #  char_id       - Integer: The id of the character being added to the wishlist
  #
- #  Returns: nil
+ #  Returns: self     - the Wishlist object
  #
  #  State Changes:
  #  inserts new entry into the characters_to_wishlists table
@@ -44,6 +44,7 @@ class Wishlist
   def add_to_wishlist(char_id)
     DATABASE.execute("INSERT INTO characters_to_wishlists (character_id, wishlist_id)
                     VALUES (#{char_id}, #{id})")
+    self                
   end
   
   def remove_from_wishlist(char_id)
@@ -100,7 +101,7 @@ class Wishlist
  #  Parameters:
  #  none
  #
- #  Returns: none
+ #  Returns: self  - the Wishlist acted upon
  #
  #  State Changes:
  #  @offer is set to "" if the user no longer has that character
@@ -120,7 +121,7 @@ class Wishlist
   # Public Method: #delete_wishlist
 #   Deletes relevant info from the wishlist and characters_to_wishlists tables
 #
-#   Returns: none
+#   Returns: self - the Wishlist acted upon
 #
 #   State Changes:
 #   Deletes entries from characters_to_wishlists where the wishlist ids match
@@ -129,6 +130,7 @@ class Wishlist
   def delete_wishlist
     DATABASE.execute("DELETE FROM characters_to_wishlists WHERE wishlist_id = #{id}")
     DATABASE.execute("DELETE FROM wishlists WHERE id = #{id}")
+    self
   end
     
   

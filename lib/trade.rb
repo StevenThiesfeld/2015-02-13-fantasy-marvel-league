@@ -35,7 +35,7 @@ class Trade
 #
 #   Parameters: none
 #
-#   Returns: none
+#   Returns: @user2_char   - the Character the 2nd user has offered
 #
 #   State Changes:
 #   @user2_char is set to the character object that matches the name of the wishlist's offered attribute
@@ -50,7 +50,7 @@ class Trade
  #
  #  Parameters: none
  #
- #  Returns: none
+ #  Returns: @valid_trade   - Either true or false
  #
  #  State Changes:
  #  @user1_valid_chars set to an array of character objects the first user owns that appears on the 2nd user's wishlist

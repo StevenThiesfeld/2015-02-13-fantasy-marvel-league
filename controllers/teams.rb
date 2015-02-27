@@ -22,9 +22,14 @@ get "/teams/new" do
 end  
 
 post "/teams/create" do
-  new_team = Team.new(params)
-  new_team.insert("teams")
-  redirect "/teams"
+  @new_team = Team.new(params)
+  if @new_team.error_check == []
+    @new_team.insert("teams")
+    redirect "/teams"
+  else
+    @error = "Please Enter a Name"
+    erb :"teams/new"
+  end
 end
 
 

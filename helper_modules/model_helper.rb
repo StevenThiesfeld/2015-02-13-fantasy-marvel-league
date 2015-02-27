@@ -31,16 +31,6 @@ module ModelHelper
     table
   end
   
-  # Public Method: #list_chars_in_team
- #  Displays a list of Character names in a team with an option to unassign them
- #  Will display additional options if displaying the user's team
- #  Parameters: 
- #  check          - String: tells the method what version of list to display
- #
- #  Returns:
- #  result         - String: a formatted unordered list of characters
- #
- #  State Changes: none
- #
+
   
 end#module end

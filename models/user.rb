@@ -33,15 +33,15 @@ class User
 #
 #   Parameters: none
 #
-#   Returns: errors   - Array: an Array containing all errors the user has made
+#   Returns: errors   - Hash: a Hash containing all errors the user has made
 #
 #   State Changes: none
   
   def error_check
-    errors = []
-    errors << "Please Enter a User Name" if name == nil
-    errors << "That User Name is already taken" if DATABASE.execute("SELECT * FROM users WHERE name = '#{name}'")[0]
-    errors << "Please Enter a Password" if password == nil
+    errors = {}
+    errors[:name] = "Please Enter a User Name" if name == ""
+    errors[:taken] = "That User Name is already taken" if DATABASE.execute("SELECT * FROM users WHERE name = '#{name}'")[0]
+    errors[:password] = "Please Enter a Password" if password == ""
     errors
   end
   
@@ -50,7 +50,7 @@ class User
 #
 #   Parameters: none
 #
-#   Returns: nil
+#   Returns: self    - the User object acted upon
 #
 #   State Changes:
 #   Removes all entries from the database related to the user and clears character assignments
@@ -65,6 +65,7 @@ class User
       char.save("characters")
     end
     DATABASE.execute("DELETE FROM users WHERE id = #{id}")
+    self
   end
   
   # Public Method: .login
@@ -75,14 +76,14 @@ class User
 #   params    - Hash: A hash containing name and password from the user
 #
 #   Returns:
-#   user      - User: The current User object.
+#   user      - User: The current User object or nil if the login info is invalid
 #
 #   State Changes:
 #   Sets user to the current User object.
   
   def self.login(params)
     user_info = DATABASE.execute("SELECT * FROM users WHERE name='#{params["name"]}' AND password='#{params["password"]}'")
-    user_info[0] ? user = self.new(user_info[0]) : user = "Invalid Login Info"
+    user = self.new(user_info[0]) if user_info[0]
     user
   end
   
@@ -91,7 +92,7 @@ class User
  #
  #  Parameters: none
  #
- #  Returns: none
+ #  Returns: self  - the User object acted upon
  #
  #  State Changes: Inserts a new team and new wishlist to the database.
   
@@ -100,6 +101,7 @@ class User
     wishlist.insert("wishlists")
     team = Team.new("name" => "Your Team", "user_id" => @id)
     team.insert("teams")
+    self
   end
   
   # Public Method: #get_unassigned_chars

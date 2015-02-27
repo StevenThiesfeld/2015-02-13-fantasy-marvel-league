@@ -23,6 +23,31 @@ ul.navlinks {
   padding-right:10px;
   background-color:rgba(247, 85, 85, 0.42);
   display:inline-block;
+  list-style-type:none;body{
+  text-align:center;
+  margin:0;
+  padding:0;
+  background-color:#CC0000;
+/*  background-image:url("http://www.decalskin.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/b/z/bz40_spiderweb_1.jpg");*/
+  background-size: cover;
+  max-width:1000px;
+  font-family:impact;
+}
+
+
+ul.navlinks {
+  margin-bottom:5px;
+  padding:0;
+  position: relative;
+  top: -8px;
+}
+
+.navlinks li{
+  margin:0;
+  padding-left:10px;
+  padding-right:10px;
+  background-color:rgba(247, 85, 85, 0.42);
+  display:inline-block;
   list-style-type:none;
 }
 .navlinks li:hover{
@@ -49,17 +74,15 @@ div.profile {
 }
 
 .profile h1{
+  white-space:nowrap;
+  text-overflow:ellipsis;
   text-align:left;
-  position: relative;
-  top: -8px;
-  left:95px;
   font-size: 35px;
 }
 
 .profile img{
-  position: absolute;
-  left: 5px;
-  top: 5px;
+  float:left;
+  
 }
 
 div.yield{
@@ -90,5 +113,80 @@ table{
   margin-left:auto;
   margin-right:auto;
   text-align:center;
+}
+p.error{
+  color:indigo;
+  margin:0;
+}
+
+
+}
+.navlinks li:hover{
+  background-color:red;
+}
+
+li a{
+  display:inline-block; 
+}
+
+a {
+  color: #531D5C;
+}
+
+div.profile {
+  z-index:1;
+  height:20%;
+  width:100%;
+  position: fixed;
+  top:0;
+  text-align: center;
+  font-weight: bold;
+  background-color: #49679E;
+}
+
+.profile h1{
+  white-space:nowrap;
+  text-overflow:ellipsis;
+  text-align:left;
+  font-size: 35px;
+}
+
+.profile img{
+  float:left;
+  
+}
+
+div.yield{
+  position: relative;
+  bottom: -136px;
+}
+
+
+div.login {
+  text-align:center;
+  margin-left:auto;
+  margin-right:auto;
+  float:center;
+}
+
+div.search_result, .char_display, .team_display, .wishlist_char, .message,
+ .user_wishlist, .user_teams{
+  margin-left:auto;
+  margin-right:auto;
+  text-align:center;
+  margin-bottom:30px;
+  border:solid black 10px;
+  padding-bottom: 10px;
+  background-color:#49679E;
+}
+
+table{
+  margin-left:auto;
+  margin-right:auto;
+  text-align:center;
+}
+p.error{
+  color:indigo;
+  margin:0;
 }
 

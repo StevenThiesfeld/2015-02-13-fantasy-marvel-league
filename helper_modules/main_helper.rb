@@ -18,7 +18,7 @@ module MainHelper
 #   template     - ERB file: the partial erb file being called
 #   locals       - Hash    : local information needed in the partial
 #
-#   Returns: none
+#   Returns: the contents of the erb file
 #
 #   State Changes: none
   
@@ -94,7 +94,7 @@ module MainHelper
 #   params     -   Hash: Contains user1_id, user2_id, char1_id and char2_id
 #   params contains message_id if the trade was done through a message
 #
-#   Returns: nil
+#   Returns: the 2nd saved Character object or the Message object
 #
 #   State Changes:
 #   Edits and saves the character objects to their new users.

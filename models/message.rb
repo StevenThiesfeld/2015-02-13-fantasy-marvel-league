@@ -61,10 +61,10 @@ class Message
  #  returns an array of all message objects the given user has recieved/sent
  #
  #  Parameters:
- #  user_id            - Integer: the id of the user the messages belong to
+ #  user_id            - Integer: the id of the User the messages belong to
  #
  #  Returns:
- #  results_as_objects   - Array: an array containing all message associated with a user
+ #  results_as_objects   - Array: an Array containing all message associated with a user
  #
  #  State Changes: none
   
@@ -111,7 +111,7 @@ class Message
  #
  #  Parameters: none
  #
- #  Returns: none
+ #  Returns: self    - the Message object acted upon
  #
  #  State Changes:
  #  @viewed set to "yes" and column is updated in the messages table

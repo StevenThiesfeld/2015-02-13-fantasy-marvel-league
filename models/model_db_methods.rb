@@ -40,7 +40,7 @@ module DatabaseMethods
  #  thaw_field - String: an unfrozen version of the field key with @ inserted.
  #
  #  Returns:
- #  nil
+ #  self      - The Object acted upon
  #
  #  State Changes:
  #  Changes all attributes in the object that are present in params.
@@ -51,6 +51,7 @@ module DatabaseMethods
       thaw_field = field.dup.insert(0, "@")
       self.instance_variable_set(thaw_field, value) if value != ""
     end
+    self
   end
   
   # Public: #save
@@ -64,7 +65,7 @@ module DatabaseMethods
    #
    #
    # Returns:
-   # nil
+   # self     - the Object acted upon
    #
    # State changes:
    # Updates the records in the database.
@@ -89,6 +90,7 @@ module DatabaseMethods
     query_hash.each do |key, value|
       DATABASE.execute("UPDATE #{table} SET #{key} = ? WHERE id = #{id}", value )
     end
+    self
   end
   
   # Public Method: #get_characters
@@ -125,13 +127,14 @@ module ClassMethods
     # 
     #
     # Returns: 
-    # none
+    # self      - The Object acted upon
     #
     # State changes:
     # Values are deleted from the database.
   
   def delete_record(table, id_to_remove)
     DATABASE.execute("DELETE FROM #{table} WHERE id = #{id_to_remove}")
+    self
   end
   
   # Public: .search_where
@@ -194,6 +197,15 @@ module ClassMethods
     results = DATABASE.execute("SELECT * FROM #{table}")
     results_as_objects(results)
   end
+  
+  # Public: #results_as_objects
+#   Creates appropriate object from SQlite hashes
+#
+#   Parameters: results   - Hash: the response of the sqlite query
+#
+#   Returns: objects      - the Object form of the results
+#
+#   State Changes: none
   
   def results_as_objects(results)
     objects = []
