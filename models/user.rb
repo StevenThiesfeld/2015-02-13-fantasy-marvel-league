@@ -28,6 +28,23 @@ class User
     @image = "http://shackmanlab.org/wp-content/uploads/2013/07/person-placeholder.jpg" if options["image"] == ""
   end
   
+  # Public Method: error_check
+#   Checks the attributes that are inputted by the user for errors.
+#
+#   Parameters: none
+#
+#   Returns: errors   - Array: an Array containing all errors the user has made
+#
+#   State Changes: none
+  
+  def error_check
+    errors = []
+    errors << "Please Enter a User Name" if name == nil
+    errors << "That User Name is already taken" if DATABASE.execute("SELECT * FROM users WHERE name = '#{name}'")[0]
+    errors << "Please Enter a Password" if password == nil
+    errors
+  end
+  
   # Public Method: #delete_user
 #   Deletes a user's profile and all table entries associated with his account.  Changes the user id and team id of user's characters to 0
 #
@@ -65,7 +82,7 @@ class User
   
   def self.login(params)
     user_info = DATABASE.execute("SELECT * FROM users WHERE name='#{params["name"]}' AND password='#{params["password"]}'")
-    user = self.new(user_info[0]) if user_info[0] != nil
+    user_info[0] ? user = self.new(user_info[0]) : user = "Invalid Login Info"
     user
   end
   

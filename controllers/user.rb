@@ -11,13 +11,12 @@ get "/logout" do
 end
 
 post "/user/verification" do
-  user_check = User.login(params)
-  if user_check == nil
-    @error = "Invalid Login Info" 
-    erb :"user/login", :layout => :"layout_login"
-  else
-    session[:user] = user_check
+  @user_check = User.login(params)
+  if @user_check.is_a?(User) 
+    session[:user] = @user_check
     redirect "/user/profile"
+  else
+    erb :"user/login", :layout => :"layout_login"
   end
 end
 
@@ -25,9 +24,13 @@ get "/user/setup" do
   erb :"user/setup", :layout => :"layout_login" 
 end
 
-post "/user/confirm_creation" do
+post "/user/confirm_creation" do #error check goes here
   @new_user = User.new(params)
-  erb :"user/confirm_creation", :layout => :"layout_login"
+  if @new_user.error_check == []
+    erb :"user/confirm_creation", :layout => :"layout_login"
+  else
+    erb :"user/setup", :layout => :"layout_login" 
+  end
 end
 
 post "/user/create_profile" do
@@ -56,7 +59,7 @@ get "/user/delete_profile" do
   erb :"user/delete_profile"
 end
 
-get "/user/confirm_delete_user" do
+get "/user/confirm_delete" do
   session[:user].delete_user
   redirect "/logout"
 end

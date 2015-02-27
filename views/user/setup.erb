@@ -1,4 +1,9 @@
 <h1> User Setup</h1>
+<% if @new_user  %>
+  <% @new_user.error_check.each do |error| %>
+    <p><%= error %></p>
+  <% end %>
+<% end  %>
 <div class="usersetup">
 <form action="/user/confirm_creation" method="post">
   Enter User Name
