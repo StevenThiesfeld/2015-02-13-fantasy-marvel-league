@@ -6,8 +6,11 @@
 <p><%= char.description %></p>
 <p>Popularity: <%= char.popularity %></p>
 <% if char.user_id == 0 %>
-<p>This Character is available! <a href="/characters/swap_users/<%= char.id %>">Click here</a> to claim it!</p>
-<%else  %> 
+  <form action="/characters/swap_user" method="post">
+    This Character is Available!
+    <input type="hidden" name="id" value="<%= fetch_id(char.name) %>">
+    <input type="submit" value="Add">
+  </form>
 <p>Current Owner: <%= char.find_owner.name %>----<a href="/messages/new/<%= char.find_owner.id %>">Send Message</a></p>
 <% end  %>
 </div>

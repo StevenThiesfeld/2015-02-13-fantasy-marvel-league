@@ -4,10 +4,10 @@
 post "/characters/add" do
   @char = Character.new(params)
   @char.insert("characters")
-  erb :"characters/confirm_add"
+  redirect "/characters"
 end
 
-get "/characters/swap_users/:id" do
+post "/characters/swap_user" do
   char = Character.find("characters", params["id"])
   char.user_id = session[:user].id
   char.team_id = 0
