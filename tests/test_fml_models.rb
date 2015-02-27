@@ -11,8 +11,8 @@ require_relative "../models/user"
 require_relative "../models/character"
 require_relative "../models/team"
 require_relative "../models/wishlist"
-require_relative "../models/search_engine"
-require_relative "../models/trade"
+require_relative "../lib/search_engine"
+require_relative "../lib/trade"
 
 
 
@@ -61,15 +61,16 @@ class TestModels < Minitest::Test
     assert_equal("test2", check[0].name)
   end
   
-  def test_all_teams #test pass
-    user = User.new("name" => "allteam_test", "password" => "password")
-    user.insert("users")
-    team1 = Team.new("name" => "allteam1", "user_id" => user.id)
-    team2 = Team.new("name" => "allteam2", "user_id" => user.id)
-    team1.insert("teams")
-    team2.insert("teams")
-    assert_equal(2, user.all_teams.length)
-  end
+  #OBSOLETE TEST
+  # def test_all_teams #test pass
+#     user = User.new("name" => "allteam_test", "password" => "password")
+#     user.insert("users")
+#     team1 = Team.new("name" => "allteam1", "user_id" => user.id)
+#     team2 = Team.new("name" => "allteam2", "user_id" => user.id)
+#     team1.insert("teams")
+#     team2.insert("teams")
+#     assert_equal(2, user.all_teams.length)
+#   end
 
   #-----------------------------------------------------------------------------
   #WISHLIST TESTS---------------------------------------------------------------
@@ -104,7 +105,7 @@ class TestModels < Minitest::Test
      wishlist = Wishlist.new("name" => "testlist", "offer" => "this shouldn't be here")
      wishlist.insert("wishlists")
      wishlist.check_offer
-     assert_equal("", wishlist.offer)
+     assert_equal("none", wishlist.offer)
    end
      
    #----------------------------------------------------------------------------
