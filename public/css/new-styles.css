@@ -2,6 +2,7 @@ html, body{
   margin:0;
   padding:0;
   height:100%;
+  background-color:#CC0000
 }
 body{
   text-align:center;
@@ -51,13 +52,13 @@ div.wrapper{
   padding:0;
   margin:0;
   list-style: none;
-  background: #111;
+  background-color:#CC0000;
 }
 
 /* Navigation Menu - List items */
 .navlinks li {
   /* non-critical appearance styles */
-  width: 150px;
+  width: 140px;
   border-top: 1px solid #111;
   border-bottom: 1px solid #000;
 }
@@ -65,12 +66,25 @@ div.wrapper{
 .navlinks a {
   /* non-critical appearance styles */
   display: block;
-  padding: 1em;
+  padding: .9em;
   background: blue;
   color: black;
   font-size: 1.2em;
   text-decoration: none;
   transition: color 0.2s, background 0.5s;
+}
+
+.navlinks p{
+  background:blue;
+  font-size: 1.2em;
+  margin-top: -4px;
+}
+
+.navlinks img{
+  width:100%;
+  max-height:130px;
+  
+  
 }
 
 .navlinks a:hover {
@@ -95,9 +109,10 @@ label[for="nav-trigger"] {
    cursor: pointer;
    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1' x='0px' y='0px' width='30px' height='30px' viewBox='0 0 30 30' enable-background='new 0 0 30 30' xml:space='preserve'><rect width='30' height='6'/><rect y='24' width='30' height='6'/><rect y='12' width='30' height='6'/></svg>");
    background-size: contain;
+   
  }
  /* Make the Magic Happen */
- .nav-trigger + label, .wrapper, .profile {
+ .nav-trigger + label, .wrapper {
    transition: left 0.2s;
  }
 
@@ -113,9 +128,23 @@ label[for="nav-trigger"] {
 
 /*MEDIA QUERIES
 ===================================================================*/
-@media (max-width: 450px) {
-  .navlinks
-  .p
+@media (min-width: 750px) {
+  
+  div.wrapper{
+    width:100%;
+    padding-left:150px;
+  }
+ .nav-trigger, label[for="nav-trigger"]{
+    display:none;
+  }
+  .navlinks{
+    float:left;
+    width:150px;
+    z-index:2;
+  }
+  .navlinks li{
+    vertical-align:middle;
+  }
 }
 
 
@@ -129,11 +158,15 @@ table{
 
 div.search_result, .char_display, .team_display, .wishlist_char, .message,
  .user_wishlist, .user_teams{
+  display:inline-block;
   margin-left:auto;
   margin-right:auto;
   text-align:center;
-  margin-bottom:30px;
+  width:90%;
+  max-width:350px;
+  margin:10px;
   border:solid black 10px;
   padding-bottom: 10px;
   background-color:#49679E;
+  vertical-align:top;
 }
