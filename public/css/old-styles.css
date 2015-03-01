@@ -1,0 +1,103 @@
+body{
+  text-align:center;
+  padding:0;
+  background-color:#CC0000;
+  font-family:impact;
+}
+a {
+  color: #531D5C;
+}
+
+ul.navlinks {
+  margin-bottom:5px;
+  padding:0;
+  position: relative;
+  top: -8px;
+}
+
+.navlinks li{
+  margin:0;
+  padding-left:10px;
+  padding-right:10px;
+  background-color:rgba(247, 85, 85, 0.42);
+  display:inline-block;
+  list-style-type:none;
+  background-color:#CC0000;
+  font-family:impact;
+}
+.navlinks li:hover{
+  background-color:red;
+}
+
+ul.navlinks {
+  margin-bottom:5px;
+  padding:0;
+  position: relative;
+  top: -8px;
+}
+
+
+li a{
+  display:inline-block; 
+}
+
+a {
+  color: #531D5C;
+}
+
+div.profile {
+  z-index:1;
+  height:20%;
+  width:100%;
+  position: fixed;
+  top:0;
+  text-align: center;
+  font-weight: bold;
+  background-color: #49679E;
+}
+
+.profile h1{
+  white-space:nowrap;
+  text-overflow:ellipsis;
+  text-align:left;
+  font-size: 35px;
+}
+
+.profile img{
+  float:left;
+  
+}
+
+div.yield{
+  position: relative;
+  bottom: -136px;
+}
+
+
+div.login {
+  text-align:center;
+  margin-left:auto;
+  margin-right:auto;
+  float:center;
+}
+
+div.search_result, .char_display, .team_display, .wishlist_char, .message,
+ .user_wishlist, .user_teams{
+  margin-left:auto;
+  margin-right:auto;
+  text-align:center;
+  margin-bottom:30px;
+  border:solid black 10px;
+  padding-bottom: 10px;
+  background-color:#49679E;
+}
+
+table{
+  margin-left:auto;
+  margin-right:auto;
+  text-align:center;
+}
+p.error{
+  color:indigo;
+  margin:0;
+}

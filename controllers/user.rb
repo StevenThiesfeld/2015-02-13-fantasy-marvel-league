@@ -21,7 +21,7 @@ post "/user/verification" do
 end
 
 get "/user/setup" do
-  @errors = {}
+  
   erb :"user/setup", :layout => :"layout_login" 
 end
 

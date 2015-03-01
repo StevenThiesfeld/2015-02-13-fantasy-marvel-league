@@ -31,6 +31,5 @@ module ModelHelper
     table
   end
   
-
   
 end#module end

@@ -1,11 +1,11 @@
 <h1> User Setup</h1>
 <div class="usersetup">
 <form action="/user/confirm_creation" method="post">
-  <p class=error><%= @errors[:name]  %>
-  <%= @errors[:taken] %></p>
+  <p class=error><%= @errors[:name] unless @errors.nil?  %>
+  <%= @errors[:taken] unless @errors.nil? %></p>
   <label for="name">Enter User Name*</label>
   <input type="text" name="name" value="<%= params["name"] %>"><br>
-  <p class=error><%= @errors[:password] %></p>
+  <p class=error><%= @errors[:password] unless @errors.nil? %></p>
   <label for="password">Enter Password*</label>
   <input type="text" name="password" value="<%= params["password"] %>"><br>
   Paste Avatar Picture URL

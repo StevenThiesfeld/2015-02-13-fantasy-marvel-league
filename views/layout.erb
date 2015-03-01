@@ -3,29 +3,30 @@
 
   <head>
     <title>!F_M_L!</title>
- <link rel="stylesheet" href="/css/stylesheet.css" type="text/css" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="/css/normalize.css" type="text/css" media="screen" title="no title" charset="utf-8">
+    
+    
+ <link rel="stylesheet" href="/css/new-styles.css" type="text/css" media="screen" title="no title" charset="utf-8">
   </head>
   
   <body>
-    <div class="profile"> 
-      <img id="head_avatar" src="<%= session[:user].image %>"height="60%" width="20%">
-      <h1>FML: <%= session[:user].name %></h1>
-  <nav>
-    <ul class="navlinks">
-     <li> <a href="javascript:history.back()">Back</a></li>     
-     <li> <a href="/user/profile">Your Profile</a></li>
-     <li> <a href="/characters">Characters</a></li>
-     <li> <a href="/teams">Teams</a></li>
-     <li> <a href="/wishlist">Wishlist</a></li>
-     <li> <a href="/search">Search</a></li>
-     <li> <a href="/messages">Messages</a></li>
-     <li> <a href="/logout">Logout</a></li>
-    </ul>
-  </nav>
-  </div>
-  
-  <div class="yield">
-    <%= yield %>
+      <ul class="navlinks">
+       <li> <a href="javascript:history.back()">Back</a></li>     
+       <li> <a href="/user/profile">Your Profile</a></li>
+       <li> <a href="/characters">Characters</a></li>
+       <li> <a href="/teams">Teams</a></li>
+       <li> <a href="/wishlist">Wishlist</a></li>
+       <li> <a href="/search">Search</a></li>
+       <li> <a href="/messages">Messages</a></li>
+       <li> <a href="/logout">Logout</a></li>
+      </ul>
+      
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger"></label>
+   
+    
+  <div class="wrapper">
+      <%= yield %>
   </div>
     
   </body>
