@@ -142,9 +142,7 @@ label[for="nav-trigger"] {
     width:150px;
     z-index:2;
   }
-  .navlinks li{
-    vertical-align:middle;
-  }
+  
 }
 
 
@@ -169,4 +167,9 @@ div.search_result, .char_display, .team_display, .wishlist_char, .message,
   padding-bottom: 10px;
   background-color:#49679E;
   vertical-align:top;
+}
+
+p.error{
+  color:indigo;
+  margin:0;
 }
