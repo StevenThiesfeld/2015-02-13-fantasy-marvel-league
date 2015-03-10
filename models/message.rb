@@ -20,7 +20,7 @@
 # #get_offered_char_name
 # #get_requested_char_name
 
-class Message
+class Message < ActiveRecord::Base
   include DatabaseMethods
   extend ClassMethods
   include ModelHelper

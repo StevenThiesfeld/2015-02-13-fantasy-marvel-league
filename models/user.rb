@@ -13,9 +13,9 @@
 # #get_unassigned_chars
 # #get_wishlist
 
-class User
-  include DatabaseMethods
-  extend ClassMethods
+class User < ActiveRecord::Base
+  # include DatabaseMethods
+#   extend ClassMethods
   include ModelHelper
   attr_reader :id
   attr_accessor :name, :password, :image

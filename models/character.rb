@@ -13,7 +13,7 @@
 # Public Methods:
 # #find_owner
 
-class Character
+class Character < ActiveRecord::Base
   include DatabaseMethods
   extend ClassMethods
   include ModelHelper

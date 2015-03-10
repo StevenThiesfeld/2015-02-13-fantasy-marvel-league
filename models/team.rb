@@ -11,7 +11,7 @@
 # #error_check
 # #delete
 
-class Team
+class Team < ActiveRecord::Base
   include DatabaseMethods
   extend ClassMethods
   include ModelHelper

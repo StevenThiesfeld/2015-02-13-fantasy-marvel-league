@@ -15,7 +15,7 @@
 # #check_offer
 # #delete_wishlist
 
-class Wishlist
+class Wishlist < ActiveRecord::Base
   include DatabaseMethods
   extend ClassMethods
   include ModelHelper

@@ -4,3 +4,5 @@ gem 'pry'
 gem 'sinatra'
 gem 'sqlite3'
 gem 'minitest'
+gem "sinatra-activerecord"
+gem "rake"

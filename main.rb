@@ -20,7 +20,8 @@ require_relative "controllers/wishlist"
 require_relative "controllers/messages"
 require_relative "controllers/search"
 require_relative "controllers/trade"
-
+set :database, {adapter: "sqlite3", database: "f_m_l.db"}
 
 enable :sessions
 helpers MainHelper, ModelHelper
+binding.pry
