@@ -39,7 +39,7 @@ module MainHelper
  #  State Changes: none
 
   def team_full?(team)
-    if team.get_characters("team_id").length == 6
+    if team.characters.length == 6
       true
     else false
     end
@@ -59,14 +59,14 @@ module MainHelper
  #  State Changes: none
 
   def char_taken?(char)
-    check_char = Character.search_where("characters", "name", char.name)[0]
+    check_char = Character.find_by(name: char.name)
     if check_char == nil 
       "no_entry"
     else
       if check_char.user_id == 0
         "unassigned"
       else
-        User.find("users", check_char.user_id).name
+        check_char.user.name
       end
     end
   end
@@ -83,7 +83,7 @@ module MainHelper
  #  State Changes: none
   
   def fetch_id(char_name)
-    char = Character.search_where("characters", "name", char_name)[0]
+    char = Character.find_by(name: char_name)
     char.id
   end
   
@@ -101,16 +101,13 @@ module MainHelper
 #   Will set a message's "trade" attribute to "finished" if relevant
   
   def make_trade(params)
-    char1 = Character.find("characters", params["char1_id"])
-    char2 = Character.find("characters", params["char2_id"])
-    char1.edit_object("team_id" => 0, "user_id" => params["user2_id"])
-    char2.edit_object("team_id" => 0, "user_id" => session[:user].id)
-    char1.save("characters")
-    char2.save("characters")
+    char1 = Character.find(params["char1_id"])
+    char2 = Character.find(params["char2_id"])
+    char1.update("team_id" => 0, "user_id" => params["user2_id"])
+    char2.update("team_id" => 0, "user_id" => session[:user].id)
     if params["message_id"] != nil
-      message = Message.find("messages", params["message_id"])
-      message.trade = "finished"
-      message.save("messages")
+      message = Message.find(params["message_id"])
+      message.update(trade: "finished")
     end
   end
   

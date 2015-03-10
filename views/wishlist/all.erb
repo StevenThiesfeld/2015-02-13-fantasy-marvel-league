@@ -9,10 +9,10 @@
         <h4>No Valid Offline Trade</h4>
       <% end  %>
     <% end  %>
-    <p>Currently Offering: <%= user.get_wishlist.offer %></p>
-    <% user.get_wishlist.set_wishlist_chars.each do |char| %>
+    <p>Currently Offering: <%= user.wishlist.offer %></p>
+    <% user.wishlist.characters.each do |char| %>
     <hr>
-      <p><%= char.name %><br>Owned By: <%= char.find_owner.name  %></p>
+      <p><%= char.name %><br>Owned By: <%= char.user.name  %></p>
     <% end  %>
   </div>
 <% end  %>

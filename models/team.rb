@@ -12,20 +12,15 @@
 # #delete
 
 class Team < ActiveRecord::Base
-  include DatabaseMethods
-  extend ClassMethods
   include ModelHelper
+    
+  after_initialize :defaults
   
-  attr_reader :id, :user_id, :slug
-  attr_accessor :name
-  
-  def initialize(options)
-    @id = options["id"]
-    @name = options["name"]
-    @user_id = options["user_id"]
-    options["slug"] ? @slug = options["slug"] : set_slug  
+  has_many :characters
+  belongs_to :user
+  def defaults
+    self.slug ||= set_slug
   end
-  
   # Public Method: #set_slug
 #   Sets the slug attribute to a URL friendly version of the name attribute
 #
@@ -36,7 +31,7 @@ class Team < ActiveRecord::Base
 #   State Changes: @slug attribute is set to a String
   
   def set_slug
-    @slug = name.downcase.strip.gsub(' ', '-').gsub(/[^\w-]/, '')
+    name.downcase.strip.gsub(' ', '-').gsub(/[^\w-]/, '')
   end
   
   # Public Method: error_check

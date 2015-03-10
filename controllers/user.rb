@@ -11,8 +11,8 @@ get "/logout" do
 end
 
 post "/user/verification" do
-  if User.login(params) 
-    session[:user] = User.login(params)
+  if user = User.find_by(params)
+    session[:user] = user
     redirect "/user/profile"
   else
     @error = "Invalid Login Info"
@@ -26,8 +26,8 @@ get "/user/setup" do
 end
 
 post "/user/confirm_creation" do #error check goes here
-  new_user = User.new(params)
-   @errors = new_user.error_check
+  new_user = User.create(params)
+   @errors = new_user.errors
   if @errors == {}
     erb :"user/confirm_creation", :layout => :"layout_login"
   else
@@ -36,14 +36,13 @@ post "/user/confirm_creation" do #error check goes here
 end
 
 post "/user/create_profile" do
-  session[:user] = User.new(params)
-  session[:user].insert("users")
+  session[:user] = User.create(params)
   session[:user].user_setup
   redirect "/user/profile"
 end
 
 get "/user/profile" do
-  @unviewed_messages = Message.get_unviewed_messages(session[:user].id)
+  @unviewed_messages = Message.where(to_user_id: session[:user].id, viewed: "no").reverse_order
   erb :"user/profile"
 end
 
@@ -52,8 +51,7 @@ get "/user/edit_profile" do
 end
 
 post "/user/confirm_edit" do
-  session[:user].edit_object(params)
-  session[:user].save("users")
+  session[:user].update(params)
   redirect "/user_profile"
 end
 

@@ -14,36 +14,16 @@
 # #find_owner
 
 class Character < ActiveRecord::Base
-  include DatabaseMethods
-  extend ClassMethods
   include ModelHelper
   
-  attr_reader :id, :name, :description, :image, :popularity
-  attr_accessor :user_id, :team_id
+  after_initialize :defaults
   
-  def initialize(options)
-    @id = options["id"]
-    @name = options["name"]
-    @description = options["description"]
-    @user_id = options["user_id"]
-    @team_id = options["team_id"]
-    options["image"] != nil ? @image = options["image"] : @image = "http://cdn-static.denofgeek.com/sites/denofgeek/files/styles/article_main_half/public/images/86941.jpg?itok=xEKeqXcW"
-    @popularity = options["popularity"]
+  def defaults
+    self.image ||= "http://cdn-static.denofgeek.com/sites/denofgeek/files/styles/article_main_half/public/images/86941.jpg?itok=xEKeqXcW"
   end
-  
-  # Public Method: #find_owner
-#   returns the user object the character is assigned to
-#
-#   Parameters: none
-#
-#   Returns:
-#   owner      - User: the user the character is assigned to
-#
-#   State Changes: none
-  
-  def find_owner
-    owner = User.find("users", user_id) 
-    owner
-  end
-  
+  belongs_to :user
+  belongs_to :team
+  has_many :characters_wishlists
+  has_many :wishlists, :through => :characters_wishlists
+
 end#class end  

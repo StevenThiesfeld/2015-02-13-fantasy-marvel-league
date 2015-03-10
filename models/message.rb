@@ -21,23 +21,13 @@
 # #get_requested_char_name
 
 class Message < ActiveRecord::Base
-  include DatabaseMethods
-  extend ClassMethods
-  include ModelHelper
+    include ModelHelper
   
-  attr_reader :from_user_id, :to_user_id, :body, :id, :offered_char,
-  :requested_char
-  attr_accessor :viewed, :trade
+  after_initialize :defaults
   
-  def initialize(options)
-    @id = options["id"]
-    options["body"] == "" ? @body = "no message" : @body = options["body"]
-    @from_user_id = options["from_user_id"]
-    @to_user_id = options["to_user_id"]
-    options["viewed"] ? @viewed = options["viewed"] : @viewed = "no"
-    @trade = options["trade"]
-    @offered_char = options["offered_char"]
-    @requested_char = options["requested_char"]
+  def defaults
+    self.body = "no message" if self.body == ""
+    self.viewed ||= "no"
   end
   
   # Class Method: .get_unviewed_messages
@@ -51,7 +41,7 @@ class Message < ActiveRecord::Base
 #
 #   State Changes: none
   
-  def self.get_unviewed_messages(user_id)
+  def self.unviewed_messages(user_id)
     results = DATABASE.execute("SELECT * FROM messages WHERE viewed = 'no' AND 
     to_user_id = #{user_id}")
     results_as_objects(results)
@@ -68,10 +58,8 @@ class Message < ActiveRecord::Base
  #
  #  State Changes: none
   
-  def self.get_all_messages(user_id)
-    results = DATABASE.execute("SELECT * FROM messages WHERE to_user_id = #{user_id}
-    OR from_user_id = #{user_id}")
-    results_as_objects(results)
+  def self.all_messages(user_id)
+    self.where("to_user_id = ? OR from_user_id = ?", user_id, user_id)
   end
   
   # Public Method: #get_from_user_name
@@ -117,8 +105,7 @@ class Message < ActiveRecord::Base
  #  @viewed set to "yes" and column is updated in the messages table
  
   def mark_as_viewed
-    @viewed = "yes"
-    self.save("messages")
+    self.update(viewed: "yes")
   end
   
   # Public Method: #get_offered_char_name
@@ -149,6 +136,14 @@ class Message < ActiveRecord::Base
   def get_requested_char_name
     name = DATABASE.execute("SELECT name FROM characters WHERE id = #{requested_char}")[0]["name"]  
     name
+  end
+  
+  def self.results_as_objects(results)
+    objects = []
+    results.each do |result|
+      objects << self.new(result) if result != nil
+    end
+    objects
   end
     
 end#class end

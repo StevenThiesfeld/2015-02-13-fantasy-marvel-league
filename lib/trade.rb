@@ -23,7 +23,7 @@ class Trade
   def initialize(options)
     @user1 = options["user1"]
     @user2 = options["user2"]
-    @user2_wishlist = @user2.get_wishlist
+    @user2_wishlist = @user2.wishlist
     @user1_valid_chars = []
     set_user2_char
     @user2_char != nil ? set_valid_trade : @valid_trade = false
@@ -42,7 +42,7 @@ class Trade
 
   def set_user2_char
     char_name = user2_wishlist.offer
-    @user2_char = Character.search_where("characters", "name", char_name)[0]
+    @user2_char = Character.find_by(name: char_name)
   end
   
   # Private Method: set_valid_trade
@@ -57,7 +57,7 @@ class Trade
  #  @valid_trade is set to true if the 1st user has trade candidates, is false if not
   
   def set_valid_trade 
-    user1_chars = user1.get_characters("user_id")
+    user1_chars = user1.characters
       user1_chars.each do |char|
        @user1_valid_chars << char if user2_wishlist.get_char_ids.include?(char.id)
       end

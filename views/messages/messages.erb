@@ -2,7 +2,7 @@
 <form action="/messages/new">
   <label for="id">Send To:</label>
   <select name="id">
-  <%User.all("users").each do |user|  %>
+  <%User.all.each do |user|  %>
     <% if user.id != session[:user].id  %>
       <option value="<%= user.id %>"><%= user.name %></option> 
     <% end  %>

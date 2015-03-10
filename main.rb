@@ -11,6 +11,7 @@ require_relative "models/user"
 require_relative "models/team"
 require_relative "models/character"
 require_relative "models/message"
+require_relative "models/characterswishlist"
 require_relative "lib/search_engine"
 require_relative "lib/trade"
 require_relative "controllers/user"
@@ -21,7 +22,5 @@ require_relative "controllers/messages"
 require_relative "controllers/search"
 require_relative "controllers/trade"
 set :database, {adapter: "sqlite3", database: "f_m_l.db"}
-
 enable :sessions
 helpers MainHelper, ModelHelper
-binding.pry

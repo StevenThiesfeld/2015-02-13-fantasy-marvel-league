@@ -2,10 +2,10 @@
 <% @users.each do |user|  %>
   <div class="user_teams">
     <h2><img src="<%= user.image %>" height="50" width="50"><%= user.name %></h2>
-    <% Team.search_where("teams", "user_id", user.id).each do |team| %>
+    <% user.teams.each do |team| %>
       <table>
         <th><a href="/teams/details/<%= team.slug %>"><%= team.name %></a></th>
-        <% team.get_characters("team_id").each do |char|  %>
+        <% team.characters.each do |char|  %>
           <tr><td><%= char.name %></td></tr>
         <% end  %>
       </table>

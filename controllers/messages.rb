@@ -3,20 +3,18 @@
 #------------------------------------------------------------------------------
 ["/messages/new/:id", "/messages/new"].each do |route|
   get route do
-    @to_user = User.find("users", params["id"])
+    @to_user = User.find(params["id"])
     erb :"messages/new"
   end
 end
 
-post "/messages/send/:to_user_id" do
+post "/messages/send" do
   params["from_user_id"] = session[:user].id
-  @message = Message.new(params)
-  @message.insert("messages")
+  @message = Message.create(params)
   redirect "/messages"
 end
 
 get "/messages" do
-  @messages = Message.get_all_messages(session[:user].id)
-  @messages.reverse!
+  @messages = Message.where("to_user_id = ? OR from_user_id = ?", session[:user].id, session[:user].id).reverse_order
   erb :"messages/messages"
 end

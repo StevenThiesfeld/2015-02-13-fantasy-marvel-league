@@ -2,19 +2,19 @@
 <h2><a href="/teams/details/<%= team.slug %>"><%= team.name %></a></h2>
 <p><a href="/teams/edit/<%= team.id %>">Change Name</a>---<a href="/teams/delete/<%= team.id %>">Delete</a></p>
 <table>
-  <% team.get_characters("team_id").each do |char|  %>
+  <% team.characters.each do |char|  %>
     <tr><td><%= char.name %>---<a href='/teams/unassign/<%= char.id %>'>Unassign</a></td></tr>
   <% end  %>
 </table>
 <% if team_full?(team) == false %>
-<% if session[:user].get_unassigned_chars == []  %>
+<% if session[:user].characters.where(team_id: 0) == []  %>
   <p>No Characters to Assign</p>
 <% else  %>
 <p>Assign New Character</p>
 <form action="/teams/assign" method="post">
   <input type="hidden" name="team_id" value="<%= team.id %>">
   <select name="char_to_assign">
-    <% session[:user].get_unassigned_chars.each do |char| %>
+    <% session[:user].characters.where(team_id: 0).each do |char| %>
     <option value="<%=char.id  %>"><%= char.name %></option>
     <%end  %>
   </select>

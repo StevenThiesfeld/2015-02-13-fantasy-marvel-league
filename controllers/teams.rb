@@ -2,18 +2,18 @@
 #TEAM ROUTES
 #------------------------------------------------------------------------------
 get "/teams" do
-  @teams = Team.search_where("teams", "user_id", session[:user].id)
+  @teams = session[:user].teams
     erb :"teams/teams"
 end
 
 get "/teams/all" do
-  @users = User.all("users")
+  @users = User.all
   erb :"teams/all"
 end
 
 get "/teams/details/:slug" do
-  @team = Team.search_where("teams", "slug", params["slug"])[0]
-  @team_chars = @team.get_characters("team_id")
+  @team = Team.find_by(slug: params["slug"])[0]
+  @team_chars = @team.characters
   erb :"teams/details"
 end
 
@@ -22,9 +22,8 @@ get "/teams/new" do
 end  
 
 post "/teams/create" do
-  @new_team = Team.new(params)
-  if @new_team.error_check == []
-    @new_team.insert("teams")
+  @new_team = Team.create(params)
+  if @new_team.errors == []
     redirect "/teams"
   else
     @error = "Please Enter a Name"
@@ -34,39 +33,37 @@ end
 
 
 get "/teams/edit/:id" do 
-  @team = Team.find("teams", params["id"])
+  @team = Team.find(params["id"])
   erb :"teams/edit"
 end
 
 get "/teams/confirm_edit" do
-  team = Team.find("teams", params["id"])
-  team.edit_object(params)
+  team = Team.find(params["id"])
+  team.update(params)
   team.set_slug
-  team.save("teams")
+  team.save
   redirect "/teams"
 end
 
 get "/teams/delete/:id" do
-  @team = Team.find("teams", params["id"])
+  @team = Team.find(params["id"])
   erb :"teams/confirm_delete"
 end
 
 get "/teams/confirm_delete/:id" do
-  team = Team.find("teams", params["id"]) 
-  team.delete
+  team = Team.find(params["id"]) 
+  team.destroy
   redirect "/teams" 
 end
 
 post "/teams/assign" do
-  char_to_assign = Character.find("characters", params["char_to_assign"])
-  char_to_assign.team_id = params["team_id"]
-  char_to_assign.save("characters")
+  char_to_assign = Character.find(params["char_to_assign"])
+  char_to_assign.update(team_id: params["team_id"])
   redirect "/teams"
 end
 
 get "/teams/unassign/:id" do
-  char_to_unassign = Character.find("characters", params["id"])
-  char_to_unassign.team_id = 0
-  char_to_unassign.save("characters")
+  char_to_unassign = Character.find(params["id"])
+  char_to_unassign.update(team_id: 0)
   redirect "/teams"
 end

@@ -16,13 +16,10 @@
 # #delete_wishlist
 
 class Wishlist < ActiveRecord::Base
-  include DatabaseMethods
-  extend ClassMethods
+  # include DatabaseMethods
+#   extend ClassMethods
   include ModelHelper
-  
-  attr_reader :id, :user_id
-  attr_accessor :name, :offer
-  
+ 
   def initialize(options)
     @id = options["id"]
     @name = options["name"]
@@ -30,6 +27,14 @@ class Wishlist < ActiveRecord::Base
     options["offer"] ? @offer = options["offer"] : @offer = "none"
   end
   
+  after_initialize :defaults
+  
+  def defaults
+    self.offer ||= "none"
+  end
+  has_many :characters_wishlists
+  has_many :characters, :through => :characters_wishlists
+  belongs_to :user
   # Public Method: #add_to_wishlist
  #  Adds an entry in the characters_to_wishlists table
  #
@@ -62,7 +67,7 @@ class Wishlist < ActiveRecord::Base
 #   State Changes: none
   
   def get_char_ids
-   response = DATABASE.execute("SELECT character_id FROM characters_to_wishlists WHERE wishlist_id = #{id}")
+   response = DATABASE.execute("SELECT character_id FROM characters_wishlists WHERE wishlist_id = #{id}")
    char_ids = []
    response.each{|id| char_ids << id["character_id"] if response != []}
    char_ids
