@@ -1,7 +1,6 @@
-require 'pry'
-require 'sqlite3'
-require 'marvelite'
-require "sinatra"
+require 'rubygems'
+require 'bundler/setup'
+Bundler.require(:default)
 DATABASE = SQLite3::Database.new("f_m_l.db")
 require_relative "database/db_setup"
 require_relative "helper_modules/main_helper"
