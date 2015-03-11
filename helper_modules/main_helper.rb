@@ -104,7 +104,7 @@ module MainHelper
     char1 = Character.find(params["char1_id"])
     char2 = Character.find(params["char2_id"])
     char1.update("team_id" => 0, "user_id" => params["user2_id"])
-    char2.update("team_id" => 0, "user_id" => session[:user].id)
+    char2.update("team_id" => 0, "user_id" => @current_user.id)
     if params["message_id"] != nil
       message = Message.find(params["message_id"])
       message.update(trade: "finished")
@@ -123,7 +123,7 @@ module MainHelper
 #   State Changes: none
   
   def display_trade_option?(user)
-    trade = Trade.new("user1" => session[:user], "user2" => user)
+    trade = Trade.new("user1" => @current_user, "user2" => user)
     trade.valid_trade
   end
   

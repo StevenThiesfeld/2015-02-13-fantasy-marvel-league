@@ -3,7 +3,7 @@
 <p class=error><%= @error %></p>
 
 <form action="/teams/create" method="post">
-  <input type="hidden" name="user_id" value="<%= session[:user].id %>">
+  <input type="hidden" name="user_id" value="<%= @current_user.id %>">
   Name of Team
   <input type="text" name="name" value="<%= params["name"] %>">
   <input type="submit" value="Submit">

@@ -5,9 +5,9 @@
 
 <p><%= char.description %></p>
 <p>Number of Comics: <%= char.popularity %></p>
-<% if session[:user].id == char.user_id  %>
+<% if @current_user.id == char.user_id  %>
 <p><a href="/characters/delete/<%= char.id %>">Delete Character</a></p>
-<% elsif session[:user].wishlist.get_char_ids.include?(char.id)  %>
+<% elsif @current_user.wishlist.get_char_ids.include?(char.id)  %>
   <p>This Character is on your Wishlist</p>
 <% else %>
 <a href="/wishlist/add/<%= char.name %>">Add to Wishlist</a>

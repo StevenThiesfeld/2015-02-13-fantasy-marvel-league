@@ -19,7 +19,7 @@
        <li> <a href="/search">Search</a></li>
        <li> <a href="/messages">Messages</a></li>
        <li> <a href="/logout">Logout</a></li>
-       <li> <img src="<%=session[:user].image%>"><br><p><%=session[:user].name%></p></li>
+       <li> <img src="<%=@current_user.image%>"><br><p><%=@current_user.name%></p></li>
       </ul>
       <input type="checkbox" id="nav-trigger" class="nav-trigger" />
       <label for="nav-trigger"></label>

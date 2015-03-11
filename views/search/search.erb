@@ -4,6 +4,6 @@
 <form class="search" action="/search_results" method="post">
   Enter Search Here
   <input type="text" name="user_search" required>
-  <input type="hidden" name="user_id" value=<%= session[:user].id %>>
+  <input type="hidden" name="user_id" value=<%= @current_user.id %>>
   <input type="submit" value="Submit">
 </form>

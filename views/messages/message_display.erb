@@ -1,5 +1,5 @@
 <div class="message">
-<% if message.to_user_id == session[:user].id %>
+<% if message.to_user_id == @current_user.id %>
 
   <h4>From: <%= message.get_from_user_name %></h4>
   <p><%= message.body %></p>

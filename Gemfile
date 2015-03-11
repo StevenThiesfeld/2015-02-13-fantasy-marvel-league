@@ -6,3 +6,4 @@ gem 'sqlite3'
 gem 'minitest'
 gem "sinatra-activerecord"
 gem "rake"
+gem 'bcrypt'

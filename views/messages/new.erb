@@ -9,7 +9,7 @@
     value="no">No<br>
     Offering:
     <select form="message" name="offered_char">
-      <% session[:user].characters.each do |char|  %>
+      <% @current_user.characters.each do |char|  %>
       <option value="<%= char.id %>"><%= char.name %></option>
       <% end %>
       </select>

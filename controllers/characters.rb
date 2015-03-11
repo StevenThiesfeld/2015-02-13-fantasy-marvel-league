@@ -8,13 +8,13 @@ end
 
 post "/characters/swap_user" do
   char = Character.find(params["id"])
-  char.update({user_id: session[:user].id, team_id: 0})
+  char.update({user_id: @current_user.id, team_id: 0})
   redirect "/characters"
 end
   
 
 get "/characters" do
-  @characters = session[:user].characters
+  @characters = @current_user.characters
   erb :"characters/characters"
 end
 

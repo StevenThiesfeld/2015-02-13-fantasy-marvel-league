@@ -1,6 +1,6 @@
 <h1> User Setup</h1>
 <div class="usersetup">
-<form action="/user/confirm_creation" method="post">
+<form action="/login/user/confirm_creation" method="post">
   <p class=error><%= @errors[:name] unless @errors.nil?  %>
   <%= @errors[:taken] unless @errors.nil? %></p>
   <label for="name">Enter User Name*</label>

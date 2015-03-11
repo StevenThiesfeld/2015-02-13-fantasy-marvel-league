@@ -1,10 +1,10 @@
 <h1>Edit Profile</h1>
 <form action="/user/confirm_edit" method="post">
   Enter New User Name
-  <input type="text" name="name" value="<%= session[:user].name %>">
+  <input type="text" name="name" value="<%= @current_user.name %>">
   Enter New Password
-  <input type="text" name="password" value="<%= session[:user].password %>">
+  <input type="text" name="password" value="<%= @current_user.password %>">
   Paste new Image URL
-  <input type="text" name="image" value="<%= session[:user].image %>">
+  <input type="text" name="image" value="<%= @current_user.image %>">
   <input type="submit" value="Submit">
 </form>

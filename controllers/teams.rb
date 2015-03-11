@@ -2,7 +2,7 @@
 #TEAM ROUTES
 #------------------------------------------------------------------------------
 get "/teams" do
-  @teams = session[:user].teams
+  @teams = @current_user.teams
     erb :"teams/teams"
 end
 

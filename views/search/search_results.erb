@@ -27,9 +27,9 @@
       <input type="hidden" name="id" value="<%= fetch_id(result.name) %>">
       <input type="submit" value="Add">
     </form>
-  <%elsif char_taken?(result) == session[:user].name %>
+  <%elsif char_taken?(result) == @current_user.name %>
     <p>This Character is on your roster.</p>
-  <%elsif session[:user].wishlist.get_char_ids.include?(result.id)  %>
+  <%elsif @current_user.wishlist.get_char_ids.include?(result.id)  %>
     <p>This Character is on your Wishlist</p>
   <% else  %>
     <p>Sorry, <%= char_taken?(result) %> has already claimed this Character, click <a href="/wishlist/add/<%= result.name %>">here</a> to add this Character to your wishlist.</p>

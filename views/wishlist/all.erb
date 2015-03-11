@@ -2,7 +2,7 @@
 <% @users.each do |user|  %>
   <div class="user_wishlist">
     <h2><img src="<%= user.image %>" height="50" width="50"><%= user.name %></h2>
-    <% if session[:user].name != user.name  %>
+    <% if @current_user.name != user.name  %>
       <% if display_trade_option?(user) == true  %>
         <h4><a href="/start_trade/<%= user.id %>">Perform Offline Trade</a></h4>
       <% else  %>
