@@ -12,7 +12,7 @@ get "/teams/all" do
 end
 
 get "/teams/details/:slug" do
-  @team = Team.find_by(slug: params["slug"])[0]
+  @team = Team.find_by(slug: params["slug"])
   @team_chars = @team.characters
   erb :"teams/details"
 end

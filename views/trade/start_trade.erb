@@ -1,6 +1,6 @@
 <h1>You're trading with <%= @trade.user2.name %></h1>
 <h2>Select a character to trade for <%= @trade.user2_char.name %></h2>
-<form action="/confirm_trade">
+<form action="/confirm_trade" method="post">
   <input type="hidden" name="user2_id" value="<%= @trade.user2.id %>">
   <input type= "hidden" name="char2_id" value="<%= @trade.user2_char.id %>">
   <select name="char1_id">
