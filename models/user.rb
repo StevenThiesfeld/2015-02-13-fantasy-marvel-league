@@ -17,7 +17,7 @@ class User < ActiveRecord::Base
   # include DatabaseMethods
 #   extend ClassMethods
   include ModelHelper
-  
+  include BCrypt
   after_initialize :defaults
 
   def defaults
@@ -27,6 +27,7 @@ class User < ActiveRecord::Base
   has_many :characters
   has_many :teams
   has_one :wishlist
+  
 #   # Public Method: #delete_user
 # #   Deletes a user's profile and all table entries associated with his account.  Changes the user id and team id of user's characters to 0
 # #
