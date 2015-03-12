@@ -68,7 +68,7 @@ class Wishlist < ActiveRecord::Base
   
   def get_char_ids
    char_ids = []
-   self.characters.each{|id| char_ids << id["character_id"] if response != []}
+   self.characters.each{|char| char_ids << char.id if char}
    char_ids
  end
     
@@ -84,15 +84,9 @@ class Wishlist < ActiveRecord::Base
   # State Changes: will call remove_from_wishlist if the character has been aquired
 
   def set_wishlist_chars
-    # response = DATABASE.execute("SELECT character_id FROM characters_to_wishlists WHERE wishlist_id = #{id}")
-    char_objects = []
-    get_char_ids.each do |char_id|
-      char_objects << Character.find("characters", char_id) 
-    end
-    char_objects.each do |char|
+    self.characters.each do |char|
       if char.user_id == user_id
         self.remove_from_wishlist(char.id)
-        char_objects.delete(char)
       end 
     end
     check_offer
@@ -111,14 +105,13 @@ class Wishlist < ActiveRecord::Base
  #  @offer is set to "" if the user no longer has that character
   
   def check_offer
-    offered_char = Character.search_where("characters", "name", offer)[0]
+    offered_char = Character.find_by(name: offer)
     if offered_char != nil
       if offered_char.user_id != user_id
-        @offer = "none"
-        self.save("wishlists")
+        self.update(offer: "none")
       end
-    else @offer = "none"
-      self.save("wishlists")
+    else 
+      self.update(offer: "none")
     end 
   end
   
@@ -133,7 +126,7 @@ class Wishlist < ActiveRecord::Base
   
   def delete_wishlist
     DATABASE.execute("DELETE FROM characters_to_wishlists WHERE wishlist_id = #{id}")
-    DATABASE.execute("DELETE FROM wishlists WHERE id = #{id}")
+    self.destroy
     self
   end
     

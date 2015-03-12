@@ -2,7 +2,7 @@
 <h3>Currently offering: <%= @wishlist.offer %></h3>
 <form action="/wishlist/add_offer" method="post">
   Put a new Character up for trade.
-  <select name="name">
+  <select name="offer">
     <% @your_chars.each do |char| %>
       <% if char.name != @wishlist.offer  %>
         <option value="<%= char.name %>"><%= char.name %></option>

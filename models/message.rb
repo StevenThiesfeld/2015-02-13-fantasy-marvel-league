@@ -42,9 +42,7 @@ class Message < ActiveRecord::Base
 #   State Changes: none
   
   def self.unviewed_messages(user_id)
-    results = DATABASE.execute("SELECT * FROM messages WHERE viewed = 'no' AND 
-    to_user_id = #{user_id}")
-    results_as_objects(results)
+    self.find_by(viewed: "no", to_user_id: user_id)
   end
   
   # Class Method: .get_all_messages
@@ -73,8 +71,8 @@ class Message < ActiveRecord::Base
  #  State Changes: none
   
   def get_from_user_name
-    result = DATABASE.execute("SELECT name FROM users WHERE id = #{from_user_id}")
-    result != [] ? name = result[0]["name"] : name = "deleted user"
+    result = User.find_by(id: from_user_id)
+    result ? name = result.name : name = "deleted user"
     name
   end
   
@@ -89,8 +87,8 @@ class Message < ActiveRecord::Base
  #  State Changes: none
   
   def get_to_user_name
-    result = DATABASE.execute("SELECT name FROM users WHERE id = #{to_user_id}")
-    result != [] ? name = result[0]["name"] : name = "deleted user"
+    result = User.find_by(id: to_user_id)
+    result ? name = result.name : name = "deleted user"
     name
   end
   
@@ -119,8 +117,7 @@ class Message < ActiveRecord::Base
 #   State Changes: none
   
   def get_offered_char_name
-    name = DATABASE.execute("SELECT name FROM characters WHERE id = #{offered_char}")[0]["name"]  
-    name
+    Character.find(offered_char).name  
   end
   
   # Public Method: #get_requested_char_name
@@ -134,16 +131,7 @@ class Message < ActiveRecord::Base
 #   State Changes: none
   
   def get_requested_char_name
-    name = DATABASE.execute("SELECT name FROM characters WHERE id = #{requested_char}")[0]["name"]  
-    name
-  end
-  
-  def self.results_as_objects(results)
-    objects = []
-    results.each do |result|
-      objects << self.new(result) if result != nil
-    end
-    objects
+    Character.find(requested_char).name
   end
     
 end#class end

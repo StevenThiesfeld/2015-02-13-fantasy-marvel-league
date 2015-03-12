@@ -18,6 +18,7 @@ class Team < ActiveRecord::Base
   
   has_many :characters
   belongs_to :user
+  
   def defaults
     self.slug ||= set_slug
   end
@@ -58,12 +59,10 @@ class Team < ActiveRecord::Base
  #  Changes the team_id of characters on the team to 0, and deletes the team from the table
   
   def delete
-    chars = self.get_characters("team_id")
-    chars.each do |char|
-      char.team_id = 0
-      char.save("characters")
+    self.characters.each do |char|
+      char.update(team_id: 0)
     end
-    DATABASE.execute("DELETE FROM teams WHERE id = #{id}")
+    self.destroy
     self
   end
   

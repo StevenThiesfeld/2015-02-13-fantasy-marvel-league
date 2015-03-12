@@ -17,6 +17,7 @@ end
 post "/wishlist/add_offer" do
   @wishlist = @current_user.wishlist
   @wishlist.update(offer: params["offer"])
+  binding.pry
   redirect "/wishlist"
 end
 

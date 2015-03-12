@@ -38,8 +38,7 @@ class User < ActiveRecord::Base
 # #   Removes all entries from the database related to the user and clears character assignments
 #
   def delete_user
-    wishlist = self.wishlists[0]
-    wishlist.destroy
+    self.wishlist.destroy
     DATABASE.execute("DELETE FROM teams WHERE user_id = #{id}")
     self.characters.each do |char|
       char.update(team_id: 0, user_id: 0)
