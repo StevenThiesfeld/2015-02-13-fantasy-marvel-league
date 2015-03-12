@@ -13,6 +13,10 @@ before do
   end
 end  
 
+get "/" do
+  redirect "/login"
+end
+
 get "/login" do
   erb :"user/login", :layout => :"layout_login"
 end
@@ -23,9 +27,7 @@ get "/logout" do
 end
 
 post "/login/user/verification" do
-  binding.pry
   if user = User.find_by(name: params["name"])
-    binding.pry
     if BCrypt::Password.new(user.password) == params["password"]
       session[:user_id] = user.id
       redirect "/user/profile"
@@ -72,8 +74,9 @@ get "/user/edit_profile" do
 end
 
 post "/user/confirm_edit" do
+  params[:password] = BCrypt::Password.create(params["password"])
   @current_user.update(params)
-  redirect "/user_profile"
+  redirect "/user/profile"
 end
 
 get "/user/delete_profile" do

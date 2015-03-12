@@ -67,9 +67,8 @@ class Wishlist < ActiveRecord::Base
 #   State Changes: none
   
   def get_char_ids
-   response = DATABASE.execute("SELECT character_id FROM characters_wishlists WHERE wishlist_id = #{id}")
    char_ids = []
-   response.each{|id| char_ids << id["character_id"] if response != []}
+   self.characters.each{|id| char_ids << id["character_id"] if response != []}
    char_ids
  end
     
