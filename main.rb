@@ -22,6 +22,8 @@ require_relative "controllers/wishlist"
 require_relative "controllers/messages"
 require_relative "controllers/search"
 require_relative "controllers/trade"
-set :database, {adapter: "sqlite3", database: "f_m_l.db"}
+configure :development do
+  set :database, {adapter: "sqlite3", database: "f_m_l.db"}
+end
 enable :sessions
 helpers MainHelper, ModelHelper
