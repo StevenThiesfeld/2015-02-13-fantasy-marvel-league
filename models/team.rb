@@ -16,6 +16,9 @@ class Team < ActiveRecord::Base
     
   after_initialize :defaults
   
+  validates :name, presence: true
+  validates :slug, uniqueness: true
+  
   has_many :characters
   belongs_to :user
   

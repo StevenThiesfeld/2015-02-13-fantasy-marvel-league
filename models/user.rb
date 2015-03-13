@@ -23,7 +23,8 @@ class User < ActiveRecord::Base
   def defaults
     self.image = "http://shackmanlab.org/wp-content/uploads/2013/07/person-placeholder.jpg" if self.image == ""
   end
-  
+  validates :name, uniqueness: true, presence: true
+  validates :password, presence: true
   has_many :characters
   has_many :teams
   has_one :wishlist

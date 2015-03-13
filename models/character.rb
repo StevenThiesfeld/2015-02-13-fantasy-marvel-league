@@ -21,6 +21,9 @@ class Character < ActiveRecord::Base
   def defaults
     self.image ||= "http://cdn-static.denofgeek.com/sites/denofgeek/files/styles/article_main_half/public/images/86941.jpg?itok=xEKeqXcW"
   end
+  
+  validates :name, presence: true, uniqueness: true
+
   belongs_to :user
   belongs_to :team
   has_many :characters_wishlists
