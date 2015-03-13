@@ -17,7 +17,6 @@ class Team < ActiveRecord::Base
   after_initialize :defaults
   
   validates :name, presence: true
-  validates :slug, uniqueness: true
   
   has_many :characters
   belongs_to :user
@@ -35,7 +34,7 @@ class Team < ActiveRecord::Base
 #   State Changes: @slug attribute is set to a String
   
   def set_slug
-    name.downcase.strip.gsub(' ', '-').gsub(/[^\w-]/, '')
+   user_id.to_s + "-" + name.downcase.strip.gsub(' ', '-').gsub(/[^\w-]/, '')
   end
   
   # Public Method: error_check

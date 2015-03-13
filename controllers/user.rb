@@ -28,6 +28,7 @@ end
 
 post "/login/user/verification" do
   if user = User.find_by(name: params["name"])
+    binding.pry
     if BCrypt::Password.new(user.password) == params["password"]
       session[:user_id] = user.id
       redirect "/user/profile"
@@ -47,8 +48,8 @@ get "/login/user/setup" do
 end
 
 post "/login/user/confirm_creation" do #error check goes here
-  new_user = User.create(params)
-   @errors = new_user.errors
+  @new_user = User.new(params)
+   @errors = @new_user.errors.messages
   if @errors == {}
     erb :"user/confirm_creation", :layout => :"layout_login"
   else

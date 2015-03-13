@@ -60,8 +60,9 @@ class User < ActiveRecord::Base
 #  #  State Changes: Inserts a new team and new wishlist to the database.
 #
   def user_setup
-    wishlist = Wishlist.create("name" => "Your Wishlist", "user_id" => @id)
-    team = Team.create("name" => "Your Team", "user_id" => @id)
+    binding.pry
+    wishlist = Wishlist.create(name: "Your Wishlist", user_id: id)
+    team = Team.create(name: "Your Team", user_id: id)
     self
   end
 #

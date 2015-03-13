@@ -20,13 +20,6 @@ class Wishlist < ActiveRecord::Base
 #   extend ClassMethods
   include ModelHelper
  
-  def initialize(options)
-    @id = options["id"]
-    @name = options["name"]
-    @user_id = options["user_id"]
-    options["offer"] ? @offer = options["offer"] : @offer = "none"
-  end
-  
   after_initialize :defaults
   
   def defaults
