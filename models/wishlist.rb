@@ -47,13 +47,12 @@ class Wishlist < ActiveRecord::Base
  #  inserts new entry into the characters_to_wishlists table
  #
   def add_to_wishlist(char_id)
-    DATABASE.execute("INSERT INTO characters_to_wishlists (character_id, wishlist_id)
-                    VALUES (#{char_id}, #{id})")
+    CharactersWishlist.create(character_id: char_id, wishlist_id: id)
     self                
   end
   
   def remove_from_wishlist(char_id)
-    DATABASE.execute("DELETE FROM characters_to_wishlists WHERE character_id=#{char_id}")
+    CharactersWishlist.find_by(character_id: char_id).destroy
   end
   
   # Public Method: #get_char_ids
@@ -114,21 +113,5 @@ class Wishlist < ActiveRecord::Base
       self.update(offer: "none")
     end 
   end
-  
-  # Public Method: #delete_wishlist
-#   Deletes relevant info from the wishlist and characters_to_wishlists tables
-#
-#   Returns: self - the Wishlist acted upon
-#
-#   State Changes:
-#   Deletes entries from characters_to_wishlists where the wishlist ids match
-#   Deletes the corresponding wishlist entry from the table
-  
-  def delete_wishlist
-    DATABASE.execute("DELETE FROM characters_to_wishlists WHERE wishlist_id = #{id}")
-    self.destroy
-    self
-  end
-    
   
 end#class end

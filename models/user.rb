@@ -40,7 +40,7 @@ class User < ActiveRecord::Base
 #
   def delete_user
     self.wishlist.destroy
-    DATABASE.execute("DELETE FROM teams WHERE user_id = #{id}")
+    Team.where(user_id: id).destroy_all
     self.characters.each do |char|
       char.update(team_id: 0, user_id: 0)
     end
