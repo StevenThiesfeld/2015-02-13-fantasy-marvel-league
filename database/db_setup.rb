@@ -49,8 +49,8 @@ end
 #  name TEXT NOT NULL, user_id INTEGER, offer TEXT, FOREIGN KEY(user_id) REFERENCES user(id))")
 #
  
-unless ActiveRecord::Base.connection.table_exists?(:characters)
-  ActiveRecord::Base.connection.create_table :characters do |t|
+unless ActiveRecord::Base.connection.table_exists?(:characters_wishlists)
+  ActiveRecord::Base.connection.create_table :characters_wishlists do |t|
     t.integer :character_id
     t.integer :wishlist_id
   end
@@ -60,8 +60,8 @@ end
 # (character_id INTEGER NOT NULL, wishlist_id INTEGER NOT NULL, FOREIGN KEY(wishlist_id)
 # REFERENCES wishlists(id), FOREIGN KEY(character_id) REFERENCES characters(id))")
 
-unless ActiveRecord::Base.connection.table_exists?(:characters)
-  ActiveRecord::Base.connection.create_table :characters do |t|
+unless ActiveRecord::Base.connection.table_exists?(:messages)
+  ActiveRecord::Base.connection.create_table :messages do |t|
     t.text :body
     t.integer :from_user_id
     t.integer :to_user_id
